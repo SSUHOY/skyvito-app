@@ -1,10 +1,37 @@
 import React, { useState } from "react";
 import * as S from "./AuthPage.styles";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import LogoSkyUrl from "../../assets/images/logo-skypro.png";
 
 export const AuthPage = () => {
+  // const dispatch = useDispatch();
+
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [error, setError] = useState(null);
+console.log(error)
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError("Пожалуйста, введите пароль и/или логин");
+      return;
+    }
+  };
+
+  const handleRegister = async () => {
+    if (!email || !password) {
+      setError("Не заполнены обязательные поля (Имя, почта, пароль)");
+      return;
+    }
+    if (repeatPassword !== password) {
+      setError("Пароли не совпадают");
+      return;
+    }
+  };
 
   return (
     <S.PageContainer>
@@ -21,23 +48,26 @@ export const AuthPage = () => {
                 type="text"
                 name="login"
                 placeholder="email"
-
-                // onChange={(event) => {
-                //   setEmail(event.target.value);
-                // }}
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
               />
               <S.ModalInput
                 type="password"
                 name="password"
                 placeholder="пароль"
-                // onChange={(event) => {
-                //   setPassword(event.target.value);
-                // }}
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
               />
             </S.Inputs>
-            {/* {error && <S.Error>{error}</S.Error>} */}
+            {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton>Войти</S.PrimaryButton>
+              <S.PrimaryButton onClick={() => handleLogin({email, password})}>
+                Войти
+              </S.PrimaryButton>
               <Link to="/register">
                 <S.SecondaryButton onClick={() => setIsLoginMode(false)}>
                   Зарегистрироваться

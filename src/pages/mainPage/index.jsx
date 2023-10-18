@@ -31,7 +31,7 @@ const Main = () => {
     <Container>
       <Header>
         <HeaderNav>
-          <NavLink>
+          <NavLink to='/login'>
             <HeaderBtnMainEnter>Вход в личный кабинет</HeaderBtnMainEnter>
           </NavLink>
         </HeaderNav>

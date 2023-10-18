@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import AddNewImgUrl from "../../../public/img/icon_02.png";
-import HomeLinkImgUrl from "../../../public/img/icon_01.png";
-import UserProfileImgUrl from "../../../public/img/icon_03.png";
+import AddNewImgUrl from "../../assets/images/icon_02.png";
+import HomeLinkImgUrl from "../../assets/images/icon_01.png";
+import UserProfileImgUrl from "../../assets/images/icon_03.png";
 import {
   AddNewImg,
   Footer,
@@ -9,7 +9,7 @@ import {
   FooterImg,
   HomeLinkImg,
   UserProfileImg,
-} from "../../../styles/main/Footer.styles";
+} from "../styles/main/Footer.styles";
 
 export const FooterAll = () => {
   return (
@@ -28,7 +28,7 @@ export const FooterAll = () => {
           </FooterImg>
           <FooterImg>
             <Link to="#">
-              <UserProfileImg src={UserProfileImgUrl}/>
+              <UserProfileImg src={UserProfileImgUrl} />
             </Link>
           </FooterImg>
         </FooterContainer>

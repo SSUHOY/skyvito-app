@@ -1,5 +1,5 @@
-import LogoUrl from './img/logo.png'
-import LogoMobUrl from './img/logo-mob.png'
+import LogoUrl from '../images/logo.png'
+import LogoMobUrl from '../images/logo-mob.png'
 import * as S from '../../components/styles/main/MainPage.styles'
 
 

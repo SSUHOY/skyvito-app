@@ -24,9 +24,13 @@ import { Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { ContentCards } from "../../components/styles/main/CardsItems.styles";
 import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
+import { useGetAllAdsQuery } from "../../components/services/adsApi";
 // import { CardsItem } from './components/cardsItem'
 
 const Main = () => {
+const {data} = useGetAllAdsQuery({})
+console.log(data)
+
   return (
     <Container>
       <Header>

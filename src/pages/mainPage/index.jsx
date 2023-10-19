@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   Container,
@@ -32,10 +32,22 @@ import { selectAllAdsList } from "../../store/selectors/ads";
 
 const Main = () => {
   const { data } = useGetAllAdsQuery({});
-  console.log(data);
-
   const fetchAllAds = useSelector(selectAllAdsList);
-  console.log(fetchAllAds);
+  console.log(fetchAllAds)
+
+  // Фильтр по вводу в строку поиска
+  const [searchText, setSearchText] = useState("");
+  console.log(searchText)
+
+  const filteredAds = useMemo(() => {
+    let result = [...fetchAllAds];
+    console.log(result)
+    if (searchText !== "") {
+      result = result.filter((ad) =>
+        ad.title.toLowerCase().includes(searchText.toLowerCase()));
+    }
+    return result;
+  }, [fetchAllAds, searchText]);
 
   const dispatch = useDispatch();
 
@@ -64,9 +76,10 @@ const Main = () => {
           </SearchLogoMobLink>
           <SearchForm>
             <SearchText
-              type="search"
+              type="text"
               placeholder="Поиск по объявлениям"
               name="search"
+              onChange={(e) => setSearchText(e.target.value)}
             />
             <SearchTextMob
               type="search"
@@ -80,12 +93,14 @@ const Main = () => {
           <MainH2>Объявления</MainH2>
           <MainContent>
             <ContentCards>
-              {fetchAllAds.map((ad, index) => (
+              {filteredAds.map((ad, index) => (
                 <CardsItem
                   key={index}
                   title={ad.title}
-                  image={ad.images}
+                  picture={`http://localhost:8090/${ad.images[0]?.url}`}
                   price={ad.price}
+                  date={ad.created_on.split("T")[0]}
+                  place={ad.user.city}
                 />
               ))}
               {/* <S.CardsItem /> */}

@@ -24,7 +24,7 @@ console.log(error)
 
   const handleRegister = async () => {
     if (!email || !password) {
-      setError("Не заполнены обязательные поля (Имя, почта, пароль)");
+      setError("Не заполнены обязательные поля (email, пароль)");
       return;
     }
     if (repeatPassword !== password) {
@@ -82,27 +82,27 @@ console.log(error)
                 type="email"
                 name="email"
                 placeholder="email"
-                // onChange={(event) => {
-                //   setUserName(event.target.value);
-                // }}
+                onChange={(event) => {
+                  setUserName(event.target.value);
+                }}
               />
               <S.ModalInput
                 type="text"
                 name="password"
                 placeholder="Пароль"
-                // value={email}
-                // onChange={(event) => {
-                //   setEmail(event.target.value);
-                // }}
+                value={email}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                }}
               />
               <S.ModalInput
                 type="password"
                 name="repeat-password"
                 placeholder="Повторите пароль"
-                // value={password}
-                // onChange={(event) => {
-                //   setPassword(event.target.value);
-                // }}
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
               />
               <S.ModalInput
                 type="text"
@@ -134,9 +134,9 @@ console.log(error)
                 // }}
               />
             </S.Inputs>
-            {/* {error && <S.Error>{error}</S.Error>} */}
+            {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton>Зарегистрироваться</S.PrimaryButton>
+              <S.PrimaryButton onClick={() => handleRegister({email, password})}>Зарегистрироваться</S.PrimaryButton>
             </S.Buttons>
           </>
         )}

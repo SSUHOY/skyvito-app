@@ -13,20 +13,25 @@ import {
   CardsCard,
 } from "../styles/main/CardsItems.styles";
 
-export const CardsItem = () => {
+export const CardsItem = ({title, image, price}) => {
+const imagesUrl = image.map((image) => {
+return image.url
+})
+
+// console.log(...image)
   return (
     <CardsContentBox>
       <CardsCard>
         <CardImgBox>
           <Link to="#">
-            <CardImage />
+            <CardImage src={imagesUrl} />
           </Link>
         </CardImgBox>
         <CardContentBox>
           <Link to="#">
-            <CardTitle>Ракетка для большого тенниса</CardTitle>
+            <CardTitle>{title}</CardTitle>
           </Link>
-          <CardPrice>2&nbsp;200&nbsp;₽ </CardPrice>
+          <CardPrice>{price} ₽</CardPrice>
           <CardPlace>Санкт-Петербург</CardPlace>
           <CardDate>Сегодня в 10:12</CardDate>
         </CardContentBox>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   Container,
@@ -25,17 +25,31 @@ import { ContentCards } from "../../components/styles/main/CardsItems.styles";
 import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
 import { useGetAllAdsQuery } from "../../components/services/adsApi";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSetAdsRequest } from "../../store/actions/creators/ads";
+import { selectAllAdsList } from "../../store/selectors/ads";
 // import { CardsItem } from './components/cardsItem'
 
 const Main = () => {
-const {data} = useGetAllAdsQuery({})
-console.log(data)
+  const { data } = useGetAllAdsQuery({});
+  console.log(data);
+
+  const fetchAllAds = useSelector(selectAllAdsList);
+  console.log(fetchAllAds);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(fetchSetAdsRequest(data));
+    }
+  }, [data, dispatch]);
 
   return (
     <Container>
       <Header>
         <HeaderNav>
-          <NavLink to='/login'>
+          <NavLink to="/login">
             <HeaderBtnMainEnter>Вход в личный кабинет</HeaderBtnMainEnter>
           </NavLink>
         </HeaderNav>
@@ -66,8 +80,14 @@ console.log(data)
           <MainH2>Объявления</MainH2>
           <MainContent>
             <ContentCards>
-              <CardsItem />
-
+              {fetchAllAds.map((ad, index) => (
+                <CardsItem
+                  key={index}
+                  title={ad.title}
+                  image={ad.images}
+                  price={ad.price}
+                />
+              ))}
               {/* <S.CardsItem /> */}
             </ContentCards>
           </MainContent>

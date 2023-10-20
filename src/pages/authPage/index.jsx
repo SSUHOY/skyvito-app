@@ -4,9 +4,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import LogoSkyUrl from "../../assets/images/logo-skypro.png";
 import { fetchLogin, fetchRegister } from "../../api";
+import { loginUser } from "../../store/actions/creators/ads";
 
 export const AuthPage = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
@@ -27,6 +28,7 @@ export const AuthPage = () => {
   }, [location.pathname, isLoginMode]);
 
   const handleLogin = async () => {
+    dispatch(loginUser())
     if (!email || !password) {
       setError("Пожалуйста, введите пароль и/или логин");
       return;
@@ -35,7 +37,7 @@ export const AuthPage = () => {
       setIsAuthLoading(true);
       await fetchLogin({ email, password });
       setIsAuthLoading(false);
-      navigate("/", { replace: true });
+      navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);
       setError(error.message || "Неизвестная ошибка при входе");
@@ -56,13 +58,18 @@ export const AuthPage = () => {
       setIsAuthLoading(true);
       await fetchRegister({ email, password, userName, city, surname });
       setIsAuthLoading(false);
-      navigate("/", { replace: true });
+      navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);
       setError(error.message || "Неизвестная ошибка регистрации");
       setIsAuthLoading(false);
     }
   };
+// Отлавливаем ошибку
+  useEffect(() => {
+    setError(null);
+  }, [isLoginMode, email, password, repeatPassword]);
+
 
   return (
     <S.PageContainer>

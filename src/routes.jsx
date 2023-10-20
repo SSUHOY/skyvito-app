@@ -7,20 +7,14 @@ import { ProtectedRoute } from "./components/protected-route";
 import { NotFound } from "./pages/notFound/404";
 
 const AppRoutes = ({ user }) => {
-  
   return (
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="/register" element={<AuthPage />} />
-      <Route
-        path="/account"
-        element={
-          <ProtectedRoute isAllowed={Boolean(user)}>
-            <Account />
-          </ProtectedRoute>
-        }
-      />
+      <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
+        <Route path="/account" element={<Account />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

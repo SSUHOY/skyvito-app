@@ -33,11 +33,9 @@ import { selectAllAdsList } from "../../store/selectors/ads";
 const Main = () => {
   const { data } = useGetAllAdsQuery({});
   const fetchAllAds = useSelector(selectAllAdsList);
-  console.log(fetchAllAds)
 
   // Фильтр по вводу в строку поиска
   const [searchText, setSearchText] = useState("");
-  console.log(searchText)
 
   const filteredAds = useMemo(() => {
     let result = [...fetchAllAds];
@@ -48,6 +46,7 @@ const Main = () => {
     }
     return result;
   }, [fetchAllAds, searchText]);
+
 
   const dispatch = useDispatch();
 
@@ -104,6 +103,7 @@ const Main = () => {
                 />
               ))}
               {/* <S.CardsItem /> */}
+              {searchText !== '' && filteredAds?.length === 0 ? "Ничего не найдено" : null}
             </ContentCards>
           </MainContent>
         </MainContainer>

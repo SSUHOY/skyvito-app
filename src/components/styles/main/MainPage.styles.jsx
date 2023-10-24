@@ -118,8 +118,9 @@ export const SearchLogoLink = styled.a`
 
 export const LogoImg = styled.img`
   width: 55px;
-  height: 38.06px;
+  height: 50.06px;
 `;
+
 
 export const SearchLogoImg = styled.img`
   width: 54px;
@@ -224,6 +225,7 @@ export const SearchLogoMobLink = styled.div`
 `;
 
 export const SearchLogoMob = styled.img`
+  display: none;
   @media screen and (max-width: 590px) {
     width: 32px;
     height: auto;

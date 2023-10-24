@@ -48,13 +48,10 @@ export const ContentCards = styled.div`
 
 export const CardsContentBox = styled.div`
   margin: 0;
-
-  @media screen and (max-width: 590px) {
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
+  @media screen and (max-width: 620px) {
+    margin: 0;
   }
 `;
-
 
 export const CardsCard = styled.div`
   width: 270px;
@@ -62,15 +59,14 @@ export const CardsCard = styled.div`
   display: flex;
   flex-direction: column;
 
-    @media screen and (max-width: 590px) {
-      width: 137px;
-      height: 293px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
-      border-radius: 6px;
-      }
-  
+  @media screen and (max-width: 620px) {
+    width: 137px;
+    height: 293px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+  }
 `;
 
 export const CardImgBox = styled.div`
@@ -107,16 +103,14 @@ export const CardImage = styled.img`
 
 export const CardContentBox = styled.div`
   font-family: "Roboto", sans-serif;
+  padding: 0px 10px 12px;
   @media screen and (max-width: 590px) {
     height: 51px;
-    width: 115px;
+    width: 137px;
     font-size: 14px;
     line-height: 17px;
     color: #009ee4;
-    margin-bottom: 10px;
-    margin-top: 10px;
   }
-
 `;
 
 export const CardTitle = styled.h3`

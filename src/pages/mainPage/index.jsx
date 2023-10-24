@@ -19,7 +19,6 @@ import {
   MainContent,
 } from "../../components/styles/main/MainPage.styles";
 import { NavLink } from "react-router-dom";
-import * as S from "../../components/styles/main/MainPage.styles";
 import { Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { ContentCards } from "../../components/styles/main/CardsItems.styles";
 import { CardsItem } from "../../components/cardsItem/cardsItem";
@@ -27,24 +26,26 @@ import { FooterAll } from "../../components/footer/footer";
 import { useGetAllAdsQuery } from "../../components/services/adsApi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSetAdsRequest } from "../../store/actions/creators/ads";
-import { selectAllAdsList } from "../../store/selectors/ads";
-// import { CardsItem } from './components/cardsItem'
+import { selectAllAdsList, selectIsLogin } from "../../store/selectors/ads";
 
 const Main = () => {
   const { data } = useGetAllAdsQuery({});
   const fetchAllAds = useSelector(selectAllAdsList);
-  console.log(fetchAllAds)
+
+  // Получение состояния залогининного пользователя из стора - пока не используется
+  const isLoginFromStore = useSelector(selectIsLogin);
+  console.log(isLoginFromStore);
 
   // Фильтр по вводу в строку поиска
   const [searchText, setSearchText] = useState("");
-  console.log(searchText)
 
   const filteredAds = useMemo(() => {
     let result = [...fetchAllAds];
-    console.log(result)
+    console.log(result);
     if (searchText !== "") {
       result = result.filter((ad) =>
-        ad.title.toLowerCase().includes(searchText.toLowerCase()));
+        ad.title.toLowerCase().includes(searchText.toLowerCase())
+      );
     }
     return result;
   }, [fetchAllAds, searchText]);
@@ -104,6 +105,9 @@ const Main = () => {
                 />
               ))}
               {/* <S.CardsItem /> */}
+              {searchText !== "" && filteredAds?.length === 0
+                ? "Ничего не найдено"
+                : null}
             </ContentCards>
           </MainContent>
         </MainContainer>

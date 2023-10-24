@@ -9,7 +9,10 @@ export const adsApi = createApi({
     getAllAds: builder.query({
       query: () => "ads",
     }),
+    getCurrentUser: builder.mutation({
+      query: () => 'user'
+    })
   }),
 });
 
-export const { useGetAllAdsQuery } = adsApi;
+export const { useGetAllAdsQuery, useGetCurrentUserMutation } = adsApi;

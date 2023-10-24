@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../store/actions/creators/ads";
-import { fetchLogin } from "../../api";
+import { fetchLogin, fetchUser } from "../../api";
 
 export const AuthContext = createContext({});
 
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginUserFn = async ({ email, password }) => {
     try {
-      const userData = await fetchLogin({ email, password });
+      const userData = await fetchLogin({ email, password }); 
       localStorage.setItem("userData", JSON.stringify(userData));
       setUser(userData);
       setError(null);

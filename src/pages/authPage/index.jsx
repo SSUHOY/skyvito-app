@@ -10,8 +10,8 @@ import { useAuthContext } from "../../components/context/AuthContext";
 export const AuthPage = () => {
   const dispatch = useDispatch();
 
-  const { setUser, user, loginUserFn } = useAuthContext()
-  console.log(user)
+  const { setUser, user, loginUserFn } = useAuthContext();
+  console.log(user);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ export const AuthPage = () => {
   }, [location.pathname, isLoginMode]);
 
   const handleLogin = async () => {
-    dispatch(loginUser())
+    dispatch(loginUser());
     if (!email || !password) {
       setError("Пожалуйста, введите пароль и/или логин");
       return;
@@ -60,7 +60,17 @@ export const AuthPage = () => {
     }
     try {
       setIsAuthLoading(true);
-      await fetchRegister({ email, password, userName, city, surname });
+      const userData = await fetchRegister({
+        email,
+        password,
+        userName,
+        city,
+        surname,
+      });
+      console.log(userData);
+      localStorage.setItem("userData", JSON.stringify(userData))
+      console.log(localStorage)
+      setUser(userData)
       setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {
@@ -69,11 +79,10 @@ export const AuthPage = () => {
       setIsAuthLoading(false);
     }
   };
-// Отлавливаем ошибку
+  // Отлавливаем ошибку
   useEffect(() => {
     setError(null);
   }, [isLoginMode, email, password, repeatPassword]);
-
 
   return (
     <S.PageContainer>

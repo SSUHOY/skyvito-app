@@ -5,8 +5,14 @@ import { Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { Container, Header, Nav, PageContainer } from "./ProfilePage.styles";
 import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
+import { useGetCurrentUserMutation, useGetCurrentUserQuery } from "../../components/services/adsApi";
+import { fetchUser } from "../../api";
+import { useAuthContext } from "../../components/context/AuthContext";
 
 const Profile = () => {
+  const { user } = useAuthContext()
+  console.log(user)
+
   return (
     <>
       <PageContainer>

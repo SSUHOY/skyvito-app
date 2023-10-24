@@ -4,6 +4,7 @@ import * as S from "./ProfilePage.styles";
 import { Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { Container, Header, Nav, PageContainer } from "./ProfilePage.styles";
 import { CardsItem } from "../../components/cardsItem/cardsItem";
+import { FooterAll } from "../../components/footer/footer";
 
 const Profile = () => {
   return (
@@ -12,7 +13,7 @@ const Profile = () => {
         <Container>
           <Header>
             <Nav>
-              <Link>
+              <Link to='/'>
                 <SearchLogoMob />
               </Link>
               <S.Button>Разместить объявление</S.Button>
@@ -32,7 +33,10 @@ const Profile = () => {
                     </Link>
                   </S.MenuForm>
                 </S.MainMenu>
-                <S.TitleGreetings>Здравствуйте, Семён!</S.TitleGreetings>
+                <S.TitleGreetings>
+                  Здравствуйте, <br />
+                  Семён!
+                </S.TitleGreetings>
                 <S.MainProfile>
                   <S.ProfileContent>
                     <S.ProfileTitleSettings>
@@ -125,6 +129,7 @@ const Profile = () => {
           </S.Main>
         </Container>
       </PageContainer>
+      <FooterAll />
     </>
   );
 };

@@ -117,10 +117,24 @@ export const MainContainer = styled.div`
   max-width: 1178px;
   margin: 0 auto;
   padding: 0px 10px 79px;
+  @media screen and (max-width: 620px) {
+    padding: 30px 0px 45px;
+  }
+  @media screen and (max-width: 890px) {
+    padding: 30px 0px 30px;
+  }
 `;
 
 export const MainCenterBox = styled.div`
   box-sizing: border-box;
+  @media screen and (max-width: 620px) {
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  @media screen and (max-width: 890px) {
+    margin: 0 auto;
+    padding: 0 20px;
+  }
 `;
 
 export const MainMenu = styled.div`
@@ -135,6 +149,9 @@ export const MainMenu = styled.div`
   justify-content: start;
   width: 100%;
   padding: 31px 10px 64px;
+  @media screen and (max-width: 620px) {
+    display: none;
+  }
 `;
 
 export const MenuForm = styled.form`
@@ -175,7 +192,7 @@ export const ProfileContent = styled.div`
 `;
 
 export const ProfileTitleSettings = styled.h3`
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   font-size: 32px;
   line-height: 70px;
   font-weight: 500;
@@ -423,11 +440,14 @@ export const MainContentTitle = styled.h3`
   font-weight: 500;
   color: #000000;
   margin-bottom: 20px;
+  @media screen and (max-width: 620px) {
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 30px;
+  }
 `;
 
 export const MainContent = styled.div`
-  width: 100%;
-  margin: 0 auto;
   @media screen and (max-width: 620px) {
     width: 100%;
     margin: 0 auto;
@@ -435,44 +455,13 @@ export const MainContent = styled.div`
 `;
 
 export const ContentCards = styled.div`
-  max-width: 1158px;
+@media screen and (max-width: 590px) {
   width: 100%;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (270px) [4];
-  grid-template-columns: repeat(4, 270px);
-  grid-auto-rows: 441px;
-  grid-gap: 40px 26px;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  overflow-y: auto;
-  scrollbar-color: #ffffff #2e2e2e;
-  scrollbar-width: thin;
-  scrollbar-width: 0px;
-  height: 441px;
-  @media screen and (max-width: 620px) {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: (137px) [2];
-    grid-template-columns: repeat(2, 137px);
-    grid-auto-rows: 293px;
-    grid-gap: 10px 10px;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    height: 596px;
-  }
-  @media screen and (max-width: 890px) {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: (270px) [2];
-    grid-template-columns: repeat(2, 270px);
-  }
-  @media screen and (max-width: 1158px) {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-columns: (270px) [3];
-    grid-template-columns: repeat(3, 270px);
-  }
+  margin: 0 auto;
+  overflow: hidden;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 84px;
+}
 `;

@@ -17,7 +17,7 @@ export const FooterAll = () => {
       <Footer>
         <FooterContainer>
           <FooterImg>
-            <Link to="#">
+            <Link to="/">
               <HomeLinkImg src={HomeLinkImgUrl} />
             </Link>
           </FooterImg>
@@ -27,7 +27,7 @@ export const FooterAll = () => {
             </Link>
           </FooterImg>
           <FooterImg>
-            <Link to="#">
+            <Link to="/account">
               <UserProfileImg src={UserProfileImgUrl} />
             </Link>
           </FooterImg>

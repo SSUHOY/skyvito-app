@@ -455,13 +455,15 @@ export const MainContent = styled.div`
 `;
 
 export const ContentCards = styled.div`
-@media screen and (max-width: 590px) {
-  width: 100%;
-  margin: 0 auto;
-  overflow: hidden;
-  position: fixed;
-  right: 0;
-  left: 0;
-  bottom: 84px;
-}
+  @media screen and (max-width: 590px) {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (137px) [2];
+    grid-template-columns: repeat(2, 137px);
+    grid-auto-rows: 293px;
+    grid-gap: 10px 10px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
 `;

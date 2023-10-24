@@ -56,7 +56,7 @@ const Profile = () => {
                       <S.SettingsRightBox>
                         <S.SettingsForm>
                           <S.SettingsDiv>
-                            <S.SettingsFormLabel for="settings-name">
+                            <S.SettingsFormLabel htmlFor="settings-name">
                               Имя
                             </S.SettingsFormLabel>
                             <S.SettingsFormInput
@@ -68,7 +68,7 @@ const Profile = () => {
                             />
                           </S.SettingsDiv>
                           <S.SettingsDiv>
-                            <S.SettingsFormLabel for="lname">
+                            <S.SettingsFormLabel htmlFor="lname">
                               Фамилия
                             </S.SettingsFormLabel>
                             <S.SettingsFormInput
@@ -80,7 +80,7 @@ const Profile = () => {
                             />
                           </S.SettingsDiv>
                           <S.SettingsDiv>
-                            <S.SettingsFormLabel for="city">
+                            <S.SettingsFormLabel htmlFor="city">
                               Город
                             </S.SettingsFormLabel>
                             <S.SettingsFormInput
@@ -92,7 +92,7 @@ const Profile = () => {
                             />
                           </S.SettingsDiv>
                           <S.SettingsDiv>
-                            <S.SettingsFormLabel for="phone">
+                            <S.SettingsFormLabel htmlFor="phone">
                               Телефон
                             </S.SettingsFormLabel>
                             <S.SettingsPhoneInput

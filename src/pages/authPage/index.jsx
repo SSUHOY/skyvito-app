@@ -5,9 +5,13 @@ import { useDispatch } from "react-redux";
 import LogoSkyUrl from "../../assets/images/logo-skypro.png";
 import { fetchLogin, fetchRegister } from "../../api";
 import { loginUser } from "../../store/actions/creators/ads";
+import { useAuthContext } from "../../components/context/AuthContext";
 
 export const AuthPage = () => {
   const dispatch = useDispatch();
+
+  const { setUser, user, loginUserFn } = useAuthContext()
+  console.log(user)
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
@@ -35,7 +39,7 @@ export const AuthPage = () => {
     }
     try {
       setIsAuthLoading(true);
-      await fetchLogin({ email, password });
+      await loginUserFn({ email, password });
       setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {

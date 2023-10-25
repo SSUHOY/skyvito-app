@@ -37,14 +37,12 @@ const Main = () => {
 
   // Получение состояния залогининного пользователя из стора - пока не используется
   const isLoginFromStore = useSelector(selectIsLogin);
-  console.log(isLoginFromStore);
 
   // Фильтр по вводу в строку поиска
   const [searchText, setSearchText] = useState("");
 
   const filteredAds = useMemo(() => {
     let result = [...fetchAllAds];
-    console.log(result);
     if (searchText !== "") {
       result = result.filter((ad) =>
         ad.title.toLowerCase().includes(searchText.toLowerCase())

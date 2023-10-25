@@ -1,7 +1,8 @@
-import { LOG_IN_USER, LOG_OUT_USER, SET_ADS, SET_ADS_FAILURE } from "../actions/types/ads";
+import { LOG_IN_USER, LOG_OUT_USER, SET_ADS, SET_ADS_FAILURE, SET_USERS_ADS } from "../actions/types/ads";
 
 const initialState = {
   // Получение постов в массив
+  setUserAds: [],
   setAds: [],
   error: null,
   isLogin: false,
@@ -10,6 +11,12 @@ const initialState = {
 export default function adsReducer(state = initialState, action) {
   switch (action.type) {
     case SET_ADS: {
+      return {
+        ...state,
+        setAds: action.payload,
+      };
+    }
+    case SET_USERS_ADS: {
       return {
         ...state,
         setAds: action.payload,

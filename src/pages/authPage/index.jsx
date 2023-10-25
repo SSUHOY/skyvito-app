@@ -6,12 +6,11 @@ import LogoSkyUrl from "../../assets/images/logo-skypro.png";
 import { fetchLogin, fetchRegister } from "../../api";
 import { loginUser } from "../../store/actions/creators/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
+import { useGetCurrentUserMutation } from "../../components/services/adsApi";
 
 export const AuthPage = () => {
   const dispatch = useDispatch();
-
-  const { setUser, user, loginUserFn } = useAuthContext();
-  console.log(user);
+  const { setUser, loginUserFn } = useAuthContext();
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
@@ -22,7 +21,6 @@ export const AuthPage = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
-  console.log(error);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -68,9 +66,9 @@ export const AuthPage = () => {
         surname,
       });
       console.log(userData);
-      localStorage.setItem("userData", JSON.stringify(userData))
-      console.log(localStorage)
-      setUser(userData)
+      localStorage.setItem("userData", JSON.stringify(userData));
+      console.log(localStorage);
+      setUser(userData);
       setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export async function fetchRegister({
   email,
   password,
@@ -47,18 +49,15 @@ export async function fetchLogin({ email, password }) {
   return data;
 }
 
-export async function fetchUser({ email, password }) {
-  const response = await fetch("http://localhost:8090/user", {
-    method: "GET",
+export async function fetchUser({ tokenData }) {
+  const token = tokenData.access_token;
+  const response = await axios.get("http://localhost:8090/user", {
     headers: {
-      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
     },
   });
-  if (!response.ok) {
-    const errorData = await response.json();
-    const errorMessages = Object.values(errorData).flat();
-    throw new Error(errorMessages[0]);
+  if (response.status !== 200) {
+    throw new Error("Ошибка сервера");
   }
-  const data = await response.json();
-  return data;
+  return response.data;
 }

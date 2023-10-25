@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../store/actions/creators/ads";
+import { logoutUser, uploadTokens } from "../../store/actions/creators/ads";
 import { fetchLogin, fetchUser } from "../../api";
 
 export const AuthContext = createContext({});
@@ -24,7 +24,12 @@ export const AuthProvider = ({ children }) => {
 
   const loginUserFn = async ({ email, password }) => {
     try {
-      const userData = await fetchLogin({ email, password }); 
+      const tokenData = await fetchLogin({ email, password }); 
+      const {access: access_token, refresh: refresh_token} = tokenData
+      dispatch(uploadTokens(access_token, refresh_token))
+      localStorage.setItem("tokenData", JSON.stringify(tokenData));
+      const userData = await fetchUser({tokenData})
+      console.log(userData)
       localStorage.setItem("userData", JSON.stringify(userData));
       setUser(userData);
       setError(null);
@@ -36,6 +41,7 @@ export const AuthProvider = ({ children }) => {
   const logoutUserFn = () => {
     setUser(null);
     localStorage.removeItem("userData");
+    localStorage.removeItem("tokenData");
     logoutUser();
   };
 

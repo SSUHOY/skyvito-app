@@ -1,4 +1,4 @@
-import { LOG_IN_USER, LOG_OUT_USER, SET_ADS, SET_ADS_FAILURE } from "../types/ads";
+import { LOG_IN_USER, LOG_OUT_USER, SET_ADS, SET_ADS_FAILURE, UPLOAD_TOKENS } from "../types/ads";
 
 export const fetchSetAdsRequest = (adsList) => ({
   type: SET_ADS,
@@ -18,4 +18,9 @@ export const loginUser = () => ({
 
 export const logoutUser = () => ({
   type: LOG_OUT_USER,
+})
+
+export const uploadTokens = (accessToken, refreshToken) => ({
+  type: UPLOAD_TOKENS,
+  payload: {accessToken, refreshToken}
 })

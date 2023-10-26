@@ -1,5 +1,19 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+`;
+
+
 export const PageContainer = styled.div`
   max-width: 1440px;
   width: 100%;

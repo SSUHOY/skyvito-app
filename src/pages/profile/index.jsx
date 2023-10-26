@@ -23,8 +23,7 @@ const Profile = () => {
 
   const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
 
-// -----------Доработать функионал получения currentUser из RTK через Mutation----//
-
+  // -----------Доработать функионал получения currentUser из RTK через Mutation----//
 
   // const [userData, setUserData] = useState('')
   // console.log(userData)
@@ -43,141 +42,146 @@ const Profile = () => {
 
   return (
     <>
-      <PageContainer>
-        <Container>
-          <Header>
-            <Nav>
-              <Link to="/">
-                <SearchLogoMob />
-              </Link>
-              <S.Button>Разместить объявление</S.Button>
-              <Link to="/">
-                <S.SellerButton onClick={() => logoutUserFn()}>
-                  Выйти
-                </S.SellerButton>
-              </Link>
-            </Nav>
-          </Header>
-          <S.Main>
-            <S.MainContainer>
-              <S.MainCenterBox>
-                <S.MainMenu>
-                  <Link to="/">
-                    <Logo />
-                  </Link>
-                  <S.MenuForm>
+      <S.Wrapper>
+        <PageContainer>
+          <Container>
+            <Header>
+              <Nav>
+                <Link to="/">
+                  <SearchLogoMob />
+                </Link>
+                <S.Button>Разместить объявление</S.Button>
+                <Link to="/">
+                  <S.SellerButton onClick={() => logoutUserFn()}>
+                    Выйти
+                  </S.SellerButton>
+                </Link>
+              </Nav>
+            </Header>
+            <S.Main>
+              <S.MainContainer>
+                <S.MainCenterBox>
+                  <S.MainMenu>
                     <Link to="/">
-                      <S.ToMainButton>Вернуться на главную</S.ToMainButton>
+                      <Logo />
                     </Link>
-                  </S.MenuForm>
-                </S.MainMenu>
-                <S.TitleGreetings>
-                  Здравствуйте,&nbsp;
-                  {user.name}!
-                </S.TitleGreetings>
-                <S.MainProfile>
-                  <S.ProfileContent>
-                    <S.ProfileTitleSettings>
-                      Настройки профиля
-                    </S.ProfileTitleSettings>
-                    <S.ProfileSettingsContainer>
-                      <S.SettingsLeftBox>
-                        <S.SettingsImg>
+                    <S.MenuForm>
+                      <Link to="/">
+                        <S.ToMainButton>Вернуться на главную</S.ToMainButton>
+                      </Link>
+                    </S.MenuForm>
+                  </S.MainMenu>
+                  <S.TitleGreetings>
+                    Здравствуйте,&nbsp;
+                    {user.name}!
+                  </S.TitleGreetings>
+                  <S.MainProfile>
+                    <S.ProfileContent>
+                      <S.ProfileTitleSettings>
+                        Настройки профиля
+                      </S.ProfileTitleSettings>
+                      <S.ProfileSettingsContainer>
+                        <S.SettingsLeftBox>
+                          <S.SettingsImg>
+                            <Link to="#">
+                              <S.ProfileImg src="#" />
+                            </Link>
+                          </S.SettingsImg>
                           <Link to="#">
-                            <S.ProfileImg src="#" />
+                            <S.SettingChangePhoto>
+                              Заменить
+                            </S.SettingChangePhoto>
                           </Link>
-                        </S.SettingsImg>
-                        <Link to="#">
-                          <S.SettingChangePhoto>Заменить</S.SettingChangePhoto>
-                        </Link>
-                      </S.SettingsLeftBox>
-                      <S.SettingsRightBox>
-                        <S.SettingsForm>
-                          <S.SettingsDiv>
-                            <S.SettingsFormLabel htmlFor="settings-name">
-                              Имя
-                            </S.SettingsFormLabel>
-                            <S.SettingsFormInput
-                            // onChange={handleNameChange}
-                            // id="settings-name"
-                            // name="name"
-                            // type="text"
-                            // defaultValue={name}
-                            />
-                          </S.SettingsDiv>
-                          <S.SettingsDiv>
-                            <S.SettingsFormLabel htmlFor="lname">
-                              Фамилия
-                            </S.SettingsFormLabel>
-                            <S.SettingsFormInput
-                            // onChange={handleSurnameChange}
-                            // id="settings-name"
-                            // name="name"
-                            // type="text"
-                            // defaultValue={surname}
-                            />
-                          </S.SettingsDiv>
-                          <S.SettingsDiv>
-                            <S.SettingsFormLabel htmlFor="city">
-                              Город
-                            </S.SettingsFormLabel>
-                            <S.SettingsFormInput
-                            // onChange={handleCityChange}
-                            // id="settings-name"
-                            // name="name"
-                            // type="text"
-                            // defaultValue={city}
-                            />
-                          </S.SettingsDiv>
-                          <S.SettingsDiv>
-                            <S.SettingsFormLabel htmlFor="phone">
-                              Телефон
-                            </S.SettingsFormLabel>
-                            <S.SettingsPhoneInput
-                            // onChange={handlePhoneChange}
-                            // id="settings-fname"
-                            // name="name"
-                            // type="text"
-                            // defaultValue={phone}
-                            />
-                          </S.SettingsDiv>
-                          <S.SettingsBtn
-                          // active={!saveButtonActive ? "#D9D9D9" : "#009EE4"}
-                          // activeHover={
-                          //   !saveButtonActive ? "#D9D9D9" : "#0080C1"
-                          // }
-                          // onClick={handleSaveChanges}
-                          // id="settings-btn"
-                          >
-                            Сохранить
-                          </S.SettingsBtn>
-                        </S.SettingsForm>
-                      </S.SettingsRightBox>
-                    </S.ProfileSettingsContainer>
-                  </S.ProfileContent>
-                </S.MainProfile>
-                <S.MainContentTitle>Мои товары</S.MainContentTitle>
-                <S.MainContent>
-                  <S.ContentCards>
-                    {fetchAllCurrentUserAds.map((ad, index) => {
-                      <CardsItem 
-                      key={index}
-                      title={ad.title}
-                      picture={`http://localhost:8090/${ad.images[0]?.url}`}
-                      price={ad.price}
-                      date={ad.created_on.split("T")[0]}
-                      place={ad.user.city}
-                      />;
-                    })}
-                    {fetchAllCurrentUserAds.length === 0 && 'Вы пока не разместили ни одного объявления'}
-                  </S.ContentCards>
-                </S.MainContent>
-              </S.MainCenterBox>
-            </S.MainContainer>
-          </S.Main>
-        </Container>
-      </PageContainer>
-      <FooterAll />
+                        </S.SettingsLeftBox>
+                        <S.SettingsRightBox>
+                          <S.SettingsForm>
+                            <S.SettingsDiv>
+                              <S.SettingsFormLabel htmlFor="settings-name">
+                                Имя
+                              </S.SettingsFormLabel>
+                              <S.SettingsFormInput
+                              // onChange={handleNameChange}
+                              // id="settings-name"
+                              // name="name"
+                              // type="text"
+                              // defaultValue={name}
+                              />
+                            </S.SettingsDiv>
+                            <S.SettingsDiv>
+                              <S.SettingsFormLabel htmlFor="lname">
+                                Фамилия
+                              </S.SettingsFormLabel>
+                              <S.SettingsFormInput
+                              // onChange={handleSurnameChange}
+                              // id="settings-name"
+                              // name="name"
+                              // type="text"
+                              // defaultValue={surname}
+                              />
+                            </S.SettingsDiv>
+                            <S.SettingsDiv>
+                              <S.SettingsFormLabel htmlFor="city">
+                                Город
+                              </S.SettingsFormLabel>
+                              <S.SettingsFormInput
+                              // onChange={handleCityChange}
+                              // id="settings-name"
+                              // name="name"
+                              // type="text"
+                              // defaultValue={city}
+                              />
+                            </S.SettingsDiv>
+                            <S.SettingsDiv>
+                              <S.SettingsFormLabel htmlFor="phone">
+                                Телефон
+                              </S.SettingsFormLabel>
+                              <S.SettingsPhoneInput
+                              // onChange={handlePhoneChange}
+                              // id="settings-fname"
+                              // name="name"
+                              // type="text"
+                              // defaultValue={phone}
+                              />
+                            </S.SettingsDiv>
+                            <S.SettingsBtn
+                            // active={!saveButtonActive ? "#D9D9D9" : "#009EE4"}
+                            // activeHover={
+                            //   !saveButtonActive ? "#D9D9D9" : "#0080C1"
+                            // }
+                            // onClick={handleSaveChanges}
+                            // id="settings-btn"
+                            >
+                              Сохранить
+                            </S.SettingsBtn>
+                          </S.SettingsForm>
+                        </S.SettingsRightBox>
+                      </S.ProfileSettingsContainer>
+                    </S.ProfileContent>
+                  </S.MainProfile>
+                  <S.MainContentTitle>Мои товары</S.MainContentTitle>
+                  <S.MainContent>
+                    <S.ContentCards>
+                      {fetchAllCurrentUserAds.map((ad, index) => {
+                        <CardsItem
+                          key={index}
+                          title={ad.title}
+                          picture={`http://localhost:8090/${ad.images[0]?.url}`}
+                          price={ad.price}
+                          date={ad.created_on.split("T")[0]}
+                          place={ad.user.city}
+                        />;
+                      })}
+                    </S.ContentCards>
+                    {fetchAllCurrentUserAds.length === 0 &&
+                      "Вы пока не разместили ни одного объявления"}
+                  </S.MainContent>
+                </S.MainCenterBox>
+              </S.MainContainer>
+            </S.Main>
+          </Container>
+        </PageContainer>
+        <FooterAll />
+      </S.Wrapper>
     </>
   );
 };

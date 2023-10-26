@@ -60,6 +60,7 @@ const Main = () => {
   }, [data, dispatch]);
 
   return (
+    <S.Wrapper>
     <Container>
       <Header>
         <HeaderNav>
@@ -126,6 +127,7 @@ const Main = () => {
       </main>
       <FooterAll />
     </Container>
+    </S.Wrapper>
   );
 };
 

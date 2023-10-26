@@ -81,7 +81,7 @@ const SellerProfile = () => {
                             {user.city}
                           </S.SellerCity>
                           <S.SellerRegistrationDate>
-                            Продает товары с августа 2020
+                            Продает товары с {user.sells_from}
                           </S.SellerRegistrationDate>
                           <S.ButtonBox>
                             <S.SellerimgBox>

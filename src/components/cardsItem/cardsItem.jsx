@@ -13,18 +13,15 @@ import {
   CardsCard,
 } from "../styles/main/CardsItems.styles";
 
-export const CardsItem = ({title, picture, price, date, place}) => {
-
+export const CardsItem = ({ title, picture, price, date, place }) => {
   return (
     <CardsContentBox>
       <CardsCard>
         <CardImgBox>
-          <Link to="#">
             <CardImage src={picture} />
-          </Link>
         </CardImgBox>
         <CardContentBox>
-          <Link to="#">
+          <Link to="/adv-page">
             <CardTitle>{title}</CardTitle>
           </Link>
           <CardPrice>{price} ₽</CardPrice>

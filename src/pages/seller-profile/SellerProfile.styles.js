@@ -84,8 +84,7 @@ export const PhoneShownBtn = styled.button`
   font-size: 16px;
   line-height: 1;
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background: #0080c1;
   }
   @media screen and (max-width: 620px) {
     width: 100%;
@@ -218,13 +217,13 @@ export const Title = styled.h2`
   line-height: 42px;
   color: #000000;
   margin-bottom: 30px;
-  padding-left: 25px;
   @media screen and (max-width: 620px) {
     font-size: 24px;
     line-height: 29px;
     color: #000000;
     margin-bottom: 20px;
     position: relative;
+    padding-left: 25px;
   }
 `;
 
@@ -438,9 +437,8 @@ export const SellerRegistrationDate = styled.p`
 `;
 
 export const ButtonBox = styled.div`
-@media screen and (max-width: 620px) {
-  display: flex;
-  flex-direction: column;
-}
-
+  @media screen and (max-width: 620px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;

@@ -6,10 +6,10 @@ export const adsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8090/",
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem("accessToken");
-      const formatTokenStr = token.replace(/"/g, "");
-      if (formatTokenStr) {
-        headers.set("Authorization", `Bearer ${formatTokenStr}`);
+      const { access_token } = JSON.parse(localStorage.getItem("tokenData"));
+      console.log(access_token)
+      if (access_token) {
+        headers.set("Authorization", `Bearer ${access_token}`);
       }
       return headers;
     },
@@ -40,7 +40,7 @@ export const adsApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{type: 'Ads', id: 'LIST'}]
+      invalidatesTags: [{ type: "Ads", id: "LIST" }],
     }),
   }),
 });

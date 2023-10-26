@@ -1,6 +1,7 @@
 import { LOG_IN_USER, LOG_OUT_USER, SET_ADS, SET_ADS_FAILURE, SET_USERS_ADS } from "../actions/types/ads";
 
 const initialState = {
+  searchedAds: [],
   setUserAds: [],
   setAds: [],
   error: null,

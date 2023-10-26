@@ -2,6 +2,7 @@ import {
   LOG_IN_USER,
   LOG_OUT_USER,
   SEARCH_TEXT,
+  SEARCH_VALUE,
   SET_ADS,
   SET_ADS_FAILURE,
   UPLOAD_TOKENS,
@@ -34,3 +35,8 @@ export const uploadTokens = (accessToken, refreshToken) => ({
   type: UPLOAD_TOKENS,
   payload: { accessToken, refreshToken },
 });
+
+export const setSearchParameters = (searchedAds) => ({
+type: SEARCH_VALUE,
+payload: searchedAds,
+})

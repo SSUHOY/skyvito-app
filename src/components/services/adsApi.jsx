@@ -7,7 +7,7 @@ export const adsApi = createApi({
     baseUrl: "http://localhost:8090/",
     prepareHeaders: (headers) => {
       const { access_token } = JSON.parse(localStorage.getItem("tokenData"));
-      console.log(access_token)
+      console.log(access_token);
       if (access_token) {
         headers.set("Authorization", `Bearer ${access_token}`);
       }
@@ -26,6 +26,10 @@ export const adsApi = createApi({
             ]
           : [{ type: "Ads", id: "LIST" }],
     }),
+    getCurrentAdv: builder.query({
+      query: (id) => `ads/${id}`,
+      providesTags: ["ads"],
+    }),
     getCurrentUser: builder.mutation({
       query: () => "user",
       providesTags: ["ads"],
@@ -33,6 +37,16 @@ export const adsApi = createApi({
     getCurrentUserAdvt: builder.query({
       query: () => "ads/me",
       providesTags: ["ads"],
+    }),
+    getComments: builder.query({
+      query: () => "comments",
+      providesTags: (result) =>
+      result
+        ? [
+            ...result.map(({ id }) => ({ type: "comments", id })),
+            { type: "comments", id: "LIST" },
+          ]
+        : [{ type: "comments", id: "LIST" }],
     }),
     addNewAd: builder.mutation({
       query: (body) => ({
@@ -49,4 +63,6 @@ export const {
   useGetAllAdsQuery,
   useGetCurrentUserMutation,
   useGetCurrentUserAdvtQuery,
+  useGetCurrentAdvQuery,
+  useGetCommentsQuery,
 } = adsApi;

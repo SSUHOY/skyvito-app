@@ -25,7 +25,10 @@ import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
 import { useGetAllAdsQuery } from "../../components/services/adsApi";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSetAdsRequest, setSearchParameters } from "../../store/actions/creators/ads";
+import {
+  fetchSetAdsRequest,
+  setSearchParameters,
+} from "../../store/actions/creators/ads";
 import { selectAllAdsList, selectIsLogin } from "../../store/selectors/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { MainContainer } from "../../components/styles/reusable/Usable.styles";
@@ -39,23 +42,26 @@ const Main = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   const SearchProducts = async (data, keyword) => {
-    const regex = new RegExp(keyword, 'i');
-    const results = data.filter(product => regex.test(product?.title) || regex.test(product?.description));
+    const regex = new RegExp(keyword, "i");
+    const results = data.filter(
+      (product) =>
+        regex.test(product?.title) || regex.test(product?.description)
+    );
     setSearchResults(results);
-    dispatch(setSearchParameters(results))
-}
+    dispatch(setSearchParameters(results));
+  };
 
-const HandleSearchClick = async (event) => {
-  event.preventDefault();
-  SearchProducts(data, searchText)
-}
+  const HandleSearchClick = async (event) => {
+    event.preventDefault();
+    SearchProducts(data, searchText);
+  };
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (data) {
-     setSearchResults(data);
-     dispatch(fetchSetAdsRequest(data))
+      setSearchResults(data);
+      dispatch(fetchSetAdsRequest(data));
     }
   }, [data]);
 
@@ -98,33 +104,36 @@ const HandleSearchClick = async (event) => {
                 placeholder="Поиск"
                 name="search-mob"
               />
-                <SearchBtn onClick={HandleSearchClick}>Найти</SearchBtn>
+              <SearchBtn onClick={HandleSearchClick}>Найти</SearchBtn>
             </SearchForm>
           </MainSearch>
           <MainContainer>
             <MainH2>Объявления</MainH2>
             <MainContent>
               <ContentCards>
-                {searchResults === "" ? data.map((ad, index) => (
-                  <CardsItem
-                    key={index}
-                    title={ad.title}
-                    picture={`http://localhost:8090/${ad.images[0]?.url}`}
-                    price={ad.price}
-                    date={ad.created_on.split("T")[0]}
-                    place={ad.user.city}
-                  />
-                )) :
-                searchResults.map((ad, index) => (
-                  <CardsItem
-                  key={index}
-                  title={ad.title}
-                  picture={`http://localhost:8090/${ad.images[0]?.url}`}
-                  price={ad.price}
-                  date={ad.created_on.split("T")[0]}
-                  place={ad.user.city}
-                  />
-              ))}
+                {searchResults === ""
+                  ? data.map((ad, index) => (
+                      <CardsItem
+                        advId={ad.id}
+                        key={index}
+                        title={ad.title}
+                        picture={`http://localhost:8090/${ad.images[0]?.url}`}
+                        price={ad.price}
+                        date={ad.created_on.split("T")[0]}
+                        place={ad.user.city}
+                      />
+                    ))
+                  : searchResults.map((ad, index) => (
+                      <CardsItem
+                        advId={ad.id}
+                        key={index}
+                        title={ad.title}
+                        picture={`http://localhost:8090/${ad.images[0]?.url}`}
+                        price={ad.price}
+                        date={ad.created_on.split("T")[0]}
+                        place={ad.user.city}
+                      />
+                    ))}
                 {searchText !== "" && searchResults?.length === 0
                   ? "Ничего не найдено"
                   : null}

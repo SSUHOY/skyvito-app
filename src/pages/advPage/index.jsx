@@ -6,7 +6,7 @@ import {
   HeaderBtnMainEnter,
   HeaderNav,
 } from "../../components/styles/main/MainPage.styles";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { useAuthContext } from "../../components/context/AuthContext";
 import {
@@ -14,9 +14,14 @@ import {
   MenuForm,
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
+import {
+  useGetCurrentAdvQuery,
+} from "../../components/services/adsApi";
 
 export const AdvPage = () => {
   const { user } = useAuthContext();
+  const { id } = useParams();
+  const { data } = useGetCurrentAdvQuery(id);
 
   return (
     <S.Wrapper>
@@ -92,16 +97,21 @@ export const AdvPage = () => {
               <S.ArticleRight>
                 <S.ArticleBlock>
                   <S.ArticleTitle>
-                    Ракетка для большого тенниса Triumph Pro STС Б/У
+                    {data ? data.title : "Загрузка..."}
                   </S.ArticleTitle>
                   <S.ArticleInfo>
-                    <S.ArticleDate>Сегодня в 10:45</S.ArticleDate>
-                    <S.ArticleCity>Санкт-Петербург</S.ArticleCity>
-                    <NavLink>
-                      23 отзыва
-                    </NavLink>
+                    <S.ArticleDate>
+                      {" "}
+                      {data ? data.created_on.split("T")[0] : "Загрузка"}
+                    </S.ArticleDate>
+                    <S.ArticleCity>
+                      {data ? data.user.city : "Загрузка"}
+                    </S.ArticleCity>
+                    <NavLink style={{ color: "blue" }}> ... отзыва</NavLink>
                   </S.ArticleInfo>
-                  <S.ArticlePrice>2 200 ₽</S.ArticlePrice>
+                  <S.ArticlePrice>
+                    {data ? data.price : "Загрузка.."} {data ? "₽" : ""}
+                  </S.ArticlePrice>
                   <S.ArticleBtn>
                     Показать&nbsp;телефон <br />
                     <span>8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ</span>
@@ -111,9 +121,12 @@ export const AdvPage = () => {
                       <S.AuthorImg src="" alt="" />
                     </S.AuthorImgDiv>
                     <S.AuthorContent>
-                      <S.AuthorName>Кирилл</S.AuthorName>
+                      <S.AuthorName>
+                        {data ? data.user.name : "Загрузка"}
+                      </S.AuthorName>
                       <S.AuthorAbout>
-                        Продает товары с августа 2021
+                        {data ? "Продает товары с " : ""}{" "}
+                        {data ? data.user.sells_from : "Загрузка..."}
                       </S.AuthorAbout>
                     </S.AuthorContent>
                   </S.ArticleAuthor>
@@ -125,13 +138,7 @@ export const AdvPage = () => {
             <S.ArticleTitle>Описание товара</S.ArticleTitle>
             <S.MainContentDescription>
               <S.MainContentText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {data ? data?.description : "Загрузка..."}
               </S.MainContentText>
             </S.MainContentDescription>
           </S.MainContainerDesc>

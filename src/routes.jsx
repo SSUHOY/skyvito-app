@@ -14,7 +14,7 @@ const AppRoutes = ({ user }) => {
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="/register" element={<AuthPage />} />
-      <Route path="/adv-page" element={<AdvPage />} />
+      <Route path="/adv-page/:id" element={<AdvPage />} />
       <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
         <Route path="/account" element={<Profile />} />
         <Route path="/seller-account" element={<SellerProfile />} />

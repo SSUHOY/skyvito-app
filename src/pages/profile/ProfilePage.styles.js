@@ -105,23 +105,6 @@ export const SellerButton = styled.button`
   }
 `;
 
-export const ToMainButton = styled.button`
-  width: 241px;
-  height: 50px;
-  background-color: #009ee4;
-  border: 1px solid #009ee4;
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  &:hover {
-    background: #0080c1;
-  }
-  @media screen and (max-width: 620px) {
-    display: none;
-  }
-`;
-
 export const Main = styled.main`
   box-sizing: border-box;
   background-color: white;
@@ -149,29 +132,6 @@ export const MainCenterBox = styled.div`
     margin: 0 auto;
     padding: 0 20px;
   }
-`;
-
-export const MainMenu = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: start;
-  width: 100%;
-  padding: 31px 10px 64px;
-  @media screen and (max-width: 620px) {
-    display: none;
-  }
-`;
-
-export const MenuForm = styled.form`
-  margin-left: 60px;
-  max-width: 1044px;
-  width: 100%;
 `;
 
 export const TitleGreetings = styled.h2`

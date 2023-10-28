@@ -13,7 +13,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-
 export const Container = styled.div`
   max-width: 1440px;
   width: 100%;
@@ -44,6 +43,13 @@ export const HeaderNav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: end;
+  @media screen and (max-width: 768px){
+    height: 55px;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: start;
+    padding: 0;
+  }
 `;
 
 export const HeaderBtnLk = styled.button`
@@ -62,7 +68,7 @@ export const HeaderBtnLk = styled.button`
     border: 1px solid #ffffff;
   }
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 768px) {
     display: none;
   }
 `;
@@ -133,7 +139,6 @@ export const LogoImg = styled.img`
   width: 55px;
   height: 50.06px;
 `;
-
 
 export const SearchLogoImg = styled.img`
   width: 54px;
@@ -239,7 +244,7 @@ export const SearchLogoMobLink = styled.div`
 
 export const SearchLogoMob = styled.img`
   display: none;
-  @media screen and (max-width: 590px) {
+  @media screen and (max-width: 768px) {
     width: 32px;
     height: auto;
     display: block;
@@ -249,14 +254,13 @@ export const SearchLogoMob = styled.img`
 `;
 
 export const BackToBtn = styled.img`
-display: none;
-@media screen and (max-width: 620px) {
-  display: block;
-  position: absolute;
-  top: 89px;
-}
-
-`
+  display: none;
+  @media screen and (max-width: 620px) {
+    display: block;
+    position: absolute;
+    top: 89px;
+  }
+`;
 
 export const SearchBtn = styled.button`
   margin-left: 10px;
@@ -275,15 +279,6 @@ export const SearchBtn = styled.button`
 
   @media screen and (max-width: 590px) {
     display: none;
-  }
-`;
-
-export const MainContainer = styled.div`
-  max-width: 1178px;
-  margin: 0 auto;
-  padding: 52px 10px 37px;
-  @media screen and (max-width: 590px) {
-    padding: 85px 10px 84px;
   }
 `;
 

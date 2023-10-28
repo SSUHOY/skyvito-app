@@ -9,6 +9,7 @@ import { useAuthContext } from "../../components/context/AuthContext";
 import { useGetCurrentUserAdvtQuery } from "../../components/services/adsApi";
 import { useEffect } from "react";
 import { fetchSetCurrentUserAdsRequest } from "../../store/actions/creators/ads";
+import { MainMenu, MenuForm, ToMainButton } from "../../components/styles/reusable/Usable.styles";
 
 const SellerProfile = () => {
   const dispatch = useDispatch();
@@ -45,16 +46,16 @@ const SellerProfile = () => {
             <S.Main>
               <S.MainContainer>
                 <S.MainCenterBox>
-                  <S.MainMenu>
+                  <MainMenu>
                     <Link to="/">
                       <Logo />
                     </Link>
-                    <S.MenuForm>
+                    <MenuForm>
                       <Link to="/">
-                        <S.ToMainButton>Вернуться на главную</S.ToMainButton>
+                        <ToMainButton>Вернуться на главную</ToMainButton>
                       </Link>
-                    </S.MenuForm>
-                  </S.MainMenu>
+                    </MenuForm>
+                  </MainMenu>
                   <BackToBtn />
                   <S.Title>Профиль продавца</S.Title>
                   <S.MainProfile>

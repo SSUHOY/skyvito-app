@@ -14,7 +14,6 @@ import {
   SearchText,
   SearchTextMob,
   SearchBtn,
-  MainContainer,
   MainH2,
   MainContent,
 } from "../../components/styles/main/MainPage.styles";
@@ -29,36 +28,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSetAdsRequest, setSearchParameters } from "../../store/actions/creators/ads";
 import { selectAllAdsList, selectIsLogin } from "../../store/selectors/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
+import { MainContainer } from "../../components/styles/reusable/Usable.styles";
 
 const Main = () => {
   const { data } = useGetAllAdsQuery({});
   const { user } = useAuthContext();
-  const fetchAllAds = useSelector(selectAllAdsList);
-
-  // Получение состояния залогининного пользователя из стора - пока не используется
-  const isLoginFromStore = useSelector(selectIsLogin);
 
   // Фильтр по вводу в строку поиска
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
-  // const filteredAds = useMemo(() => {
-  //   let result = [...fetchAllAds];
-  //   if (searchText !== "") {
-  //     result = result.filter((ad) =>
-  //       ad.title.toLowerCase().includes(searchText.toLowerCase())
-  //     );
-  //   }
-  //   return result;
-  // }, [fetchAllAds, searchText]);
-
 
   const SearchProducts = async (data, keyword) => {
     const regex = new RegExp(keyword, 'i');
     const results = data.filter(product => regex.test(product?.title) || regex.test(product?.description));
     setSearchResults(results);
     dispatch(setSearchParameters(results))
-
 }
 
 const HandleSearchClick = async (event) => {
@@ -74,8 +58,6 @@ const HandleSearchClick = async (event) => {
      dispatch(fetchSetAdsRequest(data))
     }
   }, [data]);
-
-
 
   return (
     <S.Wrapper>

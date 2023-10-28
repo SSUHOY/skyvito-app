@@ -14,6 +14,7 @@ import { useAuthContext } from "../../components/context/AuthContext";
 import { selectCurrentUserAdsList } from "../../store/selectors/ads";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSetCurrentUserAdsRequest } from "../../store/actions/creators/ads";
+import { MainMenu, MenuForm, ToMainButton } from "../../components/styles/reusable/Usable.styles";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -61,16 +62,16 @@ const Profile = () => {
             <S.Main>
               <S.MainContainer>
                 <S.MainCenterBox>
-                  <S.MainMenu>
+                  <MainMenu>
                     <Link to="/">
                       <Logo />
                     </Link>
-                    <S.MenuForm>
+                    <MenuForm>
                       <Link to="/">
-                        <S.ToMainButton>Вернуться на главную</S.ToMainButton>
+                        <ToMainButton>Вернуться на главную</ToMainButton>
                       </Link>
-                    </S.MenuForm>
-                  </S.MainMenu>
+                    </MenuForm>
+                  </MainMenu>
                   <S.TitleGreetings>
                     Здравствуйте,&nbsp;
                     {user.name}!

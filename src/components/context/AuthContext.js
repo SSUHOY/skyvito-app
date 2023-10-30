@@ -25,9 +25,11 @@ export const AuthProvider = ({ children }) => {
   const loginUserFn = async ({ email, password }) => {
     try {
       const tokenData = await fetchLogin({ email, password }); 
-      const {access: access_token, refresh: refresh_token} = tokenData
-      dispatch(uploadTokens(access_token, refresh_token))
+      // const {access: access_token, refresh: refresh_token} = tokenData
+      console.log(tokenData)
+      // dispatch(uploadTokens(access_token, refresh_token))
       localStorage.setItem("tokenData", JSON.stringify(tokenData));
+      localStorage.setItem("accessToken", JSON.stringify(tokenData.access_token));
       const userData = await fetchUser({tokenData})
       console.log(userData)
       localStorage.setItem("userData", JSON.stringify(userData));

@@ -13,7 +13,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-
 export const PageContainer = styled.div`
   max-width: 1440px;
   width: 100%;
@@ -26,6 +25,12 @@ export const PageContainer = styled.div`
     min-height: 100vh;
     background-color: #ffffff;
   }
+`;
+
+export const MenuForm = styled.form`
+  margin-left: 60px;
+  max-width: 1044px;
+  width: 100%;
 `;
 
 export const Container = styled.div`
@@ -68,24 +73,38 @@ export const HeaderLogo = styled.div`
   display: none;
 `;
 
-export const Button = styled.button`
-  width: 232px;
-  height: 40px;
-  border: 1px solid #ffffff;
+export const PhoneShownBtn = styled.button`
+  width: 214px;
+  height: 62px;
+  margin-top: 30px;
   border-radius: 6px;
-  background-color: transparent;
+  border: 1px solid #009ee4;
+  background-color: #009ee4;
   color: #ffffff;
   font-size: 16px;
   line-height: 1;
-
   &:hover {
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid #ffffff;
   }
   @media screen and (max-width: 620px) {
-    display: none;
+    width: 100%;
+    height: 57px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
   }
 `;
+
+export const PhoneNumber = styled.span`
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  @media screen and (max-width: 620px) {
+    font-size: 12px;
+  }
+`;
+
 export const SellerButton = styled.button`
   width: 173px;
   height: 40px;
@@ -96,6 +115,24 @@ export const SellerButton = styled.button`
   font-size: 16px;
   line-height: 1;
   margin-left: 10px;
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid #ffffff;
+  }
+  @media screen and (max-width: 620px) {
+    display: none;
+  }
+`;
+export const SellerPostButton = styled.button`
+  width: 232px;
+  height: 40px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1;
+
   &:hover {
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid #ffffff;
@@ -131,11 +168,11 @@ export const MainContainer = styled.div`
   max-width: 1178px;
   margin: 0 auto;
   padding: 0px 10px 79px;
+  @media screen and (max-width: 520px) {
+    padding: 85px 0px 84px;
+  }
   @media screen and (max-width: 620px) {
     padding: 30px 0px 45px;
-  }
-  @media screen and (max-width: 890px) {
-    padding: 30px 0px 30px;
   }
 `;
 
@@ -168,56 +205,59 @@ export const MainMenu = styled.div`
   }
 `;
 
-export const MenuForm = styled.form`
+export const UserInfForm = styled.form`
   margin-left: 60px;
   max-width: 1044px;
   width: 100%;
 `;
 
-export const TitleGreetings = styled.h2`
+export const Title = styled.h2`
   font-style: normal;
   font-weight: 500;
   font-size: 40px;
   line-height: 42px;
   color: #000000;
   margin-bottom: 30px;
+  padding-left: 25px;
   @media screen and (max-width: 620px) {
     font-size: 24px;
     line-height: 29px;
     color: #000000;
     margin-bottom: 20px;
+    position: relative;
   }
 `;
 
 export const MainProfile = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: flex-start;
   padding: 0 0 70px;
   @media screen and (max-width: 620px) {
     width: 100%;
     padding: 0 0 40px;
+  }
+  @media screen and (max-width: 890px) {
+    max-width: 834px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
 `;
 
 export const ProfileContent = styled.div`
-  max-width: 834px;
+  max-width: 100%;
+  @media screen and (max-width: 580px) {
+    max-width: 100%;
+    width: 100%;
+  }
   @media screen and (max-width: 890px) {
     max-width: 834px;
     width: 100%;
   }
 `;
 
-export const ProfileTitleSettings = styled.h3`
-  margin-bottom: 30px;
-  font-size: 32px;
-  line-height: 70px;
-  font-weight: 500;
-  color: #000000;
-  @media screen and (max-width: 620px) {
-    font-size: 18px;
-    line-height: 1;
-  }
-`;
-
-export const ProfileSettingsContainer = styled.div`
+export const ProfileSellerContainer = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -225,15 +265,17 @@ export const ProfileSettingsContainer = styled.div`
   -ms-flex-align: top;
   align-items: top;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  justify-content: start;
+  @media screen and (max-width: 580px) {
+    justify-content: center;
+  }
   @media screen and (max-width: 890px) {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
   }
 `;
 
-export const SettingsLeftBox = styled.div`
+export const UserContentLeftBox = styled.div`
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -241,7 +283,6 @@ export const SettingsLeftBox = styled.div`
   flex-direction: column;
   -webkit-box-align: center;
   align-items: center;
-  margin-right: 43px;
   @media screen and (max-width: 620px) {
     display: flex;
     -webkit-box-orient: vertical;
@@ -249,25 +290,52 @@ export const SettingsLeftBox = styled.div`
     flex-direction: column;
     -webkit-box-align: center;
     align-items: center;
-    margin-right: 0;
+    padding: 20px 0;
   }
 `;
 
-export const SettingsRightBox = styled.div`
-  width: 630px;
+export const UserContentRightBox = styled.div`
+  margin-left: 50px;
   @media screen and (max-width: 620px) {
     width: 100%;
+    margin-left: 0px;
   }
 `;
 
-export const SettingsImg = styled.div`
+export const SellerImg = styled.div`
   width: 170px;
   height: 170px;
   border-radius: 50%;
   background-color: #f0f0f0;
   @media screen and (max-width: 620px) {
+    display: none;
     width: 132px;
     height: 132px;
+  }
+`;
+export const SellerImgMob = styled.div`
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  display: none;
+  background-color: #f0f0f0;
+  @media screen and (max-width: 620px) {
+    width: 170px;
+    height: 170px;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: 20px 0;
+    display: block;
+  }
+`;
+
+export const SellerimgBox = styled.div`
+  @media screen and (max-width: 620px) {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
   }
 `;
 
@@ -278,17 +346,6 @@ export const ProfileImg = styled.img`
   object-fit: cover;
 `;
 
-export const SettingChangePhoto = styled.p`
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #009ee4;
-`;
-
 export const SettingsRight = styled.div`
   width: 630px;
 
@@ -297,19 +354,7 @@ export const SettingsRight = styled.div`
   }
 `;
 
-export const SettingsForm = styled.form`
-  width: 630px;
-  display: flex;
-  flex-wrap: wrap;
-
-  @media screen and (max-width: 620px) {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-export const SettingsDiv = styled.div`
+export const UserInfDiv = styled.div`
   display: inline-block;
   margin: 0 7px 20px;
 
@@ -317,135 +362,6 @@ export const SettingsDiv = styled.div`
     display: inline-block;
     margin: 0 0px 18px;
   }
-`;
-
-export const SettingsFormLabel = styled.label`
-  font-size: 16px;
-  line-height: 24px;
-  color: #c4c4c4;
-  margin-bottom: 4px;
-  display: block;
-
-  @media screen and (max-width: 620px) {
-    font-size: 14px;
-    line-height: 21px;
-    color: #c4c4c4;
-    margin-bottom: 6px;
-  }
-`;
-
-export const SettingsFormInput = styled.input`
-  background-color: #FFFFFF;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  padding: 13px 19px;
-   width: 300px;
-           &: focus {
-    border: 2px solid #009EE4;
-
-  &::-moz-placeholder {
-    background-color: transparent;
-    color: rgba(0, 0, 0, 0.3);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-
-    @media screen and (max-width: 620px) {
-    font-size: 14px;
-    line-height: 21px;
-    }
-  }
-
-  &::placeholder {
-    background-color: transparent;
-    color: rgba(0, 0, 0, 0.3);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-
-    @media screen and (max-width: 620px) {
-    font-size: 14px;
-    line-height: 21px;
-    }
-    }
-  }
-
-      @media screen and (max-width: 620px) {
-    border-radius: 30px;
-    padding: 9px 17px;
-    width: 100%;
-    } 
-  }
-`;
-
-export const SettingsPhoneInput = styled.input`
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  padding: 13px 19px;
-  width: 614px;
-  &: focus {
-    border: 2px solid #009ee4;
-  }
-
-  @media screen and (max-width: 620px) {
-    border-radius: 30px;
-    padding: 9px 17px;
-    width: 100%;
-  }
-
-  &::-moz-placeholder {
-    background-color: transparent;
-    color: rgba(0, 0, 0, 0.3);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-
-    @media screen and (max-width: 620px) {
-      font-size: 14px;
-      line-height: 21px;
-    }
-  }
-
-  &::placeholder {
-    background-color: transparent;
-    color: rgba(0, 0, 0, 0.3);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-
-    @media screen and (max-width: 620px) {
-      font-size: 14px;
-      line-height: 21px;
-    }
-  }
-`;
-
-export const SettingsBtn = styled.button`
-  font-size: 16px;
-  line-height: 1;
-  color: #FFFFFF;
-  width: 154px;
-  height: 50px;
-  margin: 10px 7px 0;
-  background-color: ${(props) => props.active};
-  border-radius: 6px;
-  border: 1px solid ${(props) => props.active};
-
-  &:hover {
-  background-color: ${(props) => props.activeHover};
-  }
-
-  @media screen and (max-width: 620px) {
-    font-size: 16px;
-    line-height: 1;
-    width: 100%;
-    height: 46px;
-    margin: 8px 0px 0;
 `;
 
 export const MainContentTitle = styled.h3`
@@ -480,4 +396,51 @@ export const ContentCards = styled.div`
     -ms-flex-pack: center;
     justify-content: center;
   }
+`;
+
+export const SellerName = styled.h3`
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 40px;
+  color: #000000;
+  margin-bottom: 0px;
+  @media screen and (max-width: 580px) {
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 6px;
+  }
+`;
+
+export const SellerCity = styled.p`
+  font-size: 16px;
+  line-height: 21px;
+  color: #5f5f5f;
+  margin-bottom: 10px;
+  @media screen and (max-width: 580px) {
+    font-size: 16px;
+    line-height: 21px;
+    color: #5f5f5f;
+    margin-bottom: 6px;
+  }
+`;
+
+export const SellerRegistrationDate = styled.p`
+  font-size: 16px;
+  line-height: 21px;
+  color: #5f5f5f;
+  margin-bottom: 10px;
+  @media screen and (max-width: 580px) {
+    font-size: 16px;
+    line-height: 21px;
+    color: #5f5f5f;
+    margin-bottom: 6px;
+  }
+`;
+
+export const ButtonBox = styled.div`
+@media screen and (max-width: 620px) {
+  display: flex;
+  flex-direction: column;
+}
+
 `;

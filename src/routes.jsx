@@ -5,6 +5,7 @@ import { AuthPage } from "./pages/authPage";
 import Profile from "./pages/profile";
 import { ProtectedRoute } from "./components/protected-route";
 import { NotFound } from "./pages/notFound/404";
+import SellerProfile from "./pages/seller-profile";
 
 const AppRoutes = ({ user }) => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = ({ user }) => {
       <Route path="/register" element={<AuthPage />} />
       <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
         <Route path="/account" element={<Profile />} />
+        <Route path="/seller-account" element={<SellerProfile />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

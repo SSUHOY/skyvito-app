@@ -5,12 +5,15 @@ export const fetchSetAdsRequest = (adsList) => ({
   payload: adsList,
 });
 
-
 export const fetchSetAdsFailure = (error) => ({
     type: SET_ADS_FAILURE,
     payload: error,
   });
   
+  export const fetchSetCurrentUserAdsRequest = (adsUserList) => ({
+    type: SET_ADS,
+    payload: adsUserList,
+  });
 
 export const loginUser = () => ({
   type: LOG_IN_USER,

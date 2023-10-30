@@ -1,4 +1,12 @@
-export async function fetchRegister({ email, password, userName, city, surname }) {
+import axios from "axios";
+
+export async function fetchRegister({
+  email,
+  password,
+  userName,
+  city,
+  surname,
+}) {
   const response = await fetch("http://localhost:8090/auth/register", {
     method: "POST",
     body: JSON.stringify({
@@ -39,4 +47,17 @@ export async function fetchLogin({ email, password }) {
   }
   const data = await response.json();
   return data;
+}
+
+export async function fetchUser({ tokenData }) {
+  const token = tokenData.access_token;
+  const response = await axios.get("http://localhost:8090/user", {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  if (response.status !== 200) {
+    throw new Error("Ошибка сервера");
+  }
+  return response.data;
 }

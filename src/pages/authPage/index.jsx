@@ -5,9 +5,13 @@ import { useDispatch } from "react-redux";
 import LogoSkyUrl from "../../assets/images/logo-skypro.png";
 import { fetchLogin, fetchRegister } from "../../api";
 import { loginUser } from "../../store/actions/creators/ads";
+import { useAuthContext } from "../../components/context/AuthContext";
 
 export const AuthPage = () => {
   const dispatch = useDispatch();
+
+  const { setUser, user, loginUserFn } = useAuthContext();
+  console.log(user);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
@@ -28,14 +32,14 @@ export const AuthPage = () => {
   }, [location.pathname, isLoginMode]);
 
   const handleLogin = async () => {
-    dispatch(loginUser())
+    dispatch(loginUser());
     if (!email || !password) {
       setError("Пожалуйста, введите пароль и/или логин");
       return;
     }
     try {
       setIsAuthLoading(true);
-      await fetchLogin({ email, password });
+      await loginUserFn({ email, password });
       setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {
@@ -56,7 +60,17 @@ export const AuthPage = () => {
     }
     try {
       setIsAuthLoading(true);
-      await fetchRegister({ email, password, userName, city, surname });
+      const userData = await fetchRegister({
+        email,
+        password,
+        userName,
+        city,
+        surname,
+      });
+      console.log(userData);
+      localStorage.setItem("userData", JSON.stringify(userData))
+      console.log(localStorage)
+      setUser(userData)
       setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {
@@ -65,11 +79,10 @@ export const AuthPage = () => {
       setIsAuthLoading(false);
     }
   };
-// Отлавливаем ошибку
+  // Отлавливаем ошибку
   useEffect(() => {
     setError(null);
   }, [isLoginMode, email, password, repeatPassword]);
-
 
   return (
     <S.PageContainer>

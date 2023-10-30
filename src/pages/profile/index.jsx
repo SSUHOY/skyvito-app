@@ -5,8 +5,13 @@ import { Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { Container, Header, Nav, PageContainer } from "./ProfilePage.styles";
 import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
+import { useGetCurrentUserMutation, useGetCurrentUserQuery } from "../../components/services/adsApi";
+import { useAuthContext } from "../../components/context/AuthContext";
 
 const Profile = () => {
+  const { user, logoutUserFn } = useAuthContext()
+  console.log(user)
+
   return (
     <>
       <PageContainer>
@@ -17,7 +22,9 @@ const Profile = () => {
                 <SearchLogoMob />
               </Link>
               <S.Button>Разместить объявление</S.Button>
-              <S.SellerButton>Личный кабинет</S.SellerButton>
+              <Link to='/'>
+              <S.SellerButton onClick={() => logoutUserFn()}>Выйти</S.SellerButton>
+              </Link>
             </Nav>
           </Header>
           <S.Main>
@@ -34,8 +41,8 @@ const Profile = () => {
                   </S.MenuForm>
                 </S.MainMenu>
                 <S.TitleGreetings>
-                  Здравствуйте, <br />
-                  Семён!
+                  Здравствуйте,&nbsp;
+                  {user.name}!
                 </S.TitleGreetings>
                 <S.MainProfile>
                   <S.ProfileContent>
@@ -56,7 +63,7 @@ const Profile = () => {
                       <S.SettingsRightBox>
                         <S.SettingsForm>
                           <S.SettingsDiv>
-                            <S.SettingsFormLabel for="settings-name">
+                            <S.SettingsFormLabel htmlFor="settings-name">
                               Имя
                             </S.SettingsFormLabel>
                             <S.SettingsFormInput
@@ -68,7 +75,7 @@ const Profile = () => {
                             />
                           </S.SettingsDiv>
                           <S.SettingsDiv>
-                            <S.SettingsFormLabel for="lname">
+                            <S.SettingsFormLabel htmlFor="lname">
                               Фамилия
                             </S.SettingsFormLabel>
                             <S.SettingsFormInput
@@ -80,7 +87,7 @@ const Profile = () => {
                             />
                           </S.SettingsDiv>
                           <S.SettingsDiv>
-                            <S.SettingsFormLabel for="city">
+                            <S.SettingsFormLabel htmlFor="city">
                               Город
                             </S.SettingsFormLabel>
                             <S.SettingsFormInput
@@ -92,7 +99,7 @@ const Profile = () => {
                             />
                           </S.SettingsDiv>
                           <S.SettingsDiv>
-                            <S.SettingsFormLabel for="phone">
+                            <S.SettingsFormLabel htmlFor="phone">
                               Телефон
                             </S.SettingsFormLabel>
                             <S.SettingsPhoneInput

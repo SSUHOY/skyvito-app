@@ -19,6 +19,7 @@ import {
   MainContent,
 } from "../../components/styles/main/MainPage.styles";
 import { NavLink } from "react-router-dom";
+import * as S from "../profile/ProfilePage.styles";
 import { Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { ContentCards } from "../../components/styles/main/CardsItems.styles";
 import { CardsItem } from "../../components/cardsItem/cardsItem";
@@ -27,9 +28,11 @@ import { useGetAllAdsQuery } from "../../components/services/adsApi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSetAdsRequest } from "../../store/actions/creators/ads";
 import { selectAllAdsList, selectIsLogin } from "../../store/selectors/ads";
+import { useAuthContext } from "../../components/context/AuthContext";
 
 const Main = () => {
   const { data } = useGetAllAdsQuery({});
+  const { user } = useAuthContext()
   const fetchAllAds = useSelector(selectAllAdsList);
 
   // Получение состояния залогининного пользователя из стора - пока не используется
@@ -62,9 +65,20 @@ const Main = () => {
     <Container>
       <Header>
         <HeaderNav>
-          <NavLink to="/login">
+            {user ? 
+            <>
+             <S.Button>Разместить объявление</S.Button>
+             <NavLink to="/account">    
+              <S.SellerButton>Личный кабинет</S.SellerButton>
+              </NavLink>
+            </>
+            :      
+          <NavLink to="/login">     
             <HeaderBtnMainEnter>Вход в личный кабинет</HeaderBtnMainEnter>
-          </NavLink>
+            </NavLink>
+            }
+  
+        
         </HeaderNav>
       </Header>
       <main>

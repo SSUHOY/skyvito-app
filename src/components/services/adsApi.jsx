@@ -6,10 +6,9 @@ export const adsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8090/",
     prepareHeaders: (headers) => {
-      const { access_token } = JSON.parse(localStorage.getItem("tokenData"));
-      console.log(access_token);
-      if (access_token) {
-        headers.set("Authorization", `Bearer ${access_token}`);
+      const token = JSON.parse(localStorage.getItem("accessToken"));
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },

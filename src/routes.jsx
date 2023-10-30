@@ -8,16 +8,16 @@ import { NotFound } from "./pages/notFound/404";
 import SellerProfile from "./pages/seller-profile";
 import { AdvPage } from "./pages/advPage";
 
-const AppRoutes = ({ user }) => {
+const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="/register" element={<AuthPage />} />
       <Route path="/adv-page/:id" element={<AdvPage />} />
-      <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
+      <Route path="/seller-account/:id" element={<SellerProfile />} />
+      <Route element={<ProtectedRoute/>}>
         <Route path="/account" element={<Profile />} />
-        <Route path="/seller-account" element={<SellerProfile />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

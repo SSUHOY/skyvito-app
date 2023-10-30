@@ -40,6 +40,25 @@ export const Header = styled.header`
   background-color: #009ee4;
 `;
 
+export const Button = styled.button`
+  width: 232px;
+  height: 40px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid #ffffff;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+
 export const Nav = styled.nav`
   max-width: 1178px;
   margin: 0 auto;
@@ -273,20 +292,12 @@ export const SellerImg = styled.div`
   }
 `;
 export const SellerImgMob = styled.div`
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  display: none;
-  background-color: #f0f0f0;
-  @media screen and (max-width: 620px) {
-    width: 170px;
-    height: 170px;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    padding: 20px 0;
+  @media screen and (max-width: 580px) {
     display: block;
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
   }
 `;
 
@@ -303,6 +314,17 @@ export const ProfileImg = styled.img`
   height: auto;
   display: block;
   object-fit: cover;
+`;
+export const ProfileImgMob = styled.img`
+  display: none;
+  @media screen and (max-width: 620px) {
+    display: block;
+    width: 132px;
+    height: 144px;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
 `;
 
 export const SettingsRight = styled.div`

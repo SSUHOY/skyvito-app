@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FooterAll } from "../../components/footer/footer";
 import * as S from "./AdvPage.styles";
 import {
@@ -14,14 +14,13 @@ import {
   MenuForm,
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
-import {
-  useGetCurrentAdvQuery,
-} from "../../components/services/adsApi";
+import { useGetCurrentAdvQuery } from "../../components/services/adsApi";
 
 export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data } = useGetCurrentAdvQuery(id);
+  console.log(data);
 
   return (
     <S.Wrapper>
@@ -62,12 +61,16 @@ export const AdvPage = () => {
             <S.ArticleContent>
               <S.ArticleLeft>
                 <S.ArticleFillImg>
-                  <S.ArticleImgBox>
-                    <S.ArticleImg src="" alt="" />
-                  </S.ArticleImgBox>
+                  {data?.images?.slice(0, 5).map((image, index) => (
+                    <S.ArticleImgBox key={index}>
+                      <S.ArticleImg
+                        src={`http://localhost:8090/${image.url}`}
+                      />
+                    </S.ArticleImgBox>
+                  ))}
                   <S.ArticleImgBar>
                     <S.ArticleImgBarBox>
-                      <S.ArticleImgBarImg src="" alt="" />
+                      <S.ArticleImgBarImg />
                     </S.ArticleImgBarBox>
                     <S.ArticleImgBarBox>
                       <S.ArticleImgBarImg src="" alt="" />
@@ -118,12 +121,15 @@ export const AdvPage = () => {
                   </S.ArticleBtn>
                   <S.ArticleAuthor>
                     <S.AuthorImgDiv>
-                      <S.AuthorImg src="" alt="" />
+                     
+                      <S.AuthorImg src={data ? `http://localhost:8090/${data.user.avatar}` : "Загрузка..."} />
                     </S.AuthorImgDiv>
                     <S.AuthorContent>
-                      <S.AuthorName>
-                        {data ? data.user.name : "Загрузка"}
-                      </S.AuthorName>
+                      <Link to={`/seller-account/${id}`}>
+                        <S.AuthorName>
+                          {data ? data.user.name : "Загрузка"}
+                        </S.AuthorName>
+                      </Link>
                       <S.AuthorAbout>
                         {data ? "Продает товары с " : ""}{" "}
                         {data ? data.user.sells_from : "Загрузка..."}

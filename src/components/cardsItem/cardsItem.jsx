@@ -14,7 +14,6 @@ import {
 } from "../styles/main/CardsItems.styles";
 
 export const CardsItem = ({ title, picture, price, date, place, advId }) => {
-  console.log(advId)
   return (
     <CardsContentBox>
       <CardsCard>

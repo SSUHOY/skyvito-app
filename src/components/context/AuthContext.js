@@ -24,15 +24,34 @@ export const AuthProvider = ({ children }) => {
 
   const loginUserFn = async ({ email, password }) => {
     try {
-      const tokenData = await fetchLogin({ email, password }); 
-      // const {access: access_token, refresh: refresh_token} = tokenData
-      console.log(tokenData)
-      // dispatch(uploadTokens(access_token, refresh_token))
+      const tokenData = await fetchLogin({ email, password });
       localStorage.setItem("tokenData", JSON.stringify(tokenData));
-      localStorage.setItem("accessToken", JSON.stringify(tokenData.access_token));
-      const userData = await fetchUser({tokenData})
-      console.log(userData)
+      localStorage.setItem(
+        "accessToken",
+        JSON.stringify(tokenData.access_token)
+      );
+      const userData = await fetchUser({ tokenData });
       localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("user_register_id", JSON.stringify(userData.id));
+      localStorage.setItem(
+        "user_register_email",
+        JSON.stringify(userData.email)
+      );
+      localStorage.setItem("user_register_city", JSON.stringify(userData.city));
+      localStorage.setItem("user_register_name", JSON.stringify(userData.name));
+      localStorage.setItem(
+        "user_register_surname",
+        JSON.stringify(userData.surname)
+      );
+      localStorage.setItem(
+        "user_register_phone",
+        JSON.stringify(userData.phone)
+      );
+
+      localStorage.setItem(
+        "user_register_phone",
+        JSON.stringify(userData.phone)
+      );
       setUser(userData);
       setError(null);
     } catch (error) {
@@ -42,9 +61,7 @@ export const AuthProvider = ({ children }) => {
   };
   const logoutUserFn = () => {
     setUser(null);
-    localStorage.removeItem("userData");
-    localStorage.removeItem("tokenData");
-    localStorage.removeItem('accessToken')
+    localStorage.clear();
     logoutUser();
   };
 

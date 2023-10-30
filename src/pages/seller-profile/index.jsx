@@ -31,16 +31,12 @@ const SellerProfile = () => {
   const user = useAuthContext();
   const { id } = useParams();
   const { data } = useGetAllAdsQuery({});
-  console.log(data);
   const [adv, setAdv] = useState();
-  console.log(adv);
   const [showPhone, setShowPhone] = useState(false);
   const [sellerAds, setSellerAds] = useState([]);
-  console.log(sellerAds);
-  console.log(id);
-
-  // const { user, logoutUserFn } = useAuthContext();
-  // // const { data } = useGetCurrentAdvQuery(id);
+  const handleShowPhoneClick = () => {
+    setShowPhone(true);
+  };
 
   useEffect(() => {
     let i = 0;
@@ -107,7 +103,11 @@ const SellerProfile = () => {
                       </Link>
                     </MenuForm>
                   </MainMenu>
-                  <BackToBtn />
+                  <Link to={`/adv-page/${id}`}>
+                    <div>
+                      <BackToBtn />
+                    </div>
+                  </Link>
                   <S.Title>Профиль продавца</S.Title>
                   <S.MainProfile>
                     <S.ProfileContent>
@@ -144,14 +144,25 @@ const SellerProfile = () => {
                               </S.SellerImgMob>
                             </S.SellerimgBox>
                             <S.PhoneShownBtn
-                            // onChange={handleSurnameChange}
-                            // id="settings-name"
-                            // name="name"
-                            // type="text"
-                            // defaultValue={surname}
-                            >
+                              // onChange={handleSurnameChange}
+                              // id="settings-name"
+                              // name="name"
+                              // type="text"
+                              // defaultValue={surname}
+                              onClick={handleShowPhoneClick}>
                               Показать телефон <br />
-                              <S.PhoneNumber>8-XXX-XXX-XX-XX</S.PhoneNumber>
+                              <S.PhoneNumber>
+                                {!adv && "Загрузка"}
+                                {!showPhone
+                                  ? `${adv?.user.phone.substring(
+                                      0,
+                                      1
+                                    )}${adv?.user.phone.substring(
+                                      1,
+                                      4
+                                    )} XXX XX XX`
+                                  : adv?.user.phone}
+                              </S.PhoneNumber>
                             </S.PhoneShownBtn>
                           </S.ButtonBox>
                         </S.UserContentRightBox>

@@ -36,7 +36,7 @@ export const ContentCards = styled.div`
     grid-template-columns: repeat(2, 270px);
   }
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 590px) {
     display: grid;
     grid-template-columns: repeat(2, 137px);
     grid-auto-rows: 293px;
@@ -48,7 +48,7 @@ export const ContentCards = styled.div`
 
 export const CardsContentBox = styled.div`
   margin: 0;
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 580px) {
     margin: 0;
   }
 `;
@@ -59,7 +59,7 @@ export const CardsCard = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 590px) {
     width: 137px;
     height: 293px;
     display: flex;

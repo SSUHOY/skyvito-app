@@ -172,8 +172,6 @@ export const ArticleFillImg = styled.div`
 `;
 
 export const ArticleImgBox = styled.div`
-  // width: 480px;
-  // height: 480px;
   background-color: #f0f0f0;
   margin: 0 5px;
   @media screen and (max-width: 768px) {
@@ -219,9 +217,8 @@ export const ArticleImgBar = styled.div`
 export const ArticleImgBarBox = styled.div`
   width: 88px;
   min-width: 88px;
-  height: 88px;
+  min-height: 0px;
   background-color: #f0f0f0;
-  border: 2px solid #f0f0f0;
   margin: 0 5px;
 `;
 
@@ -231,6 +228,7 @@ export const ArticleImgBarImg = styled.img`
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 export const ArticleImgBarMob = styled.div`
@@ -350,6 +348,10 @@ export const ArticleBtn = styled.button`
     color: #ffffff;
   }
 `;
+
+export const ArticleBtnSpan = styled.span`
+
+`
 
 export const ArticleAuthor = styled.div`
   margin-top: 34px;

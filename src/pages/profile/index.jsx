@@ -14,26 +14,44 @@ import { useAuthContext } from "../../components/context/AuthContext";
 import { selectCurrentUserAdsList } from "../../store/selectors/ads";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSetCurrentUserAdsRequest } from "../../store/actions/creators/ads";
-import { MainMenu, MenuForm, ToMainButton } from "../../components/styles/reusable/Usable.styles";
+import {
+  MainMenu,
+  MenuForm,
+  ToMainButton,
+} from "../../components/styles/reusable/Usable.styles";
 
 const Profile = () => {
-  const dispatch = useDispatch();
-
   const { user, logoutUserFn } = useAuthContext();
-  const { data, error } = useGetCurrentUserAdvtQuery({});
-
+  const { data } = useGetCurrentUserAdvtQuery({});
   const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
 
-  // -----------Доработать функионал получения currentUser из RTK через Mutation----//
+  const dispatch = useDispatch();
 
-  // const [userData, setUserData] = useState('')
-  // console.log(userData)
-  // const [getCurrentUser, {userData: currentUser}] = useGetCurrentUserMutation();
-  // const handleSetUserData = async () => {
-  //   if(user) {
-  //     await getCurrentUser({data: userData}).unwrap()
-  //   }
-  // }
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setPhone] = useState("")
+
+  const [saveButtonActive, setSaveButtonActive] = useState(false);
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleSaveChanges = (event) => {
+    event.preventDefault();
+  };
+
+  useEffect(() => {
+    const userName = JSON.parse(localStorage.getItem("user_register_name"));
+    const userSurName = JSON.parse(localStorage.getItem("user_register_surname"));
+    const userCity = JSON.parse(localStorage.getItem("user_register_city"));
+    const userPhone = JSON.parse(localStorage.getItem("user_register_phone"))
+    setName(userName);
+    setSurname(userSurName)
+    setCity(userCity)
+    setPhone(userPhone)
+  }, [user]);
 
   useEffect(() => {
     if (data) {
@@ -101,11 +119,11 @@ const Profile = () => {
                                 Имя
                               </S.SettingsFormLabel>
                               <S.SettingsFormInput
-                              // onChange={handleNameChange}
-                              // id="settings-name"
-                              // name="name"
-                              // type="text"
-                              // defaultValue={name}
+                                onChange={handleNameChange}
+                                id="settings-name"
+                                name="name"
+                                type="text"
+                                defaultValue={name}
                               />
                             </S.SettingsDiv>
                             <S.SettingsDiv>
@@ -117,7 +135,7 @@ const Profile = () => {
                               // id="settings-name"
                               // name="name"
                               // type="text"
-                              // defaultValue={surname}
+                              defaultValue={surname}
                               />
                             </S.SettingsDiv>
                             <S.SettingsDiv>
@@ -129,7 +147,7 @@ const Profile = () => {
                               // id="settings-name"
                               // name="name"
                               // type="text"
-                              // defaultValue={city}
+                              defaultValue={city}
                               />
                             </S.SettingsDiv>
                             <S.SettingsDiv>
@@ -141,17 +159,16 @@ const Profile = () => {
                               // id="settings-fname"
                               // name="name"
                               // type="text"
-                              // defaultValue={phone}
+                              defaultValue={phone}
                               />
                             </S.SettingsDiv>
                             <S.SettingsBtn
-                            // active={!saveButtonActive ? "#D9D9D9" : "#009EE4"}
-                            // activeHover={
-                            //   !saveButtonActive ? "#D9D9D9" : "#0080C1"
-                            // }
-                            // onClick={handleSaveChanges}
-                            // id="settings-btn"
-                            >
+                              active={saveButtonActive ? "#D9D9D9" : "#009EE4"}
+                              activeHover={
+                                saveButtonActive ? "#D9D9D9" : "#0080C1"
+                              }
+                              onClick={handleSaveChanges}
+                              id="settings-btn">
                               Сохранить
                             </S.SettingsBtn>
                           </S.SettingsForm>

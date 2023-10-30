@@ -366,6 +366,14 @@ export const MainContent = styled.div`
 `;
 
 export const ContentCards = styled.div`
+  max-width: 1158px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  grid-auto-rows: 441px;
+  grid-gap: 40px 26px;
+  justify-content: center;
+  height: 922px;
   @media screen and (max-width: 590px) {
     display: -ms-grid;
     display: grid;

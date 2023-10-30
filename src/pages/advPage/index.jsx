@@ -20,8 +20,23 @@ export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data } = useGetCurrentAdvQuery(id);
-  console.log(data);
+  const [selectedImg, setSelectedImg] = useState();
+  const [nextImg, setNextImg] = useState(0);
+  const [showPhone, setShowPhone] = useState(false);
 
+  const handleShowPhoneClick = () => {
+    setShowPhone(true);
+  };
+  const handleSelectImg = (event) => {
+    setSelectedImg(event.target.src);
+  };
+
+  const handleNextPhotoClick = () => {
+    const nextIndex = (nextImg + 1) % data?.images.length;
+    console.log(nextIndex);
+    setNextImg(nextIndex);
+    setSelectedImg(`http://localhost:8090/${data?.images[nextIndex]?.url}`);
+  };
   return (
     <S.Wrapper>
       <S.Container>
@@ -61,32 +76,28 @@ export const AdvPage = () => {
             <S.ArticleContent>
               <S.ArticleLeft>
                 <S.ArticleFillImg>
-                  {data?.images?.slice(0, 5).map((image, index) => (
+                  {data?.images.slice(0, 1).map((image, index) => (
                     <S.ArticleImgBox key={index}>
                       <S.ArticleImg
-                        src={`http://localhost:8090/${image.url}`}
+                        onClick={handleNextPhotoClick}
+                        src={
+                          !selectedImg
+                            ? `http://localhost:8090/${image.url}`
+                            : selectedImg
+                        }
                       />
                     </S.ArticleImgBox>
                   ))}
+
                   <S.ArticleImgBar>
-                    <S.ArticleImgBarBox>
-                      <S.ArticleImgBarImg />
-                    </S.ArticleImgBarBox>
-                    <S.ArticleImgBarBox>
-                      <S.ArticleImgBarImg src="" alt="" />
-                    </S.ArticleImgBarBox>
-                    <S.ArticleImgBarBox>
-                      <S.ArticleImgBarImg src="" alt="" />
-                    </S.ArticleImgBarBox>
-                    <S.ArticleImgBarBox>
-                      <S.ArticleImgBarImg src="" alt="" />
-                    </S.ArticleImgBarBox>
-                    <S.ArticleImgBarBox>
-                      <S.ArticleImgBarImg src="" alt="" />
-                    </S.ArticleImgBarBox>
-                    <S.ArticleImgBarBox>
-                      <S.ArticleImgBarImg src="" alt="" />
-                    </S.ArticleImgBarBox>
+                    {data?.images?.slice(0, 5).map((image, index) => (
+                      <S.ArticleImgBarBox key={index}>
+                        <S.ArticleImgBarImg
+                          onClick={handleSelectImg}
+                          src={`http://localhost:8090/${image.url}`}
+                        />
+                      </S.ArticleImgBarBox>
+                    ))}
                   </S.ArticleImgBar>
                   <S.ArticleImgBarMob>
                     <S.ArticleImgBarCircle />
@@ -115,14 +126,27 @@ export const AdvPage = () => {
                   <S.ArticlePrice>
                     {data ? data.price : "Загрузка.."} {data ? "₽" : ""}
                   </S.ArticlePrice>
-                  <S.ArticleBtn>
-                    Показать&nbsp;телефон <br />
-                    <span>8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ</span>
+                  <S.ArticleBtn onClick={handleShowPhoneClick}>
+                    Показать&nbsp;телефон
+                    <br />
+                    <S.ArticleBtnSpan>
+                      {!showPhone
+                        ? `${data?.user.phone.substring(
+                            0,
+                            1
+                          )}${data?.user.phone.substring(1, 4)} XXX XX XX`
+                        : data?.user.phone}
+                    </S.ArticleBtnSpan>
                   </S.ArticleBtn>
                   <S.ArticleAuthor>
                     <S.AuthorImgDiv>
-                     
-                      <S.AuthorImg src={data ? `http://localhost:8090/${data.user.avatar}` : "Загрузка..."} />
+                      <S.AuthorImg
+                        src={
+                          data
+                            ? `http://localhost:8090/${data.user.avatar}`
+                            : "Загрузка..."
+                        }
+                      />
                     </S.AuthorImgDiv>
                     <S.AuthorContent>
                       <Link to={`/seller-account/${id}`}>

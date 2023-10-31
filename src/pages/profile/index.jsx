@@ -6,9 +6,12 @@ import { Container, Header, Nav, PageContainer } from "./ProfilePage.styles";
 import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
 import {
+  useEditUserDataMutation,
   useGetCurrentUserAdvtQuery,
   useGetCurrentUserMutation,
   useGetCurrentUserQuery,
+  useRefreshTokenMutation,
+  useRegisterUserMutation,
 } from "../../components/services/adsApi";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { selectCurrentUserAdsList } from "../../store/selectors/ads";
@@ -22,7 +25,11 @@ import {
 
 const Profile = () => {
   const { user, logoutUserFn } = useAuthContext();
-  const { data } = useGetCurrentUserAdvtQuery({});
+  const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
+  const [registerUser] = useRegisterUserMutation()
+  console.log(currentUser);
+  const { data } = useGetCurrentUserAdvtQuery();
+
   const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
 
   const dispatch = useDispatch();
@@ -30,28 +37,89 @@ const Profile = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [city, setCity] = useState("");
-  const [phone, setPhone] = useState("")
-
+  const [phone, setPhone] = useState("");
   const [saveButtonActive, setSaveButtonActive] = useState(false);
+  const [inputsAreFilled, setInputsAreFilled] = useState();
+  const [refreshToken] = useRefreshTokenMutation();
+  const [editUserData] = useEditUserDataMutation();
 
   const handleNameChange = (event) => {
     setName(event.target.value);
+    setInputsAreFilled(event.target.value);
   };
 
-  const handleSaveChanges = (event) => {
+  const handleSurnameChange = (event) => {
+    setSurname(event.target.value);
+    setInputsAreFilled(event.target.value);
+  };
+
+  const handleCityChange = (event) => {
+    setCity(event.target.value);
+    setInputsAreFilled(event.target.value);
+  };
+
+  const handlePhoneChange = (event) => {
+    setPhone(event.target.value);
+    setInputsAreFilled(event.target.value);
+  };
+
+  // const handleAvatarUpload = (event) => {
+  //   event.preventDefault();
+  //   const selectedFile = event.target.files[0]
+  //   if(!selectedFile) {
+  //     alert('Файл не выбран')
+  //   } else { 
+  //     const formData = new 
+  //   }
+  // }
+
+  const handleSaveChanges = async (event) => {
     event.preventDefault();
+    await refreshToken();
+    const userData = { phone, name, surname, city };
+    editUserData(userData);
+    setSaveButtonActive(false);
+    getCurrentUser();
   };
 
   useEffect(() => {
-    const userName = JSON.parse(localStorage.getItem("user_register_name"));
-    const userSurName = JSON.parse(localStorage.getItem("user_register_surname"));
-    const userCity = JSON.parse(localStorage.getItem("user_register_city"));
-    const userPhone = JSON.parse(localStorage.getItem("user_register_phone"))
-    setName(userName);
-    setSurname(userSurName)
-    setCity(userCity)
-    setPhone(userPhone)
-  }, [user]);
+    const inputs = document.querySelectorAll("input");
+    console.log(inputs);
+    let allAreEmpty = true;
+    inputs.forEach((input) => {
+      if (input.value.trim() !== "") {
+        allAreEmpty = false;
+      }
+    });
+    if (allAreEmpty) {
+      setSaveButtonActive(false);
+    } else {
+      setSaveButtonActive(true);
+    }
+  }, [inputsAreFilled]);
+
+  useEffect(() => {
+    setName(localStorage.user_register_name.replace(/"/g, ""));
+    setSurname(localStorage.user_register_surname.replace(/"/g, ""));
+    setCity(localStorage.user_register_city.replace(/"/g, ""));
+    setPhone(localStorage.user_register_phone.replace(/"/g, ""));
+    console.log("данные в storage");
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) {
+      console.log(currentUser, "Юзер");
+    }
+    return;
+  }, [currentUser]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      await getCurrentUser();
+      await refreshToken()
+    };
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -92,7 +160,7 @@ const Profile = () => {
                   </MainMenu>
                   <S.TitleGreetings>
                     Здравствуйте,&nbsp;
-                    {user.name}!
+                    {name}!
                   </S.TitleGreetings>
                   <S.MainProfile>
                     <S.ProfileContent>
@@ -131,11 +199,11 @@ const Profile = () => {
                                 Фамилия
                               </S.SettingsFormLabel>
                               <S.SettingsFormInput
-                              // onChange={handleSurnameChange}
-                              // id="settings-name"
-                              // name="name"
-                              // type="text"
-                              defaultValue={surname}
+                                onChange={handleSurnameChange}
+                                id="settings-surname"
+                                name="name"
+                                type="text"
+                                defaultValue={surname}
                               />
                             </S.SettingsDiv>
                             <S.SettingsDiv>
@@ -143,11 +211,11 @@ const Profile = () => {
                                 Город
                               </S.SettingsFormLabel>
                               <S.SettingsFormInput
-                              // onChange={handleCityChange}
-                              // id="settings-name"
-                              // name="name"
-                              // type="text"
-                              defaultValue={city}
+                                onChange={handleCityChange}
+                                id="settings-city"
+                                name="city"
+                                type="text"
+                                defaultValue={city}
                               />
                             </S.SettingsDiv>
                             <S.SettingsDiv>
@@ -155,17 +223,20 @@ const Profile = () => {
                                 Телефон
                               </S.SettingsFormLabel>
                               <S.SettingsPhoneInput
-                              // onChange={handlePhoneChange}
-                              // id="settings-fname"
-                              // name="name"
-                              // type="text"
-                              defaultValue={phone}
+                                onChange={handlePhoneChange}
+                                id="settings-phone"
+                                name="phone"
+                                type="tel"
+                                defaultValue={phone === "null" ? '' : phone}
+                                placeholder={
+                                  phone === "null" && "Укажите телефон для связи с Вами"
+                                }
                               />
                             </S.SettingsDiv>
                             <S.SettingsBtn
-                              active={saveButtonActive ? "#D9D9D9" : "#009EE4"}
+                              active={!saveButtonActive ? "#D9D9D9" : "#009EE4"}
                               activeHover={
-                                saveButtonActive ? "#D9D9D9" : "#0080C1"
+                                !saveButtonActive ? "#D9D9D9" : "#0080C1"
                               }
                               onClick={handleSaveChanges}
                               id="settings-btn">

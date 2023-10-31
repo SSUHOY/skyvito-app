@@ -6,7 +6,8 @@ export const adsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8090/",
     prepareHeaders: (headers) => {
-      const token = JSON.parse(localStorage.getItem("accessToken"));
+      const token = JSON.parse(localStorage.getItem("access_token"));
+      console.log(token)
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -47,6 +48,38 @@ export const adsApi = createApi({
           ]
         : [{ type: "comments", id: "LIST" }],
     }),
+    registerUser: builder.mutation({
+      query: (userData) => ({
+        url: "/auth/register",
+        method: "POST",
+        body: userData
+      }), 
+      transformResponse: (response) => {
+        localStorage.setItem("user_register_id", response.id);
+        localStorage.setItem("user_register_email", response.email);
+        localStorage.setItem("user_register_city", response.city);
+        localStorage.setItem("user_register_name", response.name);
+        localStorage.setItem("user_register_surname", response.surname);
+        localStorage.setItem("user_register_phone", response.phone);
+      },
+    }),
+    refreshToken: builder.mutation({
+      query: () => ({
+        url: '/auth/login',
+        method: 'PUT',
+        body: {
+          access_token: localStorage.getItem("access_token"),
+          refresh_token: localStorage.getItem("refresh_token")
+        }
+      })
+    }),
+    editUserData: builder.mutation({
+      query: (userData) => ({
+        url: 'user',
+        method: 'PATCH',
+        body: userData,
+      })
+    }),
     addNewAd: builder.mutation({
       query: (body) => ({
         url: "goods",
@@ -64,4 +97,7 @@ export const {
   useGetCurrentUserAdvtQuery,
   useGetCurrentAdvQuery,
   useGetCommentsQuery,
+  useRegisterUserMutation,
+  useRefreshTokenMutation,
+  useEditUserDataMutation,
 } = adsApi;

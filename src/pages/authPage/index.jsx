@@ -6,11 +6,16 @@ import LogoSkyUrl from "../../assets/images/logo-skypro.png";
 import { fetchLogin, fetchRegister } from "../../api";
 import { loginUser } from "../../store/actions/creators/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
-import { useGetCurrentUserMutation } from "../../components/services/adsApi";
+import {
+  useGetCurrentUserMutation,
+  useRegisterUserMutation,
+} from "../../components/services/adsApi";
 
 export const AuthPage = () => {
   const dispatch = useDispatch();
   const { setUser, loginUserFn } = useAuthContext();
+  const [registerUser, { data }] = useRegisterUserMutation();
+  console.log(data)
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
@@ -58,16 +63,15 @@ export const AuthPage = () => {
     }
     try {
       setIsAuthLoading(true);
-      const userData = await fetchRegister({
+      const userData = {
         email,
         password,
         userName,
         city,
         surname,
-      });
-      console.log(userData);
+      };
+      registerUser(userData);
       localStorage.setItem("userData", JSON.stringify(userData));
-      console.log(localStorage);
       setUser(userData);
       setIsAuthLoading(false);
       navigate("/account", { replace: true });

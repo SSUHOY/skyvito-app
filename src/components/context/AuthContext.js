@@ -27,8 +27,12 @@ export const AuthProvider = ({ children }) => {
       const tokenData = await fetchLogin({ email, password });
       localStorage.setItem("tokenData", JSON.stringify(tokenData));
       localStorage.setItem(
-        "accessToken",
+        "access_token",
         JSON.stringify(tokenData.access_token)
+      );
+      localStorage.setItem(
+        "refresh_token",
+        JSON.stringify(tokenData.refresh_token)
       );
       const userData = await fetchUser({ tokenData });
       localStorage.setItem("userData", JSON.stringify(userData));

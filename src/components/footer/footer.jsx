@@ -11,7 +11,7 @@ import {
   UserProfileImg,
 } from "../styles/main/Footer.styles";
 
-export const FooterAll = () => {
+export const FooterAll = ({ active, setActive }) => {
   return (
     <>
       <Footer>
@@ -21,10 +21,8 @@ export const FooterAll = () => {
               <HomeLinkImg src={HomeLinkImgUrl} />
             </Link>
           </FooterImg>
-          <FooterImg>
-            <Link to="#">
-              <AddNewImg src={AddNewImgUrl} />
-            </Link>
+          <FooterImg onClick={()=> setActive(true)}>
+            <AddNewImg src={AddNewImgUrl} />
           </FooterImg>
           <FooterImg>
             <Link to="/account">

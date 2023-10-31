@@ -22,11 +22,16 @@ import {
   MenuForm,
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
+import { NewAdvModal } from "../../components/modal/new-adv";
 
 const Profile = () => {
   const { user, logoutUserFn } = useAuthContext();
+  // Поп-ап "Разместить объявление"
+  const [modalActive, setModalActive] = useState(false);
+  console.log(modalActive)
+
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
-  const [registerUser] = useRegisterUserMutation()
+  const [registerUser] = useRegisterUserMutation();
   console.log(currentUser);
   const { data } = useGetCurrentUserAdvtQuery();
 
@@ -68,8 +73,8 @@ const Profile = () => {
   //   const selectedFile = event.target.files[0]
   //   if(!selectedFile) {
   //     alert('Файл не выбран')
-  //   } else { 
-  //     const formData = new 
+  //   } else {
+  //     const formData = new
   //   }
   // }
 
@@ -116,7 +121,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       await getCurrentUser();
-      await refreshToken()
+      await refreshToken();
     };
     fetchUserData();
   }, []);
@@ -137,7 +142,9 @@ const Profile = () => {
                 <Link to="/">
                   <SearchLogoMob />
                 </Link>
-                <S.Button>Разместить объявление</S.Button>
+                <S.Button onClick={() => setModalActive(true)}>
+                  Разместить объявление
+                </S.Button>
                 <Link to="/">
                   <S.SellerButton onClick={() => logoutUserFn()}>
                     Выйти
@@ -227,9 +234,10 @@ const Profile = () => {
                                 id="settings-phone"
                                 name="phone"
                                 type="tel"
-                                defaultValue={phone === "null" ? '' : phone}
+                                defaultValue={phone === "null" ? "" : phone}
                                 placeholder={
-                                  phone === "null" && "Укажите телефон для связи с Вами"
+                                  phone === "null" &&
+                                  "Укажите телефон для связи с Вами"
                                 }
                               />
                             </S.SettingsDiv>
@@ -269,7 +277,8 @@ const Profile = () => {
             </S.Main>
           </Container>
         </PageContainer>
-        <FooterAll />
+        <NewAdvModal active={modalActive} setActive={setModalActive} />
+        <FooterAll active={modalActive} setActive={setModalActive}/>
       </S.Wrapper>
     </>
   );

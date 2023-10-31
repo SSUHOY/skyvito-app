@@ -87,6 +87,9 @@ export const HeaderBtnMainEnter = styled.button`
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid #ffffff;
   }
+  @media screen and (max-width: 768px) {
+    display: none
+  }
 `;
 
 export const Main = styled.main`

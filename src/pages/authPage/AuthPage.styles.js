@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
   max-width: 100%;
   height: 100vh;
-  background-color: #0080C1;
+  background-color: #0080c1;
 `;
 
 export const ModalForm = styled.div`
@@ -19,6 +19,28 @@ export const ModalForm = styled.div`
   background-color: #ffffff;
   border-radius: 12px;
   padding: 43px 47px 47px 40px;
+  transition: all 0.5s;
+   @media screen and (max-width: 768px) {
+    width: 320px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 0px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 40px 20px;
+    position: absolute;
+    left: calc(50% - (320px / 2));
+    top: 55px;
+    transition: all 0.5s;
+  }
 `;
 
 export const ModalLogo = styled.div`
@@ -93,13 +115,11 @@ const Button = styled.button`
   }
 `;
 
-
-
 export const PrimaryButton = styled(Button)`
   color: #ffffff;
-  background-color: #009EE4;
+  background-color: #009ee4;
   &:hover {
-    background-color: #0080C1;
+    background-color: #0080c1;
   }
 
   &:active {

@@ -32,10 +32,14 @@ import {
 import { selectAllAdsList, selectIsLogin } from "../../store/selectors/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { MainContainer } from "../../components/styles/reusable/Usable.styles";
+import { NewAdvModal } from "../../components/modal/new-adv";
 
 const Main = () => {
   const { data } = useGetAllAdsQuery({});
   const { user } = useAuthContext();
+
+  // Поп-ап "Разместить объявление"
+  const [modalActive, setModalActive] = useState(false);
 
   // Фильтр по вводу в строку поиска
   const [searchText, setSearchText] = useState("");
@@ -72,7 +76,9 @@ const Main = () => {
           <HeaderNav>
             {user ? (
               <>
-                <S.Button>Разместить объявление</S.Button>
+                <S.Button onClick={() => setModalActive(true)}>
+                  Разместить объявление
+                </S.Button>
                 <NavLink to="/account">
                   <S.SellerButton>Личный кабинет</S.SellerButton>
                 </NavLink>
@@ -141,6 +147,7 @@ const Main = () => {
             </MainContent>
           </MainContainer>
         </main>
+        <NewAdvModal active={modalActive} setActive={setModalActive} />
         <FooterAll />
       </Container>
     </S.Wrapper>

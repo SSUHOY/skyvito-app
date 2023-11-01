@@ -15,6 +15,8 @@ import {
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
 import { useGetCurrentAdvQuery } from "../../components/services/adsApi";
+import { NewAdvModal } from "../../components/modal/new-adv";
+import { ReviewsModal } from "../../components/modal/reviews";
 
 export const AdvPage = () => {
   const { user } = useAuthContext();
@@ -23,6 +25,11 @@ export const AdvPage = () => {
   const [selectedImg, setSelectedImg] = useState();
   const [nextImg, setNextImg] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
+
+  // Поп-ап "Разместить объявление"
+  const [modalActive, setModalActive] = useState(false);
+  // Поп-ап "отзывы"
+  const [modalActiveRevs, setModalActiveRevs] = useState(false)
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
@@ -47,7 +54,7 @@ export const AdvPage = () => {
             </Link>
             {user ? (
               <>
-                <S.Button>Разместить объявление</S.Button>
+                <S.Button onClick={() => setModalActive(true)}>Разместить объявление</S.Button>
                 <NavLink to="/account">
                   <HeaderBtnLk>Личный кабинет</HeaderBtnLk>
                 </NavLink>
@@ -121,7 +128,7 @@ export const AdvPage = () => {
                     <S.ArticleCity>
                       {data ? data.user.city : "Загрузка"}
                     </S.ArticleCity>
-                    <NavLink style={{ color: "blue" }}> ... отзыва</NavLink>
+                    <NavLink style={{ color: "blue" }} onClick={() => setModalActiveRevs(true)}> ... отзыва</NavLink>
                   </S.ArticleInfo>
                   <S.ArticlePrice>
                     {data ? data.price : "Загрузка.."} {data ? "₽" : ""}
@@ -173,6 +180,8 @@ export const AdvPage = () => {
             </S.MainContentDescription>
           </S.MainContainerDesc>
         </main>
+        <ReviewsModal active={modalActiveRevs} setActive={setModalActiveRevs}/>
+        <NewAdvModal active={modalActive} setActive={setModalActive}/>
         <FooterAll />
       </S.Container>
     </S.Wrapper>

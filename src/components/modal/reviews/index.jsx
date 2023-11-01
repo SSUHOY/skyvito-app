@@ -1,7 +1,8 @@
 import React from "react";
 import * as S from "./Reviews.styles";
+import ReviewItem from "./reviewItem";
 
-export const ReviewsModal = ({ active, setActive }) => {
+export const ReviewsModal = ({ active, setActive, comments }) => {
   return (
     <S.ContainerModal
       className={active ? "active" : ""}
@@ -12,7 +13,7 @@ export const ReviewsModal = ({ active, setActive }) => {
         <S.ModalContent>
           <S.ModalMainTitle>Отзывы о товаре</S.ModalMainTitle>
           <S.ModalBtnClose>
-            <S.ModalBtnCloseLine onClick={() => setActive(false)}/>
+            <S.ModalBtnCloseLine onClick={() => setActive(false)} />
           </S.ModalBtnClose>
           <S.ModalScroll>
             <S.ModalFormNewArt>
@@ -24,27 +25,15 @@ export const ReviewsModal = ({ active, setActive }) => {
             </S.ModalFormNewArt>
             <S.ModalReviewsBox>
               <S.ModalReview>
-                <S.ModalReviewItem>
-                  <S.ModalReviewItemLeft>
-                    <S.ModalReviewImgBox>
-                      <S.ModalReviewImg src="" alt="" />
-                    </S.ModalReviewImgBox>
-                  </S.ModalReviewItemLeft>
-                  <S.ModalReviewItemLeft>
-                    <S.ModalReviewItemName>
-                      Олег{" "}
-                      <S.ModalReviewItemNameSpan>
-                        14 августа
-                      </S.ModalReviewItemNameSpan>
-                    </S.ModalReviewItemName>
-                    <S.ModalReviewItemTitle>Комментарий</S.ModalReviewItemTitle>
-                    <S.ModalReviewItemText>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </S.ModalReviewItemText>
-                  </S.ModalReviewItemLeft>
-                </S.ModalReviewItem>
+                {comments
+                  ? comments.map((item, index) => (
+                      <ReviewItem
+                        text={item.text}
+                        key={index}
+                        author={item.author.name}
+                      />
+                    ))
+                  : ""}
               </S.ModalReview>
             </S.ModalReviewsBox>
           </S.ModalScroll>

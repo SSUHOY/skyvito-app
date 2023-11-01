@@ -28,11 +28,8 @@ const Profile = () => {
   const { user, logoutUserFn } = useAuthContext();
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
-  console.log(modalActive)
 
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
-  const [registerUser] = useRegisterUserMutation();
-  console.log(currentUser);
   const { data } = useGetCurrentUserAdvtQuery();
 
   const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
@@ -89,7 +86,6 @@ const Profile = () => {
 
   useEffect(() => {
     const inputs = document.querySelectorAll("input");
-    console.log(inputs);
     let allAreEmpty = true;
     inputs.forEach((input) => {
       if (input.value.trim() !== "") {
@@ -108,12 +104,10 @@ const Profile = () => {
     setSurname(localStorage.user_register_surname.replace(/"/g, ""));
     setCity(localStorage.user_register_city.replace(/"/g, ""));
     setPhone(localStorage.user_register_phone.replace(/"/g, ""));
-    console.log("данные в storage");
   }, [currentUser]);
 
   useEffect(() => {
     if (currentUser) {
-      console.log(currentUser, "Юзер");
     }
     return;
   }, [currentUser]);
@@ -236,14 +230,14 @@ const Profile = () => {
                                 type="tel"
                                 defaultValue={phone === "null" ? "" : phone}
                                 placeholder={
-                                  phone === "null" &&
-                                  "Укажите телефон для связи с Вами"
+                                  phone === "null" ? "Укажите телефон для связи с Вами" :
+                                  undefined
                                 }
                               />
                             </S.SettingsDiv>
                             <S.SettingsBtn
                               active={!saveButtonActive ? "#D9D9D9" : "#009EE4"}
-                              activeHover={
+                              activehover={
                                 !saveButtonActive ? "#D9D9D9" : "#0080C1"
                               }
                               onClick={handleSaveChanges}

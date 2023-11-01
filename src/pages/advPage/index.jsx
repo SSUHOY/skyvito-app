@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FooterAll } from "../../components/footer/footer";
 import * as S from "./AdvPage.styles";
 import {
@@ -14,7 +14,11 @@ import {
   MenuForm,
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
-import { useGetCurrentAdvQuery } from "../../components/services/adsApi";
+import {
+  useGetAllCommentsQuery,
+  useGetAllCurrentUserCommentsQuery,
+  useGetCurrentAdvQuery,
+} from "../../components/services/adsApi";
 import { NewAdvModal } from "../../components/modal/new-adv";
 import { ReviewsModal } from "../../components/modal/reviews";
 
@@ -22,14 +26,17 @@ export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data } = useGetCurrentAdvQuery(id);
+  const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
+  console.log(advComments)
   const [selectedImg, setSelectedImg] = useState();
+  const [adComments, setAdvComments] = useState([]);
   const [nextImg, setNextImg] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
 
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
   // Поп-ап "отзывы"
-  const [modalActiveRevs, setModalActiveRevs] = useState(false)
+  const [modalActiveRevs, setModalActiveRevs] = useState(false);
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
@@ -40,10 +47,16 @@ export const AdvPage = () => {
 
   const handleNextPhotoClick = () => {
     const nextIndex = (nextImg + 1) % data?.images.length;
-    console.log(nextIndex);
     setNextImg(nextIndex);
     setSelectedImg(`http://localhost:8090/${data?.images[nextIndex]?.url}`);
   };
+
+  useEffect(() => {
+    if (advComments) {
+      setAdvComments(advComments);
+    }
+  }, [advComments]);
+
   return (
     <S.Wrapper>
       <S.Container>
@@ -54,7 +67,9 @@ export const AdvPage = () => {
             </Link>
             {user ? (
               <>
-                <S.Button onClick={() => setModalActive(true)}>Разместить объявление</S.Button>
+                <S.Button onClick={() => setModalActive(true)}>
+                  Разместить объявление
+                </S.Button>
                 <NavLink to="/account">
                   <HeaderBtnLk>Личный кабинет</HeaderBtnLk>
                 </NavLink>
@@ -95,7 +110,6 @@ export const AdvPage = () => {
                       />
                     </S.ArticleImgBox>
                   ))}
-
                   <S.ArticleImgBar>
                     {data?.images?.slice(0, 5).map((image, index) => (
                       <S.ArticleImgBarBox key={index}>
@@ -128,7 +142,12 @@ export const AdvPage = () => {
                     <S.ArticleCity>
                       {data ? data.user.city : "Загрузка"}
                     </S.ArticleCity>
-                    <NavLink style={{ color: "blue" }} onClick={() => setModalActiveRevs(true)}> ... отзыва</NavLink>
+                    <NavLink
+                      style={{ color: "blue" }}
+                      onClick={() => setModalActiveRevs(true)}>
+                      {" "}
+                      Отзывы: {adComments ? adComments.length : "..."}
+                    </NavLink>
                   </S.ArticleInfo>
                   <S.ArticlePrice>
                     {data ? data.price : "Загрузка.."} {data ? "₽" : ""}
@@ -180,8 +199,12 @@ export const AdvPage = () => {
             </S.MainContentDescription>
           </S.MainContainerDesc>
         </main>
-        <ReviewsModal active={modalActiveRevs} setActive={setModalActiveRevs}/>
-        <NewAdvModal active={modalActive} setActive={setModalActive}/>
+        <ReviewsModal
+          active={modalActiveRevs}
+          setActive={setModalActiveRevs}
+          comments={advComments}
+        />
+        <NewAdvModal active={modalActive} setActive={setModalActive} />
         <FooterAll />
       </S.Container>
     </S.Wrapper>

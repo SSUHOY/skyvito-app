@@ -78,8 +78,8 @@ export const adsApi = createApi({
         url: "/auth/login",
         method: "PUT",
         body: {
-          access_token: localStorage.getItem("access_token"),
-          refresh_token: localStorage.getItem("refresh_token"),
+          access_token: JSON.parse(localStorage.getItem("access_token")),
+          refresh_token: JSON.parse(localStorage.getItem("refresh_token")),
         },
       }),
     }),

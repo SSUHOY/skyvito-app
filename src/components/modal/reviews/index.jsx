@@ -30,6 +30,7 @@ export const ReviewsModal = ({ active, setActive, comments }) => {
                       <ReviewItem
                         text={item.text}
                         key={index}
+                        avatar= {`http://localhost:8090/${item.author.avatar}`}
                         author={item.author.name}
                       />
                     ))

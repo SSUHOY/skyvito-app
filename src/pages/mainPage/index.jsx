@@ -25,6 +25,7 @@ import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
 import { useGetAllAdsQuery } from "../../components/services/adsApi";
 import { useDispatch, useSelector } from "react-redux";
+import "react-loading-skeleton/dist/skeleton.css";
 import {
   fetchSetAdsRequest,
   setSearchParameters,
@@ -33,6 +34,8 @@ import { selectAllAdsList, selectIsLogin } from "../../store/selectors/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { MainContainer } from "../../components/styles/reusable/Usable.styles";
 import { NewAdvModal } from "../../components/modal/new-adv";
+import SkeletonLoaderAds from "../../components/skeleton";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const Main = () => {
   const { data } = useGetAllAdsQuery({});
@@ -40,6 +43,7 @@ const Main = () => {
 
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Фильтр по вводу в строку поиска
   const [searchText, setSearchText] = useState("");
@@ -68,6 +72,14 @@ const Main = () => {
       dispatch(fetchSetAdsRequest(data));
     }
   }, [data]);
+
+  // таймер для skeletona
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1300);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <S.Wrapper>
@@ -127,6 +139,7 @@ const Main = () => {
                         price={ad.price}
                         date={ad.created_on.split("T")[0]}
                         place={ad.user.city}
+                        isLoading={isLoading}
                       />
                     ))
                   : searchResults.map((ad, index) => (
@@ -138,8 +151,10 @@ const Main = () => {
                         price={ad.price}
                         date={ad.created_on.split("T")[0]}
                         place={ad.user.city}
+                        isLoading={isLoading}
                       />
                     ))}
+
                 {searchText !== "" && searchResults?.length === 0
                   ? "Ничего не найдено"
                   : null}

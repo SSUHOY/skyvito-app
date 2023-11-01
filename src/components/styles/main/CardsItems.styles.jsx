@@ -11,6 +11,7 @@ export const ContentCards = styled.div`
   grid-gap: 40px 26px;
   justify-content: center;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-color: #ffffff #2e2e2e;
   scrollbar-width: thin;
   scrollbar-width: 0px;
@@ -85,7 +86,7 @@ export const CardImgBox = styled.div`
 
 export const CardImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 270px;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;

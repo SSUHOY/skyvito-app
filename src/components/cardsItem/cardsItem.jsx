@@ -12,23 +12,40 @@ import {
   CardDate,
   CardsCard,
 } from "../styles/main/CardsItems.styles";
+import "react-loading-skeleton/dist/skeleton.css";
+import SkeletonLoaderAds from "../skeleton";
+import Skeleton from "react-loading-skeleton";
 
-export const CardsItem = ({ title, picture, price, date, place, advId }) => {
+export const CardsItem = ({
+  title,
+  picture,
+  price,
+  date,
+  place,
+  advId,
+  isLoading,
+}) => {
   return (
-    <CardsContentBox>
-      <CardsCard>
-        <CardImgBox>
-          <CardImage src={picture} />
-        </CardImgBox>
-        <CardContentBox>
-          <Link to={`/adv-page/${advId}`}>
-            <CardTitle>{title}</CardTitle>
-          </Link>
-          <CardPrice>{price} ₽</CardPrice>
-          <CardPlace>{place}</CardPlace>
-          <CardDate>{date}</CardDate>
-        </CardContentBox>
-      </CardsCard>
-    </CardsContentBox>
+    <>
+      {isLoading ? (
+        <Skeleton count={1} />
+      ) : (
+        <CardsContentBox>
+          <CardsCard>
+            <CardImgBox>
+              <CardImage src={picture} />
+            </CardImgBox>
+            <CardContentBox>
+              <Link to={`/adv-page/${advId}`}>
+                <CardTitle>{title}</CardTitle>
+              </Link>
+              <CardPrice>{price} ₽</CardPrice>
+              <CardPlace>{place}</CardPlace>
+              <CardDate>{date}</CardDate>
+            </CardContentBox>
+          </CardsCard>
+        </CardsContentBox>
+      )}
+    </>
   );
 };

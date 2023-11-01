@@ -2,7 +2,6 @@ import React from "react";
 import * as S from "./NewAdv.styles";
 
 export const NewAdvModal = ({ active, setActive }) => {
-  console.log(active);
   return (
     <S.ContainerModal
       className={active ? "active" : ""}

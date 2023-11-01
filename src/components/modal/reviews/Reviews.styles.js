@@ -236,12 +236,7 @@ export const ModalReview = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  flex-direction: column;
   margin: 15px 0;
 `;
 
@@ -259,6 +254,7 @@ export const ModalReviewItem = styled.div`
   -webkit-box-pack: start;
   -ms-flex-pack: start;
   justify-content: flex-start;
+  padding-bottom: 30px;
 `;
 
 export const ModalReviewItemLeft = styled.div`

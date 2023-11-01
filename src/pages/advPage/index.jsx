@@ -15,19 +15,19 @@ import {
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
 import {
-  useGetAllCommentsQuery,
   useGetAllCurrentUserCommentsQuery,
   useGetCurrentAdvQuery,
 } from "../../components/services/adsApi";
 import { NewAdvModal } from "../../components/modal/new-adv";
 import { ReviewsModal } from "../../components/modal/reviews";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data } = useGetCurrentAdvQuery(id);
   const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
-  console.log(advComments)
   const [selectedImg, setSelectedImg] = useState();
   const [adComments, setAdvComments] = useState([]);
   const [nextImg, setNextImg] = useState(0);
@@ -37,6 +37,8 @@ export const AdvPage = () => {
   const [modalActive, setModalActive] = useState(false);
   // Поп-ап "отзывы"
   const [modalActiveRevs, setModalActiveRevs] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
@@ -54,8 +56,17 @@ export const AdvPage = () => {
   useEffect(() => {
     if (advComments) {
       setAdvComments(advComments);
+      setIsLoading(false);
     }
   }, [advComments]);
+
+  // таймер для skeletona
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <S.Wrapper>
@@ -129,65 +140,69 @@ export const AdvPage = () => {
                   </S.ArticleImgBarMob>
                 </S.ArticleFillImg>
               </S.ArticleLeft>
-              <S.ArticleRight>
-                <S.ArticleBlock>
-                  <S.ArticleTitle>
-                    {data ? data.title : "Загрузка..."}
-                  </S.ArticleTitle>
-                  <S.ArticleInfo>
-                    <S.ArticleDate>
-                      {" "}
-                      {data ? data.created_on.split("T")[0] : "Загрузка"}
-                    </S.ArticleDate>
-                    <S.ArticleCity>
-                      {data ? data.user.city : "Загрузка"}
-                    </S.ArticleCity>
-                    <NavLink
-                      style={{ color: "blue" }}
-                      onClick={() => setModalActiveRevs(true)}>
-                      {" "}
-                      Отзывы: {adComments ? adComments.length : "..."}
-                    </NavLink>
-                  </S.ArticleInfo>
-                  <S.ArticlePrice>
-                    {data ? data.price : "Загрузка.."} {data ? "₽" : ""}
-                  </S.ArticlePrice>
-                  <S.ArticleBtn onClick={handleShowPhoneClick}>
-                    Показать&nbsp;телефон
-                    <br />
-                    <S.ArticleBtnSpan>
-                      {!showPhone
-                        ? `${data?.user.phone.substring(
-                            0,
-                            1
-                          )}${data?.user.phone.substring(1, 4)} XXX XX XX`
-                        : data?.user.phone}
-                    </S.ArticleBtnSpan>
-                  </S.ArticleBtn>
-                  <S.ArticleAuthor>
-                    <S.AuthorImgDiv>
-                      <S.AuthorImg
-                        src={
-                          data
-                            ? `http://localhost:8090/${data.user.avatar}`
-                            : "Загрузка..."
-                        }
-                      />
-                    </S.AuthorImgDiv>
-                    <S.AuthorContent>
-                      <Link to={`/seller-account/${id}`}>
-                        <S.AuthorName>
-                          {data ? data.user.name : "Загрузка"}
-                        </S.AuthorName>
-                      </Link>
-                      <S.AuthorAbout>
-                        {data ? "Продает товары с " : ""}{" "}
-                        {data ? data.user.sells_from : "Загрузка..."}
-                      </S.AuthorAbout>
-                    </S.AuthorContent>
-                  </S.ArticleAuthor>
-                </S.ArticleBlock>
-              </S.ArticleRight>
+              {isLoading ? (
+                <Skeleton count={1} />
+              ) : (
+                <S.ArticleRight>
+                  <S.ArticleBlock>
+                    <S.ArticleTitle>
+                      {data ? data.title : "Загрузка"}
+                    </S.ArticleTitle>
+                    <S.ArticleInfo>
+                      <S.ArticleDate>
+                        {" "}
+                        {data ? data.created_on.split("T")[0] : "Загрузка"}
+                      </S.ArticleDate>
+                      <S.ArticleCity>
+                        {data ? data.user.city : "Загрузка"}
+                      </S.ArticleCity>
+                      <NavLink
+                        style={{ color: "blue" }}
+                        onClick={() => setModalActiveRevs(true)}>
+                        {" "}
+                        Отзывы: {adComments ? adComments.length : "..."}
+                      </NavLink>
+                    </S.ArticleInfo>
+                    <S.ArticlePrice>
+                      {data ? data.price : "Загрузка.."} {data ? "₽" : ""}
+                    </S.ArticlePrice>
+                    <S.ArticleBtn onClick={handleShowPhoneClick}>
+                      Показать&nbsp;телефон
+                      <br />
+                      <S.ArticleBtnSpan>
+                        {!showPhone
+                          ? `${data?.user.phone.substring(
+                              0,
+                              1
+                            )}${data?.user.phone.substring(1, 4)} XXX XX XX`
+                          : data?.user.phone}
+                      </S.ArticleBtnSpan>
+                    </S.ArticleBtn>
+                    <S.ArticleAuthor>
+                      <S.AuthorImgDiv>
+                        <S.AuthorImg
+                          src={
+                            data
+                              ? `http://localhost:8090/${data.user.avatar}`
+                              : "Загрузка..."
+                          }
+                        />
+                      </S.AuthorImgDiv>
+                      <S.AuthorContent>
+                        <Link to={`/seller-account/${id}`}>
+                          <S.AuthorName>
+                            {data ? data.user.name : "Загрузка"}
+                          </S.AuthorName>
+                        </Link>
+                        <S.AuthorAbout>
+                          {data ? "Продает товары с " : ""}{" "}
+                          {data ? data.user.sells_from : "Загрузка..."}
+                        </S.AuthorAbout>
+                      </S.AuthorContent>
+                    </S.ArticleAuthor>
+                  </S.ArticleBlock>
+                </S.ArticleRight>
+              )}
             </S.ArticleContent>
           </S.MainArticle>
           <S.MainContainerDesc>

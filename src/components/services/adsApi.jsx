@@ -2,11 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const adsApi = createApi({
   reducerPath: "adsApi",
-  tagTypes: ["Ads", "comments"],
+  tagTypes: ["Ads"],
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8090/",
     prepareHeaders: (headers) => {
-      const token = JSON.parse(localStorage.getItem("access_token"));
+      const token = localStorage.getItem("access_token");
       console.log(token);
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
@@ -43,10 +43,18 @@ export const adsApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "comments", id })),
-              { type: "comments", id: "LIST" },
+              ...result.map(({ id }) => ({ type: "Ads", id })),
+              { type: "Ads", id: "LIST" },
             ]
-          : [{ type: "comments", id: "LIST" }],
+          : [{ type: "Ads", id: "LIST" }],
+    }),
+    addComment: builder.mutation({
+      query: ({ id, text }) => ({
+        url: `ads/${id}/comments`,
+        method: "POST",
+        body: { text },
+      }),
+      invalidatesTags: [{ type: "Ads", id: "LIST" }],
     }),
     getAllCurrentUserComments: builder.query({
       query: (id) => `ads/${id}/comments`,
@@ -78,10 +86,14 @@ export const adsApi = createApi({
         url: "/auth/login",
         method: "PUT",
         body: {
-          access_token: JSON.parse(localStorage.getItem("access_token")),
-          refresh_token: JSON.parse(localStorage.getItem("refresh_token")),
+          access_token: localStorage.getItem("access_token"),
+          refresh_token: localStorage.getItem("refresh_token"),
         },
       }),
+      transformResponse: (response) => {
+        localStorage.setItem("access_token", response.access_token);
+        localStorage.setItem("refresh_token", response.refresh_token);
+      },
     }),
     editUserData: builder.mutation({
       query: (userData) => ({
@@ -115,6 +127,7 @@ export const {
   useGetCurrentUserAdvtQuery,
   useGetCurrentAdvQuery,
   useGetAllCommentsQuery,
+  useAddCommentMutation,
   useGetAllCurrentUserCommentsQuery,
   useRegisterUserMutation,
   useRefreshTokenMutation,

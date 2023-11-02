@@ -15,8 +15,6 @@ export const AuthPage = () => {
   const dispatch = useDispatch();
   const { setUser, loginUserFn } = useAuthContext();
   const [registerUser, { data }] = useRegisterUserMutation();
-  console.log(data)
-
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");

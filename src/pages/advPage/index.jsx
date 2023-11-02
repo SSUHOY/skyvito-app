@@ -26,7 +26,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
-  const { data } = useGetCurrentAdvQuery(id);
+  const { data, isLoading } = useGetCurrentAdvQuery(id);
   const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
   const [selectedImg, setSelectedImg] = useState();
   const [adComments, setAdvComments] = useState([]);
@@ -37,8 +37,6 @@ export const AdvPage = () => {
   const [modalActive, setModalActive] = useState(false);
   // Поп-ап "отзывы"
   const [modalActiveRevs, setModalActiveRevs] = useState(false);
-
-  const [isLoading, setIsLoading] = useState(true);
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
@@ -56,17 +54,8 @@ export const AdvPage = () => {
   useEffect(() => {
     if (advComments) {
       setAdvComments(advComments);
-      setIsLoading(false);
     }
   }, [advComments]);
-
-  // таймер для skeletona
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <S.Wrapper>
@@ -218,6 +207,7 @@ export const AdvPage = () => {
           active={modalActiveRevs}
           setActive={setModalActiveRevs}
           comments={advComments}
+          advId={id}
         />
         <NewAdvModal active={modalActive} setActive={setModalActive} />
         <FooterAll />

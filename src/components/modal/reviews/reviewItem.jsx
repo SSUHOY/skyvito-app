@@ -2,8 +2,6 @@ import React from "react";
 import * as S from "./Reviews.styles";
 
 const ReviewItem = ({author, text, avatar}) => {
-  console.log(avatar)
-    console.log(text)
   return (
     <>
       <S.ModalReviewItem>

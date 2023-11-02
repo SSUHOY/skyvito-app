@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "./Reviews.styles";
 import ReviewItem from "./reviewItem";
+import { useAddCommentMutation } from "../../services/adsApi";
+import { useParams } from "react-router-dom";
 
-export const ReviewsModal = ({ active, setActive, comments }) => {
+export const ReviewsModal = ({ active, setActive, comments, advId }) => {
+  let { id } = useParams();
+  const [addComment, { isLoading }] = useAddCommentMutation();
+  console.log(isLoading);
+  const [newComment, setNewProduct] = useState("");
+
+  const handleAddComment = async (event) => {
+    event.preventDefault();
+    if (newComment) {
+      await addComment({ text: newComment, id: id });
+      setNewProduct("");
+    }
+  };
+
   return (
     <S.ContainerModal
       className={active ? "active" : ""}
@@ -19,9 +34,16 @@ export const ReviewsModal = ({ active, setActive, comments }) => {
             <S.ModalFormNewArt>
               <S.ModalFormNewArtBlock>
                 <S.ModalFormNewArtLabel>Добавить отзыв</S.ModalFormNewArtLabel>
-                <S.ModalFormInput></S.ModalFormInput>
+                <S.ModalFormInput
+                  type="text"
+                  value={newComment}
+                  onChange={(e) =>
+                    setNewProduct(e.target.value)
+                  }></S.ModalFormInput>
               </S.ModalFormNewArtBlock>
-              <S.ModalBtnPublish>Опубликовать</S.ModalBtnPublish>
+              <S.ModalBtnPublish onClick={handleAddComment}>
+                {isLoading ? "Публикация..." : "Опубликовать"}
+              </S.ModalBtnPublish>
             </S.ModalFormNewArt>
             <S.ModalReviewsBox>
               <S.ModalReview>
@@ -30,7 +52,7 @@ export const ReviewsModal = ({ active, setActive, comments }) => {
                       <ReviewItem
                         text={item.text}
                         key={index}
-                        avatar= {`http://localhost:8090/${item.author.avatar}`}
+                        avatar={`http://localhost:8090/${item.author.avatar}`}
                         author={item.author.name}
                       />
                     ))

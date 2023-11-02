@@ -130,9 +130,14 @@ export const ModalScroll = styled.div`
   align-items: flex-start;
   width: 100%;
   overflow-y: auto;
-  scrollbar-color: #ffffff #2e2e2e;
-  scrollbar-width: thin;
-  scrollbar-width: 0px;
+  &::-webkit-scrollbar {
+  width: 4px;
+  background-color: white;
+    }
+  &::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 3px;
+    }
 `;
 
 export const ModalFormNewArt = styled.form`
@@ -219,6 +224,10 @@ export const ModalBtnPublish = styled.button`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
+  &:disabled {
+    background-color: #D9D9D9;
+    border: 1px solid #D9D9D9;
+  }
   @media screen and (max-width: 600px) {
     margin-top: 0px;
     width: 100%;

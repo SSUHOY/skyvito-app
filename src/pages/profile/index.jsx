@@ -26,11 +26,11 @@ import {
 import { NewAdvModal } from "../../components/modal/new-adv";
 
 const Profile = () => {
-  const { user, logoutUserFn } = useAuthContext();
+  const { logoutUserFn } = useAuthContext();
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
 
-  const [uploadImg] = useUploadUserImageMutation({});
+  const [uploadImg, { data: uploadResponse }] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
   const { data } = useGetCurrentUserAdvtQuery();
 
@@ -45,6 +45,8 @@ const Profile = () => {
   const [saveButtonActive, setSaveButtonActive] = useState(false);
   const [inputsAreFilled, setInputsAreFilled] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
+  console.log(selectedFile)
+  const [uploadedImage, setUploadedImage] = useState({});
   const [refreshToken] = useRefreshTokenMutation();
   const [editUserData] = useEditUserDataMutation();
 
@@ -66,11 +68,6 @@ const Profile = () => {
   const handlePhoneChange = (event) => {
     setPhone(event.target.value);
     setInputsAreFilled(event.target.value);
-  };
-
-  const handleAvatarChange = (event) => {
-    console.log(event.target.files[0]);
-    setSelectedFile(event.target.files[0]);
   };
 
   const handleAvatarUpload = async (event) => {
@@ -120,6 +117,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (currentUser) {
+      console.log(currentUser);
     }
     return;
   }, [currentUser]);
@@ -184,17 +182,24 @@ const Profile = () => {
                         <S.SettingsLeftBox>
                           <S.SettingsImg>
                             <Link to="#">
-                              <S.ProfileImg src="#" />
+                              <S.ProfileImg
+                                src={
+                                  currentUser === undefined
+                                    ? ""
+                                    : `http://localhost:8090/${currentUser?.avatar}`
+                                }
+                              />
                             </Link>
                           </S.SettingsImg>
-                          <S.SettingChangePhoto htmlFor="upload-photo">
-                            Заменить
-                          </S.SettingChangePhoto>
-                          <S.SettingChangeAvaInput
-                            type="file"
+                          <S.SettingChangePhoto
                             id="upload-photo"
-                            onChange={handleAvatarUpload}
-                          />
+                            onChange={handleAvatarUpload}>
+                            Заменить
+                            <S.SettingChangeAvaInput
+                              type="file"
+                              htmlFor="upload-photo"
+                            />
+                          </S.SettingChangePhoto>
                         </S.SettingsLeftBox>
                         <S.SettingsRightBox>
                           <S.SettingsForm>
@@ -211,7 +216,7 @@ const Profile = () => {
                               />
                             </S.SettingsDiv>
                             <S.SettingsDiv>
-                              <S.SettingsFormLabel htmlFor="lname">
+                              <S.SettingsFormLabel htmlFor="surname">
                                 Фамилия
                               </S.SettingsFormLabel>
                               <S.SettingsFormInput

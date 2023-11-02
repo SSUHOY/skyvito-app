@@ -235,9 +235,10 @@ export const ProfileImg = styled.img`
   height: auto;
   display: block;
   object-fit: cover;
+  border-radius: 50%;
 `;
 
-export const SettingChangePhoto = styled.button`
+export const SettingChangePhoto = styled.label`
   cursor: pointer;
   text-decoration: none;
   font-size: 16px;
@@ -246,14 +247,16 @@ export const SettingChangePhoto = styled.button`
   letter-spacing: 0em;
   text-align: left;
   color: #009ee4;
+  position: relative;
+	display: inline-block;
 `;
 
 export const SettingChangeAvaInput = styled.input`
-  // opacity: 0;
-  // position: absolute;
-  // z-index: -1;  
-  // width: 0px;
-  // height: 0px;
+  opacity: 0;
+  position: absolute;
+  z-index: -1;  
+  height:20px;
+  width: 20px;
 `;
 
 export const SettingsRight = styled.div`

@@ -7,15 +7,17 @@ import { useParams } from "react-router-dom";
 export const ReviewsModal = ({ active, setActive, comments, advId }) => {
   let { id } = useParams();
   const [addComment, { isLoading }] = useAddCommentMutation();
-  const [newComment, setNewProduct] = useState("");
+  const [newComment, setNewComment] = useState("");
+  const [inputsAreFilled, setInputAreFilled] = useState('')
 
   const handleAddComment = async (event) => {
     event.preventDefault();
     if (newComment) {
       await addComment({ text: newComment, id: id });
-      setNewProduct("");
+      setNewComment("");
     }
   };
+
 
   return (
     <S.ContainerModal
@@ -29,7 +31,7 @@ export const ReviewsModal = ({ active, setActive, comments, advId }) => {
           <S.ModalBtnClose>
             <S.ModalBtnCloseLine onClick={() => setActive(false)} />
           </S.ModalBtnClose>
-          <S.ModalScroll>
+       
             <S.ModalFormNewArt>
               <S.ModalFormNewArtBlock>
                 <S.ModalFormNewArtLabel>Добавить отзыв</S.ModalFormNewArtLabel>
@@ -37,14 +39,17 @@ export const ReviewsModal = ({ active, setActive, comments, advId }) => {
                   type="text"
                   value={newComment}
                   onChange={(e) =>
-                    setNewProduct(e.target.value)
+                    setNewComment(e.target.value)
                   }></S.ModalFormInput>
               </S.ModalFormNewArtBlock>
-              <S.ModalBtnPublish onClick={handleAddComment}>
+              
+              <S.ModalBtnPublish onClick={handleAddComment} disabled={!newComment}>
                 {isLoading ? "Публикация..." : "Опубликовать"}
               </S.ModalBtnPublish>
             </S.ModalFormNewArt>
+            <S.ModalScroll>
             <S.ModalReviewsBox>
+              
               <S.ModalReview>
                 {comments
                   ? comments.map((item, index) => (

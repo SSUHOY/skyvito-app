@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 export const ReviewsModal = ({ active, setActive, comments, advId }) => {
   let { id } = useParams();
   const [addComment, { isLoading }] = useAddCommentMutation();
-  console.log(isLoading);
   const [newComment, setNewProduct] = useState("");
 
   const handleAddComment = async (event) => {

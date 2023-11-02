@@ -13,7 +13,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-
 export const PageContainer = styled.div`
   max-width: 1440px;
   width: 100%;
@@ -238,7 +237,7 @@ export const ProfileImg = styled.img`
   object-fit: cover;
 `;
 
-export const SettingChangePhoto = styled.p`
+export const SettingChangePhoto = styled.button`
   cursor: pointer;
   text-decoration: none;
   font-size: 16px;
@@ -247,6 +246,14 @@ export const SettingChangePhoto = styled.p`
   letter-spacing: 0em;
   text-align: left;
   color: #009ee4;
+`;
+
+export const SettingChangeAvaInput = styled.input`
+  // opacity: 0;
+  // position: absolute;
+  // z-index: -1;  
+  // width: 0px;
+  // height: 0px;
 `;
 
 export const SettingsRight = styled.div`

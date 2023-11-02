@@ -27,8 +27,12 @@ export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data, isLoading } = useGetCurrentAdvQuery(id);
+
   const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
   const [selectedImg, setSelectedImg] = useState();
+  console.log(selectedImg);
+  let stringImg = String(selectedImg);
+  console.log(stringImg);
   const [adComments, setAdvComments] = useState([]);
   const [nextImg, setNextImg] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
@@ -104,7 +108,9 @@ export const AdvPage = () => {
                         onClick={handleNextPhotoClick}
                         src={
                           !selectedImg
-                            ? `http://localhost:8090/${image.url}`
+                            ? setSelectedImg(
+                                `http://localhost:8090/${image.url}`
+                              )
                             : selectedImg
                         }
                       />

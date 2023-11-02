@@ -110,6 +110,14 @@ export const adsApi = createApi({
         localStorage.setItem("user_register_phone", response.phone);
       },
     }),
+    uploadUserImage: builder.mutation({
+      query: (formData) => ({
+        url: "user/avatar",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: [{ type: "Ads", id: "LIST" }],
+    }),
     addNewAd: builder.mutation({
       query: (body) => ({
         url: "goods",
@@ -132,4 +140,5 @@ export const {
   useRegisterUserMutation,
   useRefreshTokenMutation,
   useEditUserDataMutation,
+  useUploadUserImageMutation,
 } = adsApi;

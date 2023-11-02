@@ -142,6 +142,13 @@ export const ArticleRight = styled.div`
   }
 `;
 
+export const EmptyImgMessage = styled.div`
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 export const ArticleFillImg = styled.div`
   width: 100%;
   display: -webkit-box;
@@ -349,9 +356,7 @@ export const ArticleBtn = styled.button`
   }
 `;
 
-export const ArticleBtnSpan = styled.span`
-
-`
+export const ArticleBtnSpan = styled.span``;
 
 export const ArticleAuthor = styled.div`
   margin-top: 34px;

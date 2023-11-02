@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import * as S from "./ProfilePage.styles";
 import { Logo, SearchLogoMob } from "../../assets/icons/icons";
@@ -12,6 +12,7 @@ import {
   useGetCurrentUserQuery,
   useRefreshTokenMutation,
   useRegisterUserMutation,
+  useUploadUserImageMutation,
 } from "../../components/services/adsApi";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { selectCurrentUserAdsList } from "../../store/selectors/ads";
@@ -29,6 +30,7 @@ const Profile = () => {
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
 
+  const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
   const { data } = useGetCurrentUserAdvtQuery();
 
@@ -42,6 +44,7 @@ const Profile = () => {
   const [phone, setPhone] = useState("");
   const [saveButtonActive, setSaveButtonActive] = useState(false);
   const [inputsAreFilled, setInputsAreFilled] = useState();
+  const [selectedFile, setSelectedFile] = useState(null);
   const [refreshToken] = useRefreshTokenMutation();
   const [editUserData] = useEditUserDataMutation();
 
@@ -65,15 +68,24 @@ const Profile = () => {
     setInputsAreFilled(event.target.value);
   };
 
-  // const handleAvatarUpload = (event) => {
-  //   event.preventDefault();
-  //   const selectedFile = event.target.files[0]
-  //   if(!selectedFile) {
-  //     alert('Файл не выбран')
-  //   } else {
-  //     const formData = new
-  //   }
-  // }
+  const handleAvatarChange = (event) => {
+    console.log(event.target.files[0]);
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleAvatarUpload = async (event) => {
+    event.preventDefault();
+    const selectedImg = event.target.files[0];
+    setSelectedFile(event.target.files[0]);
+    if (!selectedImg) {
+      console.log("Файл не выбран");
+    } else {
+      const formData = new FormData();
+      formData.append("file", selectedImg);
+      setInputsAreFilled(true);
+      uploadImg(formData);
+    }
+  };
 
   const handleSaveChanges = async (event) => {
     event.preventDefault();
@@ -175,11 +187,14 @@ const Profile = () => {
                               <S.ProfileImg src="#" />
                             </Link>
                           </S.SettingsImg>
-                          <Link to="#">
-                            <S.SettingChangePhoto>
-                              Заменить
-                            </S.SettingChangePhoto>
-                          </Link>
+                          <S.SettingChangePhoto htmlFor="upload-photo">
+                            Заменить
+                          </S.SettingChangePhoto>
+                          <S.SettingChangeAvaInput
+                            type="file"
+                            id="upload-photo"
+                            onChange={handleAvatarUpload}
+                          />
                         </S.SettingsLeftBox>
                         <S.SettingsRightBox>
                           <S.SettingsForm>
@@ -230,8 +245,9 @@ const Profile = () => {
                                 type="tel"
                                 defaultValue={phone === "null" ? "" : phone}
                                 placeholder={
-                                  phone === "null" ? "Укажите телефон для связи с Вами" :
-                                  undefined
+                                  phone === "null"
+                                    ? "Укажите телефон для связи с Вами"
+                                    : undefined
                                 }
                               />
                             </S.SettingsDiv>
@@ -272,7 +288,7 @@ const Profile = () => {
           </Container>
         </PageContainer>
         <NewAdvModal active={modalActive} setActive={setModalActive} />
-        <FooterAll active={modalActive} setActive={setModalActive}/>
+        <FooterAll active={modalActive} setActive={setModalActive} />
       </S.Wrapper>
     </>
   );

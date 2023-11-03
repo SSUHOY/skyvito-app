@@ -76,6 +76,10 @@ export const Button = styled.button`
   color: #ffffff;
   font-size: 16px;
   line-height: 1;
+  &:disabled {
+    background-color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+  }
 
   &:hover {
     background: rgba(255, 255, 255, 0.15);
@@ -95,6 +99,10 @@ export const SellerButton = styled.button`
   font-size: 16px;
   line-height: 1;
   margin-left: 10px;
+  &:disabled {
+    background-color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+  }
   &:hover {
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid #ffffff;
@@ -248,14 +256,14 @@ export const SettingChangePhoto = styled.label`
   text-align: left;
   color: #009ee4;
   position: relative;
-	display: inline-block;
+  display: inline-block;
 `;
 
 export const SettingChangeAvaInput = styled.input`
   opacity: 0;
   position: absolute;
-  z-index: -1;  
-  height:20px;
+  z-index: -1;
+  height: 20px;
   width: 20px;
 `;
 

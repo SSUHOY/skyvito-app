@@ -19,7 +19,7 @@ export default function adsReducer(state = initialState, action) {
     case SET_USERS_ADS: {
       return {
         ...state,
-        setAds: action.payload,
+        setUserAds: action.payload,
       };
     }
     case SET_ADS_FAILURE: {

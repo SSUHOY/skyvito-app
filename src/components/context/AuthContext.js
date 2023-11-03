@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
       );
       localStorage.setItem("user_register_city", JSON.stringify(userData.city));
       localStorage.setItem("user_register_name", JSON.stringify(userData.name));
+      localStorage.setItem("user_register_avatar", JSON.stringify(userData.avatar));
       localStorage.setItem(
         "user_register_surname",
         JSON.stringify(userData.surname)

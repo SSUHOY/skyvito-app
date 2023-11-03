@@ -7,6 +7,7 @@ import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
 import {
   useEditUserDataMutation,
+  useGetAllAdsQuery,
   useGetCurrentUserAdvtQuery,
   useGetCurrentUserMutation,
   useGetCurrentUserQuery,
@@ -24,18 +25,22 @@ import {
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
 import { NewAdvModal } from "../../components/modal/new-adv";
+import { fetchUser } from "../../api";
 
 const Profile = () => {
-  const { logoutUserFn } = useAuthContext();
+  const { user, logoutUserFn } = useAuthContext();
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
 
-  const [uploadImg, { data: uploadResponse }] = useUploadUserImageMutation({});
+  const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
-  const { data } = useGetCurrentUserAdvtQuery();
+  const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
+  console.log(data);
+  const { data: adv } = useGetAllAdsQuery({});
+  console.log(adv);
 
   const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
-
+  console.log(fetchAllCurrentUserAds);
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -45,8 +50,7 @@ const Profile = () => {
   const [saveButtonActive, setSaveButtonActive] = useState(false);
   const [inputsAreFilled, setInputsAreFilled] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
-  console.log(selectedFile)
-  const [uploadedImage, setUploadedImage] = useState({});
+  const [sellerAdv, setSellerAdv] = useState();
   const [refreshToken] = useRefreshTokenMutation();
   const [editUserData] = useEditUserDataMutation();
 
@@ -89,6 +93,7 @@ const Profile = () => {
     await refreshToken();
     const userData = { phone, name, surname, city };
     editUserData(userData);
+    console.log(selectedFile)
     setSaveButtonActive(false);
     getCurrentUser();
   };
@@ -113,6 +118,7 @@ const Profile = () => {
     setSurname(localStorage.user_register_surname.replace(/"/g, ""));
     setCity(localStorage.user_register_city.replace(/"/g, ""));
     setPhone(localStorage.user_register_phone.replace(/"/g, ""));
+    setSelectedFile(localStorage.user_register_avatar.replace(/"/g, ""));
   }, [currentUser]);
 
   useEffect(() => {
@@ -132,9 +138,14 @@ const Profile = () => {
 
   useEffect(() => {
     if (data) {
+      getCurrentUser();
       dispatch(fetchSetCurrentUserAdsRequest(data));
     }
   }, [data, dispatch]);
+
+  useEffect(() => {
+    setSellerAdv(data);
+  }, [data]);
 
   return (
     <>
@@ -273,19 +284,20 @@ const Profile = () => {
                   <S.MainContentTitle>Мои товары</S.MainContentTitle>
                   <S.MainContent>
                     <S.ContentCards>
-                      {fetchAllCurrentUserAds.map((ad, index) => {
+                      {fetchAllCurrentUserAds.map((item, index) => {
                         <CardsItem
                           key={index}
-                          title={ad.title}
-                          picture={`http://localhost:8090/${ad.images[0]?.url}`}
-                          price={ad.price}
-                          date={ad.created_on.split("T")[0]}
-                          place={ad.user.city}
+                          title={item.title}
+                          picture={`http://localhost:8090/${item.images[0]?.url}`}
+                          price={item.price}
+                          date={item.created_on.split("T")[0]}
+                          place={item.user.city}
+                          isLoading={isLoading}
                         />;
                       })}
                     </S.ContentCards>
-                    {fetchAllCurrentUserAds.length === 0 &&
-                      "Вы пока не разместили ни одного объявления"}
+                    {/* {fetchAllCurrentUserAds.length === 0 &&
+                      "Вы пока не разместили ни одного объявления"} */}
                   </S.MainContent>
                 </S.MainCenterBox>
               </S.MainContainer>

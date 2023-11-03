@@ -86,11 +86,11 @@ const Main = () => {
           <HeaderNav>
             {user ? (
               <>
-                <S.Button onClick={() => setModalActive(true)}>
+                <S.Button disabled={isLoading} onClick={() => setModalActive(true)}>
                   Разместить объявление
                 </S.Button>
                 <NavLink to="/account">
-                  <S.SellerButton>Личный кабинет</S.SellerButton>
+                  <S.SellerButton disabled={isLoading}>Личный кабинет</S.SellerButton>
                 </NavLink>
               </>
             ) : (

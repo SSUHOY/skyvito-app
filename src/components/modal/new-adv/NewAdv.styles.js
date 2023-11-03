@@ -231,7 +231,7 @@ export const FormLabelTextName = styled.input`
   }
 `;
 
-export const FormLabelTextDescription = styled.input`
+export const FormLabelTextDescription = styled.textarea`
   width: 100%;
   height: 200px;
   border-radius: 6px;
@@ -243,6 +243,12 @@ export const FormLabelTextDescription = styled.input`
   line-height: 24px;
   color: #000000;
   padding-left: 19px;
+  padding-top: 19px;
+  resize: none;
+  font-size: 16px;
+  line-height: 1;
+  box-sizing: border-box;
+  vertical-align: top;
   @media screen and (max-width: 600px) {
     border-radius: 30px;
     margin-bottom: 5px;
@@ -378,7 +384,7 @@ export const FormNewArtImg = styled.img`
   }
 `;
 
-export const FormNewArtCover = styled.div`
+export const FormNewArtCover = styled.label`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -458,9 +464,25 @@ export const FormSendBtn = styled.button`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
+  background-color: ${(props) => props.active};
+  border-radius: 6px;
+  border: 1px solid ${(props) => props.active};
+
+  &:hover {
+    background-color: ${(props) => props.activeHover};
+  }
   @media screen and (max-width: 600px) {
     margin-top: 10px;
     width: 100%;
     height: 46px;
   }
+`;
+
+export const Error = styled.div`
+  color: coral;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 20px;
+  text-align: left;
 `;

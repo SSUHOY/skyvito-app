@@ -34,6 +34,7 @@ const SellerProfile = () => {
   const [adv, setAdv] = useState();
   const [showPhone, setShowPhone] = useState(false);
   const [sellerAds, setSellerAds] = useState([]);
+  
   const handleShowPhoneClick = () => {
     setShowPhone(true);
   };

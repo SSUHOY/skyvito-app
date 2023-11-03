@@ -5,6 +5,7 @@ import {
   SEARCH_VALUE,
   SET_ADS,
   SET_ADS_FAILURE,
+  SET_USERS_ADS,
   UPLOAD_TOKENS,
 } from "../types/ads";
 
@@ -18,9 +19,9 @@ export const fetchSetAdsFailure = (error) => ({
   payload: error,
 });
 
-export const fetchSetCurrentUserAdsRequest = (adsUserList) => ({
-  type: SET_ADS,
-  payload: adsUserList,
+export const fetchSetCurrentUserAdsRequest = (setUserAds) => ({
+  type: SET_USERS_ADS,
+  payload: setUserAds,
 });
 
 export const loginUser = () => ({

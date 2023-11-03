@@ -39,7 +39,7 @@ export const adsApi = createApi({
     }),
     getAllComments: builder.query({
       query: () => "comments",
-      providesTags: ['Ads']
+      providesTags: ["Ads"],
     }),
     addComment: builder.mutation({
       query: ({ id, text }) => ({
@@ -101,6 +101,7 @@ export const adsApi = createApi({
         localStorage.setItem("user_register_name", response.name);
         localStorage.setItem("user_register_surname", response.surname);
         localStorage.setItem("user_register_phone", response.phone);
+        localStorage.setItem("user_register_avatar", response.avatar);
       },
     }),
     uploadUserImage: builder.mutation({
@@ -109,13 +110,13 @@ export const adsApi = createApi({
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["Ads"],
+      invalidatesTags: [{ type: "Ads", id: "LIST" }],
     }),
-    addNewAd: builder.mutation({
-      query: (body) => ({
-        url: "goods",
+    addNewAdvText: builder.mutation({
+      query: (newAdvData) => ({
+        url: "adstext",
         method: "POST",
-        body,
+        body: newAdvData
       }),
       invalidatesTags: [{ type: "Ads", id: "LIST" }],
     }),
@@ -129,6 +130,7 @@ export const {
   useGetCurrentAdvQuery,
   useGetAllCommentsQuery,
   useAddCommentMutation,
+  useAddNewAdvTextMutation,
   useGetAllCurrentUserCommentsQuery,
   useRegisterUserMutation,
   useRefreshTokenMutation,

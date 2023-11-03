@@ -353,7 +353,7 @@ export const FormNewArtBarImages = styled.div`
   }
 `;
 
-export const FormNewArtImage = styled.div`
+export const FormNewArtImage = styled.label`
   width: 90px;
   height: 90px;
   margin-right: 10px;
@@ -384,7 +384,7 @@ export const FormNewArtImg = styled.img`
   }
 `;
 
-export const FormNewArtCover = styled.label`
+export const FormNewArtCover = styled.input`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -392,6 +392,7 @@ export const FormNewArtCover = styled.label`
   left: 0;
   background-color: #f0f0f0;
   z-index: -1;
+  cursor: pointer;
   &:before {
     content: "";
     position: absolute;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FooterAll } from "../../components/footer/footer";
 import * as S from "./AdvPage.styles";
 import {
@@ -30,12 +30,11 @@ export const AdvPage = () => {
 
   const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
   const [selectedImg, setSelectedImg] = useState();
-  console.log(selectedImg);
-  let stringImg = String(selectedImg);
-  console.log(stringImg);
   const [adComments, setAdvComments] = useState([]);
   const [nextImg, setNextImg] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
+  const [errorWithImg, setImgError] = useState("");
+
 
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
@@ -60,6 +59,20 @@ export const AdvPage = () => {
       setAdvComments(advComments);
     }
   }, [advComments]);
+
+  const adv = useMemo(() => data || [], [data]);
+  const user_data = useMemo(() => user || [], [user]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("Проверка")
+    if (selectedImg === undefined) {
+      return setImgError("Фото отсутсвует");
+    } 
+  }, 1300);
+    return () => clearTimeout(timer);
+  }, [selectedImg]);
+
 
   return (
     <S.Wrapper>
@@ -101,6 +114,7 @@ export const AdvPage = () => {
           <S.MainArticle>
             <S.ArticleContent>
               <S.ArticleLeft>
+                {errorWithImg != '' ? <S.Error>{errorWithImg}</S.Error> : ''}
                 <S.ArticleFillImg>
                   {data?.images.slice(0, 1).map((image, index) => (
                     <S.ArticleImgBox key={index}>
@@ -141,15 +155,15 @@ export const AdvPage = () => {
                 <S.ArticleRight>
                   <S.ArticleBlock>
                     <S.ArticleTitle>
-                      {data ? data.title : "Загрузка"}
+                      {adv ? adv.title : "Загрузка"}
                     </S.ArticleTitle>
                     <S.ArticleInfo>
                       <S.ArticleDate>
                         {" "}
-                        {data ? data.created_on.split("T")[0] : "Загрузка"}
+                        {adv ? adv.created_on.split("T")[0] : "Загрузка"}
                       </S.ArticleDate>
                       <S.ArticleCity>
-                        {data ? data.user.city : "Загрузка"}
+                        {adv ? adv.user.city : "Загрузка"}
                       </S.ArticleCity>
                       <NavLink
                         style={{ color: "blue" }}
@@ -159,25 +173,33 @@ export const AdvPage = () => {
                       </NavLink>
                     </S.ArticleInfo>
                     <S.ArticlePrice>
-                      {data ? data.price : "Загрузка.."} {data ? "₽" : ""}
+                      {adv ? adv.price : "Загрузка.."} {data ? "₽" : ""}
                     </S.ArticlePrice>
-                    <S.ArticleBtn onClick={handleShowPhoneClick}>
-                      Показать&nbsp;телефон
-                      <br />
-                      <S.ArticleBtnSpan>
-                        {!showPhone
-                          ? `${data?.user.phone.substring(
-                              0,
-                              1
-                            )}${data?.user.phone.substring(1, 4)} XXX XX XX`
-                          : data?.user.phone}
-                      </S.ArticleBtnSpan>
-                    </S.ArticleBtn>
+                    {user_data.id === adv.user.id ? (
+                      <S.UsersUIBtnBlock>
+                        <S.ArticleBtnEdit>Редактировать</S.ArticleBtnEdit>
+                        <S.ArticleBtnDel>Снять с публикации</S.ArticleBtnDel>
+                      </S.UsersUIBtnBlock>
+                    ) : (
+                      <S.ArticleBtn onClick={handleShowPhoneClick}>
+                        Показать&nbsp;телефон
+                        <br />
+                        <S.ArticleBtnSpan>
+                          {!showPhone
+                            ? `${adv?.user.phone.substring(
+                                0,
+                                1
+                              )}${adv?.user.phone.substring(1, 4)} XXX XX XX`
+                            : data?.user.phone}
+                        </S.ArticleBtnSpan>
+                      </S.ArticleBtn>
+                    )}
+
                     <S.ArticleAuthor>
                       <S.AuthorImgDiv>
                         <S.AuthorImg
                           src={
-                            data
+                            adv
                               ? `http://localhost:8090/${data.user.avatar}`
                               : "Загрузка..."
                           }
@@ -190,8 +212,8 @@ export const AdvPage = () => {
                           </S.AuthorName>
                         </Link>
                         <S.AuthorAbout>
-                          {data ? "Продает товары с " : ""}{" "}
-                          {data ? data.user.sells_from : "Загрузка..."}
+                          {adv ? "Продает товары с " : ""}{" "}
+                          {adv ? adv.user.sells_from : "Загрузка..."}
                         </S.AuthorAbout>
                       </S.AuthorContent>
                     </S.ArticleAuthor>
@@ -204,7 +226,8 @@ export const AdvPage = () => {
             <S.ArticleTitle>Описание товара</S.ArticleTitle>
             <S.MainContentDescription>
               <S.MainContentText>
-                {data ? data?.description : "Загрузка..."}
+                {adv ? adv?.description : "Загрузка..."}
+                {!adv?.description && "Описание отсутствует"}
               </S.MainContentText>
             </S.MainContentDescription>
           </S.MainContainerDesc>

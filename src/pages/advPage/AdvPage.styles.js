@@ -356,6 +356,54 @@ export const ArticleBtn = styled.button`
   }
 `;
 
+export const ArticleBtnEdit = styled.button`
+  background-color: #009ee4;
+  border-radius: 6px;
+  border: 1px solid #009ee4;
+  width: 189px;
+  height: 50px;
+  gap: 10px
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 57px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #ffffff;
+  }
+`;
+
+export const UsersUIBtnBlock = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const ArticleBtnDel = styled.button`
+  background-color: #009ee4;
+  border-radius: 6px;
+  border: 1px solid #009ee4;
+  width:225px;
+  height: 50px;
+  gap: 20px
+  
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 57px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #ffffff;
+  }
+`;
+
 export const ArticleBtnSpan = styled.span``;
 
 export const ArticleAuthor = styled.div`
@@ -440,4 +488,17 @@ export const MainContentText = styled.p`
     margin: 0 auto;
     padding: 0 0 84px;
   }
+`;
+
+export const Error = styled.div`
+  color: black;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 20px;
+  height:300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;

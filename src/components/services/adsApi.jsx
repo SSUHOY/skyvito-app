@@ -1,18 +1,57 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { uploadTokens } from "../../store/actions/creators/ads";
+
+const baseQueryWithReauth = async (argc, api, extraOptions) => {
+  const baseQuery = fetchBaseQuery({
+    baseUrl: "http://localhost:8090/",
+    prepareHeaders: (headers, { getState }) => {
+      const token = localStorage.getItem("access_token");
+      console.debug("Токен из стора", { token });
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  });
+
+  const auth = localStorage.getItem("refresh_token");
+  console.log(auth);
+  const result = await baseQuery(argc, api, extraOptions);
+  console.debug("результат первого запроса", { result });
+
+  if (result?.error?.status !== 401) {
+    return result;
+  }
+
+  const forceLogout = () => {
+    console.debug("Принудительная авторизация");
+    api.dispatch(uploadTokens(null, null));
+    window.location.href = "/login";
+  };
+
+  console.debug("Данные пользователя в сторе", { auth });
+
+  if (!auth) {
+    console.log("no token");
+    return forceLogout();
+  }
+};
 
 export const adsApi = createApi({
   reducerPath: "adsApi",
   tagTypes: ["Ads"],
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8090/",
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("access_token");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
+
+  // fetchBaseQuery({
+  //   baseUrl: "http://localhost:8090/",
+  //   prepareHeaders: (headers) => {
+  //     const token = localStorage.getItem("access_token");
+  //     if (token) {
+  //       headers.set("Authorization", `Bearer ${token}`);
+  //     }
+  //     return headers;
+  //   },
+  // }),
 
   endpoints: (builder) => ({
     getAllAds: builder.query({
@@ -116,9 +155,16 @@ export const adsApi = createApi({
       query: (newAdvData) => ({
         url: "adstext",
         method: "POST",
-        body: newAdvData
+        body: newAdvData,
       }),
       invalidatesTags: [{ type: "Ads", id: "LIST" }],
+    }),
+    addNewAdvPic: builder.mutation({
+      query: (formData, searchParams) => ({
+        url: `ads?${searchParams}`,
+        method: "POST",
+        body: formData,
+      }),
     }),
   }),
 });
@@ -131,6 +177,7 @@ export const {
   useGetAllCommentsQuery,
   useAddCommentMutation,
   useAddNewAdvTextMutation,
+  useAddNewAdvPicMutation,
   useGetAllCurrentUserCommentsQuery,
   useRegisterUserMutation,
   useRefreshTokenMutation,

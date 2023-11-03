@@ -35,12 +35,9 @@ const Profile = () => {
   const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
   const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
-  console.log(data);
   const { data: adv } = useGetAllAdsQuery({});
-  console.log(adv);
 
   const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
-  console.log(fetchAllCurrentUserAds);
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -93,7 +90,7 @@ const Profile = () => {
     await refreshToken();
     const userData = { phone, name, surname, city };
     editUserData(userData);
-    console.log(selectedFile)
+    console.log(selectedFile);
     setSaveButtonActive(false);
     getCurrentUser();
   };
@@ -192,15 +189,13 @@ const Profile = () => {
                       <S.ProfileSettingsContainer>
                         <S.SettingsLeftBox>
                           <S.SettingsImg>
-                            <Link to="#">
-                              <S.ProfileImg
-                                src={
-                                  currentUser === undefined
-                                    ? ""
-                                    : `http://localhost:8090/${currentUser?.avatar}`
-                                }
-                              />
-                            </Link>
+                            <S.ProfileImg
+                              src={
+                                currentUser === undefined
+                                  ? ""
+                                  : `http://localhost:8090/${currentUser?.avatar}`
+                              }
+                            />
                           </S.SettingsImg>
                           <S.SettingChangePhoto
                             id="upload-photo"
@@ -296,8 +291,8 @@ const Profile = () => {
                         />;
                       })}
                     </S.ContentCards>
-                    {/* {fetchAllCurrentUserAds.length === 0 &&
-                      "Вы пока не разместили ни одного объявления"} */}
+                    {fetchAllCurrentUserAds.length === 0 &&
+                      "Вы пока не разместили ни одного объявления"}
                   </S.MainContent>
                 </S.MainCenterBox>
               </S.MainContainer>

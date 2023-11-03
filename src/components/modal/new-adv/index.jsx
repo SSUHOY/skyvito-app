@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
 import * as S from "./NewAdv.styles";
-import { useAddNewAdvTextMutation } from "../../services/adsApi";
+import {
+  useAddNewAdvPicMutation,
+  useAddNewAdvTextMutation,
+  useGetCurrentUserAdvtQuery,
+} from "../../services/adsApi";
+import { AuthContext, useAuthContext } from "../../context/AuthContext";
 
 export const NewAdvModal = ({ active, setActive }) => {
+  const { user } = useAuthContext();
+  const { data } = useGetCurrentUserAdvtQuery();
+
   const [inputsAreFilled, setInputsAreFilled] = useState();
   const [sendButtonActive, setSendButtonActive] = useState(false);
   const [advTitle, setTitle] = useState("");
   const [advDescription, setDescription] = useState("");
   const [advPrice, setPrice] = useState("");
   const [error, setError] = useState(null);
-  const [selectedFiles, setSelectedFiles] = useState(null)
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
-  // Добавить объявление без текста
+  // Добавить объявления без фото
   const [addNewAdv] = useAddNewAdvTextMutation({});
+  // Добавление объявления с фото
+  const [addNewAdvWithPic] = useAddNewAdvPicMutation({});
 
   const handleAdTitleChange = (event) => {
     setTitle(event.target.value);
@@ -33,15 +43,16 @@ export const NewAdvModal = ({ active, setActive }) => {
   const handleAdvPictureUpload = async (event) => {
     event.preventDefault();
     const selectedImg = event.target.files[0];
-    setSelectedFile(event.target.files[0]);
-    if (!selectedImg) {
-      console.log("Файл не выбран");
-    } else {
-      const formData = new FormData();
-      formData.append("file", selectedImg);
-      setInputsAreFilled(true);
-      uploadImg(formData);
-    }
+    setSelectedFiles([...selectedFiles, event.target.files[0]]);
+
+    // if (!selectedImg) {
+    //   console.log("Файл не выбран");
+    // } else {
+    //   const formData = new FormData();
+    //   formData.append("file", selectedImg);
+    //   setInputsAreFilled(true);
+    //   addNewAdvWithPic(formData);
+    // }
   };
 
   useEffect(() => {
@@ -59,16 +70,38 @@ export const NewAdvModal = ({ active, setActive }) => {
     }
   }, [inputsAreFilled]);
 
-  const handleSaveChanges = async (event) => {
+  const handleSendChanges = async (event) => {
     event.preventDefault();
-    if (!advTitle || !advDescription || advPrice) {
+    if (!advTitle || !advDescription || !advPrice) {
       setError("Пожалуйста, введите наименование и/или описание объявления");
       return;
     }
-    const newAdvData = { title: advTitle, description: advDescription, price: advPrice };
-    addNewAdv(newAdvData)
-    setSendButtonActive(false);
-    setActive(false)
+    try {
+      const searchParams = new URLSearchParams();
+      searchParams.append("title", advTitle);
+      searchParams.append("description", advDescription);
+      searchParams.append("price", advPrice);
+
+      const formData = new FormData();
+      selectedFiles.forEach((image, index) => {
+        formData.append(`image${index + 1}`, image);
+      });
+      console.log(selectedFiles);
+      const newAdvData = {
+        title: advTitle,
+        description: advDescription,
+        price: advPrice,
+        file: formData,
+      };
+      addNewAdvWithPic(formData, searchParams);
+      console.log(newAdvData);
+      setSendButtonActive(false);
+      setActive(false);
+    } catch (error) {
+      console.error("Ошибка регистрации:", error);
+      setError(error.message || "Неизвестная ошибка регистрации");
+      setSendButtonActive(false);
+    }
   };
 
   return (
@@ -112,25 +145,27 @@ export const NewAdvModal = ({ active, setActive }) => {
                 <S.FormNewArtSpan>не более 5 фотографий</S.FormNewArtSpan>
               </S.FormNewArtParagraph>
               <S.FormNewArtBarImages>
-                <S.FormNewArtImage>
+                <S.FormNewArtImage
+                  id="upload-photo"
+                  onChange={handleAdvPictureUpload}>
                   <S.FormNewArtImg />
-                  <S.FormNewArtCover />
+                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
                 </S.FormNewArtImage>
-                <S.FormNewArtImage>
+                <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg />
-                  <S.FormNewArtCover />
+                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
                 </S.FormNewArtImage>
-                <S.FormNewArtImage>
+                <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg />
-                  <S.FormNewArtCover />
+                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
                 </S.FormNewArtImage>
-                <S.FormNewArtImage>
+                <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg />
-                  <S.FormNewArtCover />
+                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
                 </S.FormNewArtImage>
-                <S.FormNewArtImage>
+                <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg />
-                  <S.FormNewArtCover />
+                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
                 </S.FormNewArtImage>
               </S.FormNewArtBarImages>
             </S.FormNewArtBlock>
@@ -144,7 +179,8 @@ export const NewAdvModal = ({ active, setActive }) => {
                 onChange={handleAdPriceChange}></S.FormPriceInput>
               <S.FormNewArtPriceCover> &#8381;</S.FormNewArtPriceCover>
             </S.FormNewArtBlockPrice>
-            <S.FormSendBtn onClick={handleSaveChanges}
+            <S.FormSendBtn
+              onClick={handleSendChanges}
               active={!sendButtonActive ? "#D9D9D9" : "#009EE4"}
               activehover={!sendButtonActive ? "#D9D9D9" : "#0080C1"}>
               {" "}

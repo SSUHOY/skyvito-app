@@ -24,6 +24,7 @@ import { NewAdvModal } from "../../components/modal/new-adv";
 import { ReviewsModal } from "../../components/modal/reviews";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { EditAdvModal } from "../../components/modal/adv-edit";
 
 export const AdvPage = () => {
   const { user } = useAuthContext();
@@ -44,6 +45,8 @@ export const AdvPage = () => {
   const [modalActive, setModalActive] = useState(false);
   // Поп-ап "отзывы"
   const [modalActiveRevs, setModalActiveRevs] = useState(false);
+  // Поп-ап "Редактировать объявление"
+  const [modalActiveEdit, setModalActiveEdit] = useState(false);
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
@@ -190,9 +193,13 @@ export const AdvPage = () => {
                     </S.ArticlePrice>
                     {user_data.id === adv.user.id ? (
                       <S.UsersUIBtnBlock>
-                        <S.ArticleBtnEdit disabled={deleted}>Редактировать</S.ArticleBtnEdit>
-                        <S.ArticleBtnDel onClick={handleDeleteAdv} disabled={deleted}>
-                          {deleted ? 'Удалено' : 'Снять с публикации'}
+                        <S.ArticleBtnEdit disabled={deleted} onClick={setModalActiveEdit}>
+                          Редактировать
+                        </S.ArticleBtnEdit>
+                        <S.ArticleBtnDel
+                          onClick={handleDeleteAdv}
+                          disabled={deleted}>
+                          {deleted ? "Удалено" : "Снять с публикации"}
                         </S.ArticleBtnDel>
                       </S.UsersUIBtnBlock>
                     ) : (
@@ -254,6 +261,7 @@ export const AdvPage = () => {
           advId={id}
         />
         <NewAdvModal active={modalActive} setActive={setModalActive} />
+        <EditAdvModal active={modalActiveEdit} setActive={setModalActiveEdit} />
         <FooterAll />
       </S.Container>
     </S.Wrapper>

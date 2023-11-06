@@ -19,6 +19,9 @@ export const NewAdvModal = ({ active, setActive }) => {
   const [error, setError] = useState(null);
   const [images, setImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [imageSrc, setImageSrc] = useState([]);
+  console.log(imageSrc);
+  console.log(selectedFiles);
 
   // Добавление объявления с фото
   const [addNewAdvWithPic] = useAddNewAdvPicMutation({});
@@ -49,6 +52,28 @@ export const NewAdvModal = ({ active, setActive }) => {
       setSendButtonActive(true);
 
       const selectedImgUrl = URL.createObjectURL(selectedImg);
+
+      const newImageSrc = [];
+      if (
+        event.target.files[0].type &&
+        !event.target.files[0].type.startsWith("image/")
+      ) {
+        console.log(
+          "Файл не является картинкой",
+          event.target.files[0].type,
+          event.target.files[0]
+        );
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        newImageSrc.push(reader.result);
+        setImageSrc([...imageSrc, ...newImageSrc]);
+      });
+      reader.readAsDataURL(event.target.files[0]);
+      console.log(reader);
+
       setSelectedFiles([...selectedFiles, { selectedImgUrl }]);
     }
   };
@@ -139,15 +164,7 @@ export const NewAdvModal = ({ active, setActive }) => {
               </S.FormNewArtParagraph>
               <S.FormNewArtBarImages>
                 <S.FormNewArtImage htmlFor="upload-photo">
-                  <S.FormNewArtImg
-                    src={
-                      selectedFiles === undefined
-                        ? ""
-                        : selectedFiles[0]?.selectedImg
-                        ? selectedFiles[0]?.selectedImg
-                        : `http://localhost:8090/${selectedFiles[0]}`
-                    }
-                  />
+                  <S.FormNewArtImg src={imageSrc[0]} />
                   <S.FormNewArtCover
                     type="file"
                     id="upload-photo"
@@ -155,7 +172,7 @@ export const NewAdvModal = ({ active, setActive }) => {
                   />
                 </S.FormNewArtImage>
                 <S.FormNewArtImage id="upload-photo">
-                  <S.FormNewArtImg />
+                  <S.FormNewArtImg src={imageSrc[1]} />
                   <S.FormNewArtCover
                     type="file"
                     htmlFor="upload-photo"
@@ -163,16 +180,28 @@ export const NewAdvModal = ({ active, setActive }) => {
                   />
                 </S.FormNewArtImage>
                 <S.FormNewArtImage id="upload-photo">
-                  <S.FormNewArtImg />
-                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
+                  <S.FormNewArtImg src={imageSrc[2]} />
+                  <S.FormNewArtCover
+                    type="file"
+                    htmlFor="upload-photo"
+                    onChange={handleAdvPictureUpload}
+                  />
                 </S.FormNewArtImage>
                 <S.FormNewArtImage id="upload-photo">
-                  <S.FormNewArtImg />
-                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
+                  <S.FormNewArtImg src={imageSrc[3]} />
+                  <S.FormNewArtCover
+                    type="file"
+                    htmlFor="upload-photo"
+                    onChange={handleAdvPictureUpload}
+                  />
                 </S.FormNewArtImage>
                 <S.FormNewArtImage id="upload-photo">
-                  <S.FormNewArtImg />
-                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
+                  <S.FormNewArtImg src={imageSrc[4]} />
+                  <S.FormNewArtCover
+                    type="file"
+                    htmlFor="upload-photo"
+                    onChange={handleAdvPictureUpload}
+                  />
                 </S.FormNewArtImage>
               </S.FormNewArtBarImages>
             </S.FormNewArtBlock>

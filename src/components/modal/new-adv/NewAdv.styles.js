@@ -359,6 +359,7 @@ export const FormNewArtImage = styled.label`
   margin-right: 10px;
   position: relative;
   z-index: 0;
+  background-color: #f0f0f0;
   @media screen and (max-width: 600px) {
     display: block;
     width: 90px;
@@ -385,7 +386,12 @@ export const FormNewArtImg = styled.img`
 `;
 
 export const FormNewArtCover = styled.input`
+  &::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  content: "Файл";
   position: absolute;
+
   width: 100%;
   height: 100%;
   top: 0;
@@ -393,6 +399,7 @@ export const FormNewArtCover = styled.input`
   background-color: #f0f0f0;
   z-index: -1;
   cursor: pointer;
+
   &:before {
     content: "";
     position: absolute;

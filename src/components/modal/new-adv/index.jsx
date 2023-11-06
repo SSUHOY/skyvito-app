@@ -4,12 +4,12 @@ import {
   useAddNewAdvPicMutation,
   useAddNewAdvTextMutation,
   useGetCurrentUserAdvtQuery,
+  useRefreshTokenMutation,
 } from "../../services/adsApi";
 import { AuthContext, useAuthContext } from "../../context/AuthContext";
 
 export const NewAdvModal = ({ active, setActive }) => {
-  const { user } = useAuthContext();
-  const { data } = useGetCurrentUserAdvtQuery();
+  const [refreshToken] = useRefreshTokenMutation();
 
   const [inputsAreFilled, setInputsAreFilled] = useState();
   const [sendButtonActive, setSendButtonActive] = useState(false);
@@ -17,13 +17,11 @@ export const NewAdvModal = ({ active, setActive }) => {
   const [advDescription, setDescription] = useState("");
   const [advPrice, setPrice] = useState("");
   const [error, setError] = useState(null);
+  const [images, setImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
 
-  // Добавить объявления без фото
-  const [addNewAdv] = useAddNewAdvTextMutation({});
   // Добавление объявления с фото
   const [addNewAdvWithPic] = useAddNewAdvPicMutation({});
-
   const handleAdTitleChange = (event) => {
     setTitle(event.target.value);
     setInputsAreFilled(event.target.value);
@@ -43,16 +41,20 @@ export const NewAdvModal = ({ active, setActive }) => {
   const handleAdvPictureUpload = async (event) => {
     event.preventDefault();
     const selectedImg = event.target.files[0];
-    setSelectedFiles([...selectedFiles, event.target.files[0]]);
+    if (!selectedFiles) {
+      console.log("Файл не выбран");
+    } else {
+      handleAddItemPhoto(selectedImg);
+      console.log("Файл выбран");
+      setSendButtonActive(true);
 
-    // if (!selectedImg) {
-    //   console.log("Файл не выбран");
-    // } else {
-    //   const formData = new FormData();
-    //   formData.append("file", selectedImg);
-    //   setInputsAreFilled(true);
-    //   addNewAdvWithPic(formData);
-    // }
+      const selectedImgUrl = URL.createObjectURL(selectedImg);
+      setSelectedFiles([...selectedFiles, { selectedImgUrl }]);
+    }
+  };
+
+  const handleAddItemPhoto = (newItem) => {
+    setImages((prevItems) => prevItems.concat(newItem));
   };
 
   useEffect(() => {
@@ -73,33 +75,24 @@ export const NewAdvModal = ({ active, setActive }) => {
   const handleSendChanges = async (event) => {
     event.preventDefault();
     if (!advTitle || !advDescription || !advPrice) {
-      setError("Пожалуйста, введите наименование и/или описание объявления");
+      setError("Пожалуйста, добавьте информацию о товаре");
       return;
     }
     try {
-      const searchParams = new URLSearchParams();
-      searchParams.append("title", advTitle);
-      searchParams.append("description", advDescription);
-      searchParams.append("price", advPrice);
-
       const formData = new FormData();
-      selectedFiles.forEach((image, index) => {
+      formData.append("title", advTitle);
+      formData.append("description", advDescription);
+      formData.append("price", advPrice);
+
+      images.forEach((image, index) => {
         formData.append(`image${index + 1}`, image);
       });
-      console.log(selectedFiles);
-      const newAdvData = {
-        title: advTitle,
-        description: advDescription,
-        price: advPrice,
-        file: formData,
-      };
-      addNewAdvWithPic(formData, searchParams);
-      console.log(newAdvData);
+      addNewAdvWithPic(formData);
       setSendButtonActive(false);
       setActive(false);
     } catch (error) {
-      console.error("Ошибка регистрации:", error);
-      setError(error.message || "Неизвестная ошибка регистрации");
+      console.error("Ошибка:", error);
+      setError(error.message || "Неизвестная ошибка обработки запроса к API");
       setSendButtonActive(false);
     }
   };
@@ -145,15 +138,29 @@ export const NewAdvModal = ({ active, setActive }) => {
                 <S.FormNewArtSpan>не более 5 фотографий</S.FormNewArtSpan>
               </S.FormNewArtParagraph>
               <S.FormNewArtBarImages>
-                <S.FormNewArtImage
-                  id="upload-photo"
-                  onChange={handleAdvPictureUpload}>
-                  <S.FormNewArtImg />
-                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
+                <S.FormNewArtImage htmlFor="upload-photo">
+                  <S.FormNewArtImg
+                    src={
+                      selectedFiles === undefined
+                        ? ""
+                        : selectedFiles[0]?.selectedImg
+                        ? selectedFiles[0]?.selectedImg
+                        : `http://localhost:8090/${selectedFiles[0]}`
+                    }
+                  />
+                  <S.FormNewArtCover
+                    type="file"
+                    id="upload-photo"
+                    onChange={handleAdvPictureUpload}
+                  />
                 </S.FormNewArtImage>
                 <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg />
-                  <S.FormNewArtCover type="file" htmlFor="upload-photo" />
+                  <S.FormNewArtCover
+                    type="file"
+                    htmlFor="upload-photo"
+                    onChange={handleAdvPictureUpload}
+                  />
                 </S.FormNewArtImage>
                 <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg />

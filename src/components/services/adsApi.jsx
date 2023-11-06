@@ -160,11 +160,28 @@ export const adsApi = createApi({
       invalidatesTags: [{ type: "Ads", id: "LIST" }],
     }),
     addNewAdvPic: builder.mutation({
-      query: (formData, searchParams) => ({
-        url: `ads?${searchParams}`,
-        method: "POST",
-        body: formData,
-      }),
+      query: (data) => {
+        console.log(data);
+        const searchParams = new URLSearchParams();
+        searchParams.append("title", data.get("title"));
+        searchParams.append("description", data.get("description"));
+        searchParams.append("price", data.get("price"));
+
+        const formData = new FormData();
+
+        const arrData = [...data];
+        const length = arrData.length;
+
+        for (let i = 1; i < length - 2; i++) {
+          formData.append(`files`, data.get(`image${i}`));
+        }
+        return {
+          url: `ads?${searchParams.toString()}`,
+          method: "POST",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["Ads"],
     }),
   }),
 });

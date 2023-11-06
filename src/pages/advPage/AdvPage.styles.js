@@ -362,12 +362,19 @@ export const ArticleBtnEdit = styled.button`
   border: 1px solid #009ee4;
   width: 189px;
   height: 50px;
-  gap: 10px
-  font-size: 25px;
+  gap: 10px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   color: #ffffff;
-  font-family: "Roboto", sans-serif;
+  &:hover {
+    background: #0080c1;
+  }
+  &:disabled {
+    background-color: #D9D9D9;
+    border: none;
+    color: #FFFFFF;
+  }
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 57px;
@@ -388,12 +395,13 @@ export const ArticleBtnDel = styled.button`
   border: 1px solid #009ee4;
   width:225px;
   height: 50px;
-  gap: 20px
-  
+  gap: 20px;
   font-size: 16px;
-  font-weight: 500;
-  line-height: 22px;
+  line-height: 1;
   color: #ffffff;
+  &:hover {
+    background: #0080c1;
+  }
   font-family: "Roboto", sans-serif;
   @media screen and (max-width: 768px) {
     width: 100%;

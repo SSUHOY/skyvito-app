@@ -33,13 +33,6 @@ export const NewAdvModal = ({ active, setActive }) => {
     setInputsAreFilled(event.target.value);
   };
 
-  // Доработать
-  const handleDeletePictureFromList = () => {
-  let shifted = selectedFiles.shift()
-  console.log(shifted)
-  console.log('Работа кнопки')
-  };
-
   const handleAdvPictureUpload = async (event) => {
     event.preventDefault();
     const selectedImg = event.target.files[0];
@@ -173,9 +166,6 @@ export const NewAdvModal = ({ active, setActive }) => {
                     id="upload-photo"
                     onChange={handleAdvPictureUpload}
                   />
-                  <S.DeletePicFromListDiv>
-                    <S.DeletePicFromListBtn onClick={handleDeletePictureFromList}/>
-                  </S.DeletePicFromListDiv>
                 </S.FormNewArtImage>
                 <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg src={imageSrc[1]} />

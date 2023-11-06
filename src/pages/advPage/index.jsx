@@ -190,7 +190,7 @@ export const AdvPage = () => {
                     </S.ArticlePrice>
                     {user_data.id === adv.user.id ? (
                       <S.UsersUIBtnBlock>
-                        <S.ArticleBtnEdit>Редактировать</S.ArticleBtnEdit>
+                        <S.ArticleBtnEdit disabled={deleted}>Редактировать</S.ArticleBtnEdit>
                         <S.ArticleBtnDel onClick={handleDeleteAdv} disabled={deleted}>
                           {deleted ? 'Удалено' : 'Снять с публикации'}
                         </S.ArticleBtnDel>

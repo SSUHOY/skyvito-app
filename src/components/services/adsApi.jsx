@@ -14,8 +14,6 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
     },
   });
 
-  const auth = localStorage.getItem("refresh_token");
-  console.log(auth);
   const result = await baseQuery(argc, api, extraOptions);
   console.debug("результат первого запроса", { result });
 
@@ -26,32 +24,34 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
   const forceLogout = () => {
     console.debug("Принудительная авторизация");
     api.dispatch(uploadTokens(null, null));
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
     window.location.href = "/login";
   };
 
   console.debug("Данные пользователя в сторе", { auth });
 
+  const { auth } = api.getState();
+  console.log(auth);
+
+  if (!auth.refreshToken) {
+    console.log("no token");
+    return forceLogout();
+  }
+
   if (!auth) {
     console.log("no token");
     return forceLogout();
   }
+
 };
+
+
 
 export const adsApi = createApi({
   reducerPath: "adsApi",
   tagTypes: ["Ads"],
   baseQuery: baseQueryWithReauth,
-
-  // fetchBaseQuery({
-  //   baseUrl: "http://localhost:8090/",
-  //   prepareHeaders: (headers) => {
-  //     const token = localStorage.getItem("access_token");
-  //     if (token) {
-  //       headers.set("Authorization", `Bearer ${token}`);
-  //     }
-  //     return headers;
-  //   },
-  // }),
 
   endpoints: (builder) => ({
     getAllAds: builder.query({
@@ -184,14 +184,14 @@ export const adsApi = createApi({
       invalidatesTags: ["Ads"],
     }),
     deleteAdv: builder.mutation({
-      query: (id) => { 
+      query: (id) => {
         return {
           url: `ads/${id}`,
           method: "DELETE",
-        }
+        };
       },
       invalidatesTags: [{ type: "Ads", id: "LIST" }],
-    })
+    }),
   }),
 });
 

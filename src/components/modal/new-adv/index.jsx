@@ -2,15 +2,9 @@ import React, { useEffect, useState } from "react";
 import * as S from "./NewAdv.styles";
 import {
   useAddNewAdvPicMutation,
-  useAddNewAdvTextMutation,
-  useGetCurrentUserAdvtQuery,
-  useRefreshTokenMutation,
 } from "../../services/adsApi";
-import { AuthContext, useAuthContext } from "../../context/AuthContext";
 
 export const NewAdvModal = ({ active, setActive }) => {
-  const [refreshToken] = useRefreshTokenMutation();
-
   const [inputsAreFilled, setInputsAreFilled] = useState();
   const [sendButtonActive, setSendButtonActive] = useState(false);
   const [advTitle, setTitle] = useState("");
@@ -20,8 +14,6 @@ export const NewAdvModal = ({ active, setActive }) => {
   const [images, setImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [imageSrc, setImageSrc] = useState([]);
-  console.log(imageSrc);
-  console.log(selectedFiles);
 
   // Добавление объявления с фото
   const [addNewAdvWithPic] = useAddNewAdvPicMutation({});
@@ -41,6 +33,13 @@ export const NewAdvModal = ({ active, setActive }) => {
     setInputsAreFilled(event.target.value);
   };
 
+  // Доработать
+  const handleDeletePictureFromList = () => {
+  let shifted = selectedFiles.shift()
+  console.log(shifted)
+  console.log('Работа кнопки')
+  };
+
   const handleAdvPictureUpload = async (event) => {
     event.preventDefault();
     const selectedImg = event.target.files[0];
@@ -51,9 +50,13 @@ export const NewAdvModal = ({ active, setActive }) => {
       console.log("Файл выбран");
       setSendButtonActive(true);
 
-      const selectedImgUrl = URL.createObjectURL(selectedImg);
-
       const newImageSrc = [];
+
+      if (!event.target.files[0]) {
+        console.log("Файл не выбран");
+        return;
+      }
+
       if (
         event.target.files[0].type &&
         !event.target.files[0].type.startsWith("image/")
@@ -74,7 +77,7 @@ export const NewAdvModal = ({ active, setActive }) => {
       reader.readAsDataURL(event.target.files[0]);
       console.log(reader);
 
-      setSelectedFiles([...selectedFiles, { selectedImgUrl }]);
+      setSelectedFiles([...selectedFiles, { imageSrc }]);
     }
   };
 
@@ -163,13 +166,16 @@ export const NewAdvModal = ({ active, setActive }) => {
                 <S.FormNewArtSpan>не более 5 фотографий</S.FormNewArtSpan>
               </S.FormNewArtParagraph>
               <S.FormNewArtBarImages>
-                <S.FormNewArtImage htmlFor="upload-photo">
+                <S.FormNewArtImage htmlFor="upload-photo" >
                   <S.FormNewArtImg src={imageSrc[0]} />
                   <S.FormNewArtCover
                     type="file"
                     id="upload-photo"
                     onChange={handleAdvPictureUpload}
                   />
+                  <S.DeletePicFromListDiv>
+                    <S.DeletePicFromListBtn onClick={handleDeletePictureFromList}/>
+                  </S.DeletePicFromListDiv>
                 </S.FormNewArtImage>
                 <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg src={imageSrc[1]} />
@@ -195,7 +201,7 @@ export const NewAdvModal = ({ active, setActive }) => {
                     onChange={handleAdvPictureUpload}
                   />
                 </S.FormNewArtImage>
-                <S.FormNewArtImage id="upload-photo">
+                <S.FormNewArtImage id="upload-photo" onClick={(e) => e.stopPropagation()}>
                   <S.FormNewArtImg src={imageSrc[4]} />
                   <S.FormNewArtCover
                     type="file"

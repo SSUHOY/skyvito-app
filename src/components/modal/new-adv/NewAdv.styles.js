@@ -423,6 +423,47 @@ export const FormNewArtCover = styled.input`
   }
 `;
 
+export const DeletePicFromListDiv = styled.div`
+
+  width: 23px;
+  height: 23px;
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  z-index: 3;
+  cursor: pointer;
+`;
+
+export const DeletePicFromListBtn = styled.div`
+border-radius: 50%;
+  position: relative;
+  width: 5pcx;
+  background-color: #009EE4;
+  height: 100%;
+  &:before {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    top: 47%;
+    right: 4px;
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    top: 47%;
+    right: 4px;
+  }
+`;
+
 export const FormPrice = styled.label`
   margin-bottom: 4px;
   font-size: 16px;

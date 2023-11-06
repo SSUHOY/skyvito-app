@@ -15,8 +15,10 @@ import {
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
 import {
+  useDeleteAdvMutation,
   useGetAllCurrentUserCommentsQuery,
   useGetCurrentAdvQuery,
+  useRefreshTokenMutation,
 } from "../../components/services/adsApi";
 import { NewAdvModal } from "../../components/modal/new-adv";
 import { ReviewsModal } from "../../components/modal/reviews";
@@ -27,14 +29,16 @@ export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data, isLoading } = useGetCurrentAdvQuery(id);
+  const [refreshToken] = useRefreshTokenMutation();
 
   const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
+  const [deleteAdv] = useDeleteAdvMutation(id);
   const [selectedImg, setSelectedImg] = useState();
   const [adComments, setAdvComments] = useState([]);
   const [nextImg, setNextImg] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
   const [errorWithImg, setImgError] = useState("");
-
+  const [deleted, setDeleted] = useState(false);
 
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
@@ -54,6 +58,16 @@ export const AdvPage = () => {
     setSelectedImg(`http://localhost:8090/${data?.images[nextIndex]?.url}`);
   };
 
+  const handleDeleteAdv = async () => {
+    let delPrompt = confirm("Вы действительно хотите удалить объявление?");
+    await refreshToken();
+    if (delPrompt) {
+      setDeleted(true);
+      deleteAdv(id);
+      return;
+    }
+  };
+
   useEffect(() => {
     if (advComments) {
       setAdvComments(advComments);
@@ -65,14 +79,13 @@ export const AdvPage = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log("Проверка")
-    if (selectedImg === undefined) {
-      return setImgError("Фото отсутсвует");
-    } 
-  }, 1300);
+      console.log("Проверка");
+      if (selectedImg === undefined) {
+        return setImgError("Фото отсутсвует");
+      }
+    }, 1300);
     return () => clearTimeout(timer);
   }, [selectedImg]);
-
 
   return (
     <S.Wrapper>
@@ -114,7 +127,7 @@ export const AdvPage = () => {
           <S.MainArticle>
             <S.ArticleContent>
               <S.ArticleLeft>
-                {errorWithImg != '' ? <S.Error>{errorWithImg}</S.Error> : ''}
+                {errorWithImg != "" ? <S.Error>{errorWithImg}</S.Error> : ""}
                 <S.ArticleFillImg>
                   {data?.images.slice(0, 1).map((image, index) => (
                     <S.ArticleImgBox key={index}>
@@ -178,7 +191,9 @@ export const AdvPage = () => {
                     {user_data.id === adv.user.id ? (
                       <S.UsersUIBtnBlock>
                         <S.ArticleBtnEdit>Редактировать</S.ArticleBtnEdit>
-                        <S.ArticleBtnDel>Снять с публикации</S.ArticleBtnDel>
+                        <S.ArticleBtnDel onClick={handleDeleteAdv} disabled={deleted}>
+                          {deleted ? 'Удалено' : 'Снять с публикации'}
+                        </S.ArticleBtnDel>
                       </S.UsersUIBtnBlock>
                     ) : (
                       <S.ArticleBtn onClick={handleShowPhoneClick}>

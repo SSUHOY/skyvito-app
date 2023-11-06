@@ -183,6 +183,15 @@ export const adsApi = createApi({
       },
       invalidatesTags: ["Ads"],
     }),
+    deleteAdv: builder.mutation({
+      query: (id) => { 
+        return {
+          url: `ads/${id}`,
+          method: "DELETE",
+        }
+      },
+      invalidatesTags: [{ type: "Ads", id: "LIST" }],
+    })
   }),
 });
 
@@ -200,4 +209,5 @@ export const {
   useRefreshTokenMutation,
   useEditUserDataMutation,
   useUploadUserImageMutation,
+  useDeleteAdvMutation,
 } = adsApi;

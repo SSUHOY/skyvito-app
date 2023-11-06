@@ -402,6 +402,11 @@ export const ArticleBtnDel = styled.button`
     line-height: 20px;
     color: #ffffff;
   }
+  &:disabled {
+    background-color: #D9D9D9;
+    border: none;
+    color: #FFFFFF;
+  }
 `;
 
 export const ArticleBtnSpan = styled.span``;
@@ -496,7 +501,7 @@ export const Error = styled.div`
   font-size: 18px;
   line-height: 24px;
   margin-top: 20px;
-  height:300px;
+  height: 300px;
   text-align: center;
   display: flex;
   flex-direction: column;

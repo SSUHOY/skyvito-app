@@ -30,16 +30,21 @@ export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data, isLoading } = useGetCurrentAdvQuery(id);
+  console.log(data);
   const [refreshToken] = useRefreshTokenMutation();
 
   const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
   const [deleteAdv] = useDeleteAdvMutation(id);
   const [selectedImg, setSelectedImg] = useState();
+  console.log(selectedImg);
   const [adComments, setAdvComments] = useState([]);
   const [nextImg, setNextImg] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
   const [errorWithImg, setImgError] = useState("");
   const [deleted, setDeleted] = useState(false);
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(null);
+  const [selectedPhotoIndexOnMob, setSelectedPhotoIndexOnMob] = useState(null);
+  console.log(selectedPhotoIndexOnMob);
 
   // Поп-ап "Разместить объявление"
   const [modalActive, setModalActive] = useState(false);
@@ -53,6 +58,10 @@ export const AdvPage = () => {
   };
   const handleSelectImg = (event) => {
     setSelectedImg(event.target.src);
+  };
+
+  const handleSelectImgByClickCircles = () => {
+    setSelectedPhotoIndexOnMob(selectedImg.id);
   };
 
   const handleNextPhotoClick = () => {
@@ -133,7 +142,10 @@ export const AdvPage = () => {
                 {errorWithImg != "" ? <S.Error>{errorWithImg}</S.Error> : ""}
                 <S.ArticleFillImg>
                   {data?.images.slice(0, 1).map((image, index) => (
-                    <S.ArticleImgBox key={index}>
+                    <S.ArticleImgBox
+                      key={index}
+                      onClick={() => handleSelectImgByClickCircles(image.id)}
+                    >
                       <S.ArticleImg
                         onClick={handleNextPhotoClick}
                         src={
@@ -148,7 +160,7 @@ export const AdvPage = () => {
                   ))}
                   <S.ArticleImgBar>
                     {data?.images?.slice(0, 5).map((image, index) => (
-                      <S.ArticleImgBarBox key={index}>
+                      <S.ArticleImgBarBox key={index}  >
                         <S.ArticleImgBarImg
                           onClick={handleSelectImg}
                           src={`http://localhost:8090/${image.url}`}
@@ -156,12 +168,12 @@ export const AdvPage = () => {
                       </S.ArticleImgBarBox>
                     ))}
                   </S.ArticleImgBar>
+
                   <S.ArticleImgBarMob>
-                    <S.ArticleImgBarCircle />
-                    <S.ArticleImgBarCircle />
-                    <S.ArticleImgBarCircle />
-                    <S.ArticleImgBarCircle />
-                    <S.ArticleImgBarCircle />
+                    {data?.images?.slice(0, 5).map((image, index) => (
+                      <S.ArticleImgBarCircle key={index} 
+                     />
+                    ))}
                   </S.ArticleImgBarMob>
                 </S.ArticleFillImg>
               </S.ArticleLeft>
@@ -193,7 +205,9 @@ export const AdvPage = () => {
                     </S.ArticlePrice>
                     {user_data.id === adv.user.id ? (
                       <S.UsersUIBtnBlock>
-                        <S.ArticleBtnEdit disabled={deleted} onClick={setModalActiveEdit}>
+                        <S.ArticleBtnEdit
+                          disabled={deleted}
+                          onClick={setModalActiveEdit}>
                           Редактировать
                         </S.ArticleBtnEdit>
                         <S.ArticleBtnDel

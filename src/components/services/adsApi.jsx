@@ -1,11 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { uploadTokens } from "../../store/actions/creators/ads";
+import { useAuthContext } from "../context/AuthContext";
 
 const baseQueryWithReauth = async (argc, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
     baseUrl: "http://localhost:8090/",
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("access_token");
+
       console.debug("Токен из стора", { token });
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
@@ -17,10 +19,6 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
   const result = await baseQuery(argc, api, extraOptions);
   console.debug("результат первого запроса", { result });
 
-  if (result?.error?.status !== 401) {
-    return result;
-  }
-
   const forceLogout = () => {
     console.debug("Принудительная авторизация");
     api.dispatch(uploadTokens(null, null));
@@ -29,24 +27,15 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
     window.location.href = "/login";
   };
 
-  console.debug("Данные пользователя в сторе", { auth });
 
-  const { auth } = api.getState();
-  console.log(auth);
+if(result?.error?.status === 401) {
+   forceLogout()
+} if ( result?.error?.status !== 401) {
+  return result;
+}
 
-  if (!auth.refreshToken) {
-    console.log("no token");
-    return forceLogout();
-  }
-
-  if (!auth) {
-    console.log("no token");
-    return forceLogout();
-  }
 
 };
-
-
 
 export const adsApi = createApi({
   reducerPath: "adsApi",

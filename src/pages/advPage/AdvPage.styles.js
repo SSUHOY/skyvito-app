@@ -233,6 +233,7 @@ export const ArticleImgBarImg = styled.img`
   width: 100%;
   height: auto;
   display: block;
+  background-color: white;
   -o-object-fit: cover;
   object-fit: cover;
   cursor: pointer;
@@ -256,7 +257,7 @@ export const ArticleImgBarMob = styled.div`
   }
 `;
 
-export const ArticleImgBarCircle = styled.div`
+export const ArticleImgBarCircle = styled.img`
   @media screen and (max-width: 768px) {
     width: 8px;
     height: 8px;

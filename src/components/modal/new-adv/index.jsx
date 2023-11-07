@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as S from "./NewAdv.styles";
 import {
   useAddNewAdvPicMutation,
+  useAddNewAdvTextMutation,
 } from "../../services/adsApi";
 
 export const NewAdvModal = ({ active, setActive }) => {
@@ -14,9 +15,13 @@ export const NewAdvModal = ({ active, setActive }) => {
   const [images, setImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [imageSrc, setImageSrc] = useState([]);
+  const [photoIsChosen, setPhotoIsChosen] = useState(false);
 
-  // Добавление объявления с фото
+  // Post Adv with photo
   const [addNewAdvWithPic] = useAddNewAdvPicMutation({});
+  // Post Ad without photo
+  const [addNewAdvText] = useAddNewAdvTextMutation({});
+
   const handleAdTitleChange = (event) => {
     setTitle(event.target.value);
     setInputsAreFilled(event.target.value);
@@ -28,7 +33,6 @@ export const NewAdvModal = ({ active, setActive }) => {
   };
 
   const handleAdPriceChange = (event) => {
-    console.log(event.target.value);
     setPrice(event.target.value);
     setInputsAreFilled(event.target.value);
   };
@@ -41,6 +45,7 @@ export const NewAdvModal = ({ active, setActive }) => {
     } else {
       handleAddItemPhoto(selectedImg);
       console.log("Файл выбран");
+      setPhotoIsChosen(true);
       setSendButtonActive(true);
 
       const newImageSrc = [];
@@ -99,6 +104,17 @@ export const NewAdvModal = ({ active, setActive }) => {
       return;
     }
     try {
+      if (!photoIsChosen) {
+        console.log("пост без фото");
+        const newAdvData = {
+          title: advTitle,
+          description: advDescription,
+          price: advPrice,
+        };
+        setSendButtonActive(false)
+        addNewAdvText(newAdvData);
+        return;
+      }
       const formData = new FormData();
       formData.append("title", advTitle);
       formData.append("description", advDescription);
@@ -158,7 +174,7 @@ export const NewAdvModal = ({ active, setActive }) => {
                 <S.FormNewArtSpan>не более 5 фотографий</S.FormNewArtSpan>
               </S.FormNewArtParagraph>
               <S.FormNewArtBarImages>
-                <S.FormNewArtImage htmlFor="upload-photo" >
+                <S.FormNewArtImage htmlFor="upload-photo">
                   <S.FormNewArtImg src={imageSrc[0]} />
                   <S.FormNewArtCover
                     type="file"
@@ -190,7 +206,9 @@ export const NewAdvModal = ({ active, setActive }) => {
                     onChange={handleAdvPictureUpload}
                   />
                 </S.FormNewArtImage>
-                <S.FormNewArtImage id="upload-photo" onClick={(e) => e.stopPropagation()}>
+                <S.FormNewArtImage
+                  id="upload-photo"
+                  onClick={(e) => e.stopPropagation()}>
                   <S.FormNewArtImg src={imageSrc[4]} />
                   <S.FormNewArtCover
                     type="file"

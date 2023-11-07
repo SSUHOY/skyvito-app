@@ -347,6 +347,9 @@ export const ArticleBtn = styled.button`
   font-weight: 500;
   line-height: 22px;
   color: #ffffff;
+  &:hover {
+    background: #0080c1;
+  }
   font-family: "Roboto", sans-serif;
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -372,9 +375,9 @@ export const ArticleBtnEdit = styled.button`
     background: #0080c1;
   }
   &:disabled {
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     border: none;
-    color: #FFFFFF;
+    color: #ffffff;
   }
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -394,7 +397,7 @@ export const ArticleBtnDel = styled.button`
   background-color: #009ee4;
   border-radius: 6px;
   border: 1px solid #009ee4;
-  width:225px;
+  width: 225px;
   height: 50px;
   gap: 20px;
   font-size: 16px;
@@ -412,9 +415,9 @@ export const ArticleBtnDel = styled.button`
     color: #ffffff;
   }
   &:disabled {
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
     border: none;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 `;
 

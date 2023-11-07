@@ -48,4 +48,3 @@ export const ToMainButton = styled.button`
     display: none;
   }
 `;
-

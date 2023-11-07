@@ -27,14 +27,12 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
     window.location.href = "/login";
   };
 
-
-if(result?.error?.status === 401) {
-   forceLogout()
-} if ( result?.error?.status !== 401) {
-  return result;
-}
-
-
+  if (result?.error?.status === 401) {
+    forceLogout();
+  }
+  if (result?.error?.status !== 401) {
+    return result;
+  }
 };
 
 export const adsApi = createApi({
@@ -150,7 +148,6 @@ export const adsApi = createApi({
     }),
     addNewAdvPic: builder.mutation({
       query: (data) => {
-        console.log(data);
         const searchParams = new URLSearchParams();
         searchParams.append("title", data.get("title"));
         searchParams.append("description", data.get("description"));
@@ -181,6 +178,14 @@ export const adsApi = createApi({
       },
       invalidatesTags: [{ type: "Ads", id: "LIST" }],
     }),
+    editAdv: builder.mutation({
+      query: ({ id, title, description, price }) => ({
+        url: `ads/${id}`,
+        method: "PATCH",
+        body: { title, description, price },
+      }),
+      invalidatesTags: ["Ads"],
+    }),
   }),
 });
 
@@ -197,6 +202,7 @@ export const {
   useRegisterUserMutation,
   useRefreshTokenMutation,
   useEditUserDataMutation,
+  useEditAdvMutation,
   useUploadUserImageMutation,
   useDeleteAdvMutation,
 } = adsApi;

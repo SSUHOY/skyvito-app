@@ -330,7 +330,7 @@ export const FormNewArtBarImages = styled.div`
   align-items: center;
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-bottom: 10px;
   overflow: hidden;
   @media screen and (max-width: 600px) {

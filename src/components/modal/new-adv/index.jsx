@@ -68,7 +68,6 @@ export const NewAdvModal = ({ active, setActive }) => {
         setImageSrc([...imageSrc, ...newImageSrc]);
       });
       reader.readAsDataURL(event.target.files[0]);
-      console.log(reader);
 
       setSelectedFiles([...selectedFiles, { imageSrc }]);
     }

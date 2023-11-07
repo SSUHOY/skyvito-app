@@ -34,7 +34,7 @@ const SellerProfile = () => {
   const [adv, setAdv] = useState();
   const [showPhone, setShowPhone] = useState(false);
   const [sellerAds, setSellerAds] = useState([]);
-  
+
   const handleShowPhoneClick = () => {
     setShowPhone(true);
   };
@@ -124,15 +124,7 @@ const SellerProfile = () => {
                           <S.SellerName>
                             {adv?.user.name} {adv?.user.surname}
                           </S.SellerName>
-                          <S.SellerCity
-                          // onChange={handleNameChange}
-                          // id="settings-name"
-                          // name="name"
-                          // type="text"
-                          // defaultValue={name}
-                          >
-                            {adv?.user.city}
-                          </S.SellerCity>
+                          <S.SellerCity>{adv?.user.city}</S.SellerCity>
                           <S.SellerRegistrationDate>
                             Продает товары с {adv?.user.sells_from}
                           </S.SellerRegistrationDate>
@@ -144,13 +136,7 @@ const SellerProfile = () => {
                                 />
                               </S.SellerImgMob>
                             </S.SellerimgBox>
-                            <S.PhoneShownBtn
-                              // onChange={handleSurnameChange}
-                              // id="settings-name"
-                              // name="name"
-                              // type="text"
-                              // defaultValue={surname}
-                              onClick={handleShowPhoneClick}>
+                            <S.PhoneShownBtn onClick={handleShowPhoneClick}>
                               Показать телефон <br />
                               <S.PhoneNumber>
                                 {!adv && "Загрузка"}

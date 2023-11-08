@@ -1,4 +1,5 @@
 import {
+  CHANGE_PASSWORD,
   LOG_IN_USER,
   LOG_OUT_USER,
   SEARCH_TEXT,
@@ -40,4 +41,9 @@ export const uploadTokens = (accessToken, refreshToken) => ({
 export const setSearchParameters = (searchedAds) => ({
 type: SEARCH_VALUE,
 payload: searchedAds,
+})
+
+export const changePassword = (newPassword) => ({
+  type: CHANGE_PASSWORD,
+  payload: newPassword
 })

@@ -20,7 +20,7 @@ export const ModalForm = styled.div`
   border-radius: 12px;
   padding: 43px 47px 47px 40px;
   transition: all 0.5s;
-   @media screen and (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     width: 320px;
     height: auto;
     background-color: #ffffff;
@@ -137,5 +137,50 @@ export const SecondaryButton = styled(Button)`
 
   &:active {
     background-color: #d9d9d9;
+  }
+`;
+
+export const ShowPasswordLogoLogin = styled.img`
+  position: absolute;
+  left: 287px;
+  bottom: 252px;
+  width: 22px;
+  height: 21px;
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    left: 268px;
+    bottom: 254px;
+    width: 22px;
+    height: 21px;
+  }
+`;
+
+export const ShowPasswordLogo = styled.img`
+  position: absolute;
+  left: 287px;
+  bottom: 412px;
+  width: 22px;
+  height: 21px;
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    left: 268px;
+    bottom: 404px;
+    width: 22px;
+    height: 21px;
+  }
+`;
+
+export const ShowPasswordLogoSec = styled.img`
+  position: absolute;
+  left: 287px;
+  bottom: 352px;
+  width: 22px;
+  height: 21px;
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    left: 268px;
+    bottom: 345px;
+    width: 22px;
+    height: 21px;
   }
 `;

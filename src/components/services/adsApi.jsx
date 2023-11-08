@@ -100,6 +100,13 @@ export const adsApi = createApi({
         localStorage.setItem("user_register_phone", response.phone);
       },
     }),
+    changePassword: builder.mutation({
+      query: (newPassData) => ({
+        url: "user/password",
+        method: "PUT",
+        body: newPassData ,
+      }),
+    }),
     refreshToken: builder.mutation({
       query: () => ({
         url: "/auth/login",
@@ -186,6 +193,25 @@ export const adsApi = createApi({
       }),
       invalidatesTags: ["Ads"],
     }),
+    deleteAdvImages: builder.mutation({
+      query: ({ data, id }) => {
+        console.log(data);
+
+        return {
+          url: `ads/${id}/image?file_url=${new_url}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["Ads"],
+    }),
+    uploadAdvImage: builder.mutation({
+      query: ({ id, formData }) => ({
+        url: `ads/${id}/image`,
+        method: "POST",
+        body: { formData },
+      }),
+      invalidatesTags: [{ type: "Ads", id: "LIST" }],
+    }),
   }),
 });
 
@@ -193,6 +219,7 @@ export const {
   useGetAllAdsQuery,
   useGetCurrentUserMutation,
   useGetCurrentUserAdvtQuery,
+  useChangePasswordMutation,
   useGetCurrentAdvQuery,
   useGetAllCommentsQuery,
   useAddCommentMutation,
@@ -203,6 +230,8 @@ export const {
   useRefreshTokenMutation,
   useEditUserDataMutation,
   useEditAdvMutation,
+  useUploadAdvImageMutation,
+  useDeleteAdvImagesMutation,
   useUploadUserImageMutation,
   useDeleteAdvMutation,
 } = adsApi;

@@ -3,13 +3,11 @@ import * as S from "./AuthPage.styles";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import LogoSkyUrl from "../../assets/images/logo-skypro.png";
-import { fetchLogin, fetchRegister } from "../../api";
+import ShowPassWordLogo from "../../assets/images/view_show_icon_124811.png";
+import HidePassWordLogo from "../../assets/images/view_hide_icon_124813.png";
 import { loginUser } from "../../store/actions/creators/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
-import {
-  useGetCurrentUserMutation,
-  useRegisterUserMutation,
-} from "../../components/services/adsApi";
+import { useRegisterUserMutation } from "../../components/services/adsApi";
 
 export const AuthPage = () => {
   const dispatch = useDispatch();
@@ -24,6 +22,7 @@ export const AuthPage = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
+  const [showPassword, setShowPassWord] = useState("password");
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,6 +47,15 @@ export const AuthPage = () => {
       setError(error.message || "Неизвестная ошибка при входе");
       setIsAuthLoading(false);
     }
+  };
+
+  const handleShowPassword = () => {
+    if (showPassword == "password") {
+      setShowPassWord("text");
+    } else {
+      setShowPassWord("password");
+    }
+    return false;
   };
 
   const handleRegister = async () => {
@@ -105,13 +113,21 @@ export const AuthPage = () => {
                 }}
               />
               <S.ModalInput
-                type="password"
+                type={showPassword}
                 name="password"
                 placeholder="пароль"
                 value={password}
                 onChange={(event) => {
                   setPassword(event.target.value);
                 }}
+              />
+                 <S.ShowPasswordLogoLogin
+                onClick={handleShowPassword}
+                src={
+                  showPassword === "password"
+                    ? ShowPassWordLogo
+                    : HidePassWordLogo
+                }
               />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
@@ -141,7 +157,7 @@ export const AuthPage = () => {
                 }}
               />
               <S.ModalInput
-                type="password"
+                type={showPassword}
                 name="password"
                 placeholder="Пароль"
                 value={password}
@@ -149,14 +165,30 @@ export const AuthPage = () => {
                   setPassword(event.target.value);
                 }}
               />
+                <S.ShowPasswordLogoSec
+                onClick={handleShowPassword}
+                src={
+                  showPassword === "password"
+                    ? ShowPassWordLogo
+                    : HidePassWordLogo
+                }
+              />
               <S.ModalInput
-                type="password"
+                type={showPassword}
                 name="repeat-password"
                 placeholder="Повторите пароль"
                 value={repeatPassword}
                 onChange={(event) => {
                   setRepeatPassword(event.target.value);
                 }}
+              />
+              <S.ShowPasswordLogo
+                onClick={handleShowPassword}
+                src={
+                  showPassword === "password"
+                    ? ShowPassWordLogo
+                    : HidePassWordLogo
+                }
               />
               <S.ModalInput
                 type="text"

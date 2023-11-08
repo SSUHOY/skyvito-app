@@ -424,9 +424,8 @@ export const FormNewArtCover = styled.input`
 `;
 
 export const DeletePicFromListDiv = styled.div`
-
-  width: 23px;
-  height: 23px;
+  width: 18px;
+  height: 18px;
   position: absolute;
   top: 5px;
   right: 7px;
@@ -438,17 +437,17 @@ export const DeletePicFromListBtn = styled.div`
 border-radius: 50%;
   position: relative;
   width: 5pcx;
-  background-color: #009EE4;
+  background-color: white;
   height: 100%;
   &:before {
     content: "";
     position: absolute;
     width: 15px;
     height: 2px;
-    border-radius: 2px;
-    background-color: #d9d9d9;
-    top: 47%;
-    right: 4px;
+    border-radius: 1px;
+    background-color:black;
+    top: 45%;
+    right: 1px;
     transform: rotate(45deg);
   }
   &:after {
@@ -457,10 +456,10 @@ border-radius: 50%;
     position: absolute;
     width: 15px;
     height: 2px;
-    border-radius: 2px;
-    background-color: #d9d9d9;
-    top: 47%;
-    right: 4px;
+    border-radius: 1px;
+    background-color:black;
+    top: 45%;
+right: 1px;
   }
 `;
 

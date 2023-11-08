@@ -26,18 +26,21 @@ import {
 } from "../../components/styles/reusable/Usable.styles";
 import { NewAdvModal } from "../../components/modal/new-adv";
 import { fetchUser } from "../../api";
+import ChangePasswordModal from "../../components/modal/change-password/changePassword";
 
 const Profile = () => {
-  const { user, logoutUserFn } = useAuthContext();
-  // Поп-ап "Разместить объявление"
+  const { logoutUserFn } = useAuthContext();
+  // Pop-up "post new adv"
   const [modalActive, setModalActive] = useState(false);
+  // Pop-up "change password"
+  const [modalActiveChangePass, setModalChangePassActive] = useState(false)
 
   const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
   const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
-  const { data: adv } = useGetAllAdsQuery({});
 
   const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
+  console.log(fetchAllCurrentUserAds)
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -157,11 +160,15 @@ const Profile = () => {
                 <S.Button onClick={() => setModalActive(true)}>
                   Разместить объявление
                 </S.Button>
+                <S.SellerButton onClick={() => setModalChangePassActive(true)}>
+                    Сменить пароль
+                  </S.SellerButton>
                 <Link to="/">
                   <S.SellerButton onClick={() => logoutUserFn()}>
                     Выйти
                   </S.SellerButton>
                 </Link>
+              
               </Nav>
             </Header>
             <S.Main>
@@ -299,6 +306,7 @@ const Profile = () => {
             </S.Main>
           </Container>
         </PageContainer>
+        <ChangePasswordModal active={modalActiveChangePass} setActive={setModalChangePassActive}/>
         <NewAdvModal active={modalActive} setActive={setModalActive} />
         <FooterAll active={modalActive} setActive={setModalActive} />
       </S.Wrapper>

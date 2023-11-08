@@ -2,9 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import * as S from "./AdvEdit.styles.js";
 import { useParams } from "react-router-dom";
 import {
+  useDeleteAdvImagesMutation,
   useEditAdvMutation,
   useGetCurrentAdvQuery,
   useRefreshTokenMutation,
+  useUploadAdvImageMutation,
+  useUploadUserImageMutation,
 } from "../../services/adsApi.jsx";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -13,7 +16,9 @@ export const EditAdvModal = ({ active, setActive }) => {
   const { id } = useParams();
   const { data } = useGetCurrentAdvQuery(id);
   const [editAdvRequest] = useEditAdvMutation(id);
+  const [deleteAdvImages] = useDeleteAdvImagesMutation(id);
   const [refreshToken] = useRefreshTokenMutation();
+  const [uploadAdvImage] = useUploadAdvImageMutation(id);
 
   const [isLoading, setIsLoading] = useState(true);
   const [images, setImages] = useState([]);
@@ -21,6 +26,7 @@ export const EditAdvModal = ({ active, setActive }) => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [saveButtonActive, setSaveButtonActive] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -47,6 +53,24 @@ export const EditAdvModal = ({ active, setActive }) => {
       id: id,
     });
     setSaveButtonActive(false);
+  };
+
+  const handleImgUpload = async (event) => {
+    event.preventDefault();
+    const selectedImg = event.target.files[0];
+    setSelectedFile(event.target.files[0]);
+    if (!selectedImg) {
+      console.log("Файл не выбран");
+    } else {
+      const formData = new FormData();
+      formData.append("file", selectedImg);
+      uploadAdvImage({ data: formData, id: id });
+    }
+  };
+
+  const handleDeleteAdvImage = async () => {
+    await refreshToken();
+    deleteAdvImages({ id: id, data: images });
   };
 
   const handleAdTitleChange = (event) => {
@@ -106,6 +130,7 @@ export const EditAdvModal = ({ active, setActive }) => {
                 <Skeleton count={1} />
               ) : (
                 <S.FormNewArtBarImages>
+                  {" "}
                   {data?.images?.map((image, index) => (
                     <S.FormNewArtImage htmlFor="upload-photo" key={index}>
                       <S.FormNewArtImg
@@ -118,7 +143,11 @@ export const EditAdvModal = ({ active, setActive }) => {
                   ))}
                   <S.FormNewArtImage htmlFor="upload-photo">
                     <S.FormNewArtImg />
-                    <S.FormNewArtCover type="file" id="upload-photo" />
+                    <S.FormNewArtCover
+                      type="file"
+                      id="upload-photo"
+                      onChange={handleImgUpload}
+                    />
                   </S.FormNewArtImage>
                 </S.FormNewArtBarImages>
               )}
@@ -141,7 +170,6 @@ export const EditAdvModal = ({ active, setActive }) => {
               {" "}
               Опубликовать
             </S.FormSendBtn>
-            {/* {error && <S.Error>{error}</S.Error>} */}
           </S.ModalFormNewArt>
         </S.ModalContent>
       </S.ModalBlock>

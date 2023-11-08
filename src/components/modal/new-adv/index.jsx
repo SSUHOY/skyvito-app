@@ -111,7 +111,7 @@ export const NewAdvModal = ({ active, setActive }) => {
           description: advDescription,
           price: advPrice,
         };
-        setSendButtonActive(false)
+        setSendButtonActive(false);
         addNewAdvText(newAdvData);
         return;
       }
@@ -206,9 +206,7 @@ export const NewAdvModal = ({ active, setActive }) => {
                     onChange={handleAdvPictureUpload}
                   />
                 </S.FormNewArtImage>
-                <S.FormNewArtImage
-                  id="upload-photo"
-                  onClick={(e) => e.stopPropagation()}>
+                <S.FormNewArtImage id="upload-photo">
                   <S.FormNewArtImg src={imageSrc[4]} />
                   <S.FormNewArtCover
                     type="file"

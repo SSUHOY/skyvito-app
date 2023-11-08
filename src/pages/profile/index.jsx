@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import * as S from "./ProfilePage.styles";
 import { Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { Container, Header, Nav, PageContainer } from "./ProfilePage.styles";
@@ -8,6 +8,7 @@ import { FooterAll } from "../../components/footer/footer";
 import {
   useEditUserDataMutation,
   useGetAllAdsQuery,
+  useGetCurrentAdvQuery,
   useGetCurrentUserAdvtQuery,
   useGetCurrentUserMutation,
   useGetCurrentUserQuery,
@@ -25,10 +26,10 @@ import {
   ToMainButton,
 } from "../../components/styles/reusable/Usable.styles";
 import { NewAdvModal } from "../../components/modal/new-adv";
-import { fetchUser } from "../../api";
 import ChangePasswordModal from "../../components/modal/change-password/changePassword";
 
 const Profile = () => {
+
   const { logoutUserFn } = useAuthContext();
   // Pop-up "post new adv"
   const [modalActive, setModalActive] = useState(false);
@@ -39,7 +40,6 @@ const Profile = () => {
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
   const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
 
-  const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -285,19 +285,20 @@ const Profile = () => {
                   <S.MainContentTitle>Мои товары</S.MainContentTitle>
                   <S.MainContent>
                     <S.ContentCards>
-                      {fetchAllCurrentUserAds.map((item, index) => {
+                      {data?.map((item, index) => (
                         <CardsItem
                           key={index}
+                          advId={item.id}
                           title={item.title}
                           picture={`http://localhost:8090/${item.images[0]?.url}`}
                           price={item.price}
                           date={item.created_on.split("T")[0]}
                           place={item.user.city}
                           isLoading={isLoading}
-                        />;
-                      })}
+                        />
+                      ))}
                     </S.ContentCards>
-                    {fetchAllCurrentUserAds.length === 0 &&
+                    {data?.length === 0 &&
                       "Вы пока не разместили ни одного объявления"}
                   </S.MainContent>
                 </S.MainCenterBox>

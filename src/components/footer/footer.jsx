@@ -12,6 +12,7 @@ import {
 } from "../styles/main/Footer.styles";
 
 export const FooterAll = ({ active, setActive }) => {
+  console.log(setActive);
   return (
     <>
       <Footer>
@@ -21,8 +22,8 @@ export const FooterAll = ({ active, setActive }) => {
               <HomeLinkImg src={HomeLinkImgUrl} />
             </Link>
           </FooterImg>
-          <FooterImg onClick={()=> setActive(true)}>
-            <AddNewImg src={AddNewImgUrl} />
+          <FooterImg>
+            <AddNewImg src={AddNewImgUrl} onClick={() => setActive(true)} />
           </FooterImg>
           <FooterImg>
             <Link to="/account">

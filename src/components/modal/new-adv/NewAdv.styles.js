@@ -47,7 +47,7 @@ export const ModalBlock = styled.div`
     position: absolute;
     z-index: 5;
     left: calc(50% - (320px / 2));
-    top: 55px;
+    top: 4px;
     opacity: 0;
     &.active {
       opacity: 1;

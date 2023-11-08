@@ -43,7 +43,7 @@ const Main = () => {
   const [modalActive, setModalActive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Фильтр по вводу в строку поиска
+  // Filter text by search bar inputs
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -86,11 +86,15 @@ const Main = () => {
           <HeaderNav>
             {user ? (
               <>
-                <S.Button disabled={isLoading} onClick={() => setModalActive(true)}>
+                <S.Button
+                  disabled={isLoading}
+                  onClick={() => setModalActive(true)}>
                   Разместить объявление
                 </S.Button>
                 <NavLink to="/account">
-                  <S.SellerButton disabled={isLoading}>Личный кабинет</S.SellerButton>
+                  <S.SellerButton disabled={isLoading}>
+                    Личный кабинет
+                  </S.SellerButton>
                 </NavLink>
               </>
             ) : (
@@ -161,7 +165,7 @@ const Main = () => {
           </MainContainer>
         </main>
         <NewAdvModal active={modalActive} setActive={setModalActive} />
-        <FooterAll />
+        <FooterAll active={modalActive} setActive={setModalActive} />
       </Container>
     </S.Wrapper>
   );

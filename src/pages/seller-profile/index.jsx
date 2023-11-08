@@ -1,8 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCurrentUserAdsList,
-  selectIsLogin,
-} from "../../store/selectors/ads";
+import { useDispatch,  } from "react-redux";
 import * as S from "./SellerProfile.styles";
 import { Link, NavLink, useParams } from "react-router-dom";
 import { FooterAll } from "../../components/footer/footer";
@@ -10,8 +6,6 @@ import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { BackToBtn, Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { useAuthContext } from "../../components/context/AuthContext";
 import {
-  useGetAllAdsQuery,
-  useGetCurrentAdvQuery,
   useGetCurrentUserAdvtQuery,
 } from "../../components/services/adsApi";
 import { useEffect, useState } from "react";
@@ -30,7 +24,8 @@ const SellerProfile = () => {
   const dispatch = useDispatch();
   const user = useAuthContext();
   const { id } = useParams();
-  const { data } = useGetAllAdsQuery({});
+  const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
+  console.log(data)
   const [adv, setAdv] = useState();
   const [showPhone, setShowPhone] = useState(false);
   const [sellerAds, setSellerAds] = useState([]);
@@ -38,6 +33,8 @@ const SellerProfile = () => {
   const handleShowPhoneClick = () => {
     setShowPhone(true);
   };
+
+
 
   useEffect(() => {
     let i = 0;
@@ -159,10 +156,10 @@ const SellerProfile = () => {
                   <S.MainContentTitle>Товары продавца</S.MainContentTitle>
                   <S.MainContent>
                     <S.ContentCards>
-                      {sellerAds?.map((adv) => (
+                      {data?.map((adv) => (
                         <CardsItem
                           key={adv?.id}
-                          advId={adv.id}
+                          advId={id}
                           title={adv.title}
                           price={adv.price}
                           place={adv.user.city}

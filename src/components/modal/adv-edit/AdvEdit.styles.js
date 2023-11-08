@@ -46,8 +46,8 @@ export const ModalBlock = styled.div`
   @media screen and (max-width: 600px) {
     position: absolute;
     z-index: 5;
-    left: calc(50% - (320px / 2));
-    top: 55px;
+    left: calc(50% - (400px / 2));
+    top: 4px;
     opacity: 0;
     &.active {
       opacity: 1;
@@ -434,7 +434,7 @@ export const DeletePicFromListDiv = styled.div`
 `;
 
 export const DeletePicFromListBtn = styled.div`
-border-radius: 50%;
+  border-radius: 50%;
   position: relative;
   width: 5pcx;
   background-color: white;
@@ -445,7 +445,7 @@ border-radius: 50%;
     width: 15px;
     height: 2px;
     border-radius: 1px;
-    background-color:black;
+    background-color: black;
     top: 45%;
     right: 1px;
     transform: rotate(45deg);
@@ -457,9 +457,9 @@ border-radius: 50%;
     width: 15px;
     height: 2px;
     border-radius: 1px;
-    background-color:black;
+    background-color: black;
     top: 45%;
-right: 1px;
+    right: 1px;
   }
 `;
 
@@ -494,11 +494,11 @@ export const FormPriceInput = styled.input`
 
 export const FormNewArtPriceCover = styled.div`
   position: relative;
-  left: 177px;
+  left: 255px;
   bottom: 34px;
   @media screen and (max-width: 600px) {
     position: relative;
-    left: 251px;
+    left: 330px;
   }
 `;
 

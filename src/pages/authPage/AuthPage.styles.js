@@ -87,9 +87,10 @@ export const Inputs = styled.div`
 `;
 
 export const Error = styled.div`
+position: absolute;
   color: coral;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 24px;
   margin-top: 20px;
   text-align: left;
@@ -184,3 +185,14 @@ export const ShowPasswordLogoSec = styled.img`
     height: 21px;
   }
 `;
+
+export const ReloginMessage = styled.div`
+position: absolute;
+color: #009ee4;
+font-weight: 400;
+font-size: 15px;
+line-height: 24px;
+margin-top: 10px;
+margin-right: 48px;
+text-align: center;
+`

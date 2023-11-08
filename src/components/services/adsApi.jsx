@@ -27,12 +27,16 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
     window.location.href = "/login";
   };
 
+  const refresh_token = localStorage.getItem("refresh_token");
+  console.log(refresh_token)
+
   if (result?.error?.status === 401) {
+    console.log('лог аут')
     forceLogout();
   }
   if (result?.error?.status !== 401) {
     return result;
-  }
+  }  
 };
 
 export const adsApi = createApi({
@@ -104,7 +108,7 @@ export const adsApi = createApi({
       query: (newPassData) => ({
         url: "user/password",
         method: "PUT",
-        body: newPassData ,
+        body: newPassData,
       }),
     }),
     refreshToken: builder.mutation({

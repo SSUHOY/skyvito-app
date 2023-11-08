@@ -33,14 +33,13 @@ const Profile = () => {
   // Pop-up "post new adv"
   const [modalActive, setModalActive] = useState(false);
   // Pop-up "change password"
-  const [modalActiveChangePass, setModalChangePassActive] = useState(false)
+  const [modalActiveChangePass, setModalChangePassActive] = useState(false);
 
   const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
   const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
 
   const fetchAllCurrentUserAds = useSelector(selectCurrentUserAdsList);
-  console.log(fetchAllCurrentUserAds)
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -114,11 +113,11 @@ const Profile = () => {
   }, [inputsAreFilled]);
 
   useEffect(() => {
-    setName(localStorage.user_register_name.replace(/"/g, ""));
-    setSurname(localStorage.user_register_surname.replace(/"/g, ""));
-    setCity(localStorage.user_register_city.replace(/"/g, ""));
-    setPhone(localStorage.user_register_phone.replace(/"/g, ""));
-    setSelectedFile(localStorage.user_register_avatar.replace(/"/g, ""));
+    setName(localStorage.user_register_name);
+    setSurname(localStorage.user_register_surname);
+    setCity(localStorage.user_register_city);
+    setPhone(localStorage.user_register_phone);
+    setSelectedFile(localStorage.user_register_avatar);
   }, [currentUser]);
 
   useEffect(() => {
@@ -160,15 +159,15 @@ const Profile = () => {
                 <S.Button onClick={() => setModalActive(true)}>
                   Разместить объявление
                 </S.Button>
-                <S.SellerButton onClick={() => setModalChangePassActive(true)}>
-                    Сменить пароль
-                  </S.SellerButton>
+                <S.ChangePasswordButton
+                  onClick={() => setModalChangePassActive(true)}>
+                  Сменить пароль
+                </S.ChangePasswordButton>
                 <Link to="/">
                   <S.SellerButton onClick={() => logoutUserFn()}>
                     Выйти
                   </S.SellerButton>
                 </Link>
-              
               </Nav>
             </Header>
             <S.Main>
@@ -306,7 +305,10 @@ const Profile = () => {
             </S.Main>
           </Container>
         </PageContainer>
-        <ChangePasswordModal active={modalActiveChangePass} setActive={setModalChangePassActive}/>
+        <ChangePasswordModal
+          active={modalActiveChangePass}
+          setActive={setModalChangePassActive}
+        />
         <NewAdvModal active={modalActive} setActive={setModalActive} />
         <FooterAll active={modalActive} setActive={setModalActive} />
       </S.Wrapper>

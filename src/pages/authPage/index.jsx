@@ -17,12 +17,13 @@ export const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
+  const [name, setUserName] = useState("");
   const [surname, setSurname] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [showPassword, setShowPassWord] = useState("password");
+  const [repeatLogin, setRepeatLogin] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ export const AuthPage = () => {
       setIsAuthLoading(true);
       await loginUserFn({ email, password });
       setIsAuthLoading(false);
+      setRepeatLogin(false)
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);
@@ -72,15 +74,15 @@ export const AuthPage = () => {
       const userData = {
         email,
         password,
-        userName,
+        name,
         city,
         surname,
       };
       registerUser(userData);
-      localStorage.setItem("userData", JSON.stringify(userData));
       setUser(userData);
       setIsAuthLoading(false);
-      navigate("/account", { replace: true });
+      setRepeatLogin(true);
+      navigate("/login", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);
       setError(error.message || "Неизвестная ошибка регистрации");
@@ -121,7 +123,7 @@ export const AuthPage = () => {
                   setPassword(event.target.value);
                 }}
               />
-                 <S.ShowPasswordLogoLogin
+              <S.ShowPasswordLogoLogin
                 onClick={handleShowPassword}
                 src={
                   showPassword === "password"
@@ -131,6 +133,11 @@ export const AuthPage = () => {
               />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
+            {repeatLogin && (
+              <S.ReloginMessage>
+                Войдите под новыми данными для завершения регистрации
+              </S.ReloginMessage>
+            )}
             <S.Buttons>
               <S.PrimaryButton
                 onClick={() => handleLogin({ email, password })}
@@ -165,7 +172,7 @@ export const AuthPage = () => {
                   setPassword(event.target.value);
                 }}
               />
-                <S.ShowPasswordLogoSec
+              <S.ShowPasswordLogoSec
                 onClick={handleShowPassword}
                 src={
                   showPassword === "password"
@@ -194,7 +201,7 @@ export const AuthPage = () => {
                 type="text"
                 name="name"
                 placeholder="Имя (необязательно)"
-                value={userName}
+                value={name}
                 onChange={(event) => {
                   setUserName(event.target.value);
                 }}
@@ -220,6 +227,7 @@ export const AuthPage = () => {
                 }}
               />
             </S.Inputs>
+
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
               <S.PrimaryButton

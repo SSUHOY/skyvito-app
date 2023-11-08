@@ -58,7 +58,7 @@ export const Nav = styled.nav`
     height: 55px;
     -webkit-box-pack: start;
     -ms-flex-pack: start;
-    justify-content: start;
+    justify-content: space-between;
     padding: 0 20px;
   }
 `;
@@ -111,6 +111,32 @@ export const SellerButton = styled.button`
     display: none;
   }
 `;
+
+export const ChangePasswordButton = styled.button`
+  width: 173px;
+  height: 40px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1;
+  margin-left: 10px;
+  &:disabled {
+    background-color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+  }
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid #ffffff;
+  }
+  @media screen and (max-width: 620px) {
+    width: 173px;
+    height: 40px;
+    margin-left: 185px;
+  }
+`;
+
 
 export const Main = styled.main`
   box-sizing: border-box;

@@ -30,27 +30,14 @@ export const AuthProvider = ({ children }) => {
       dispatch(uploadTokens(tokenData.access_token, tokenData.refresh_token));
       const userData = await fetchUser({ tokenData });
       localStorage.setItem("userData", JSON.stringify(userData));
-      localStorage.setItem("user_register_id", JSON.stringify(userData.id));
-      localStorage.setItem(
-        "user_register_email",
-        JSON.stringify(userData.email)
-      );
-      localStorage.setItem("user_register_city", JSON.stringify(userData.city));
-      localStorage.setItem("user_register_name", JSON.stringify(userData.name));
-      localStorage.setItem("user_register_avatar", JSON.stringify(userData.avatar));
-      localStorage.setItem(
-        "user_register_surname",
-        JSON.stringify(userData.surname)
-      );
-      localStorage.setItem(
-        "user_register_phone",
-        JSON.stringify(userData.phone)
-      );
+      localStorage.setItem("user_register_id", userData.id);
+      localStorage.setItem("user_register_email", userData.email);
+      localStorage.setItem("user_register_city", userData.city);
+      localStorage.setItem("user_register_name", userData.name);
+      localStorage.setItem("user_register_avatar", userData.avatar);
+      localStorage.setItem("user_register_surname", userData.surname);
+      localStorage.setItem("user_register_phone", userData.phone);
 
-      localStorage.setItem(
-        "user_register_phone",
-        JSON.stringify(userData.phone)
-      );
       setUser(userData);
       setError(null);
     } catch (error) {

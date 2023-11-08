@@ -220,16 +220,22 @@ export const AdvPage = () => {
                       </S.UsersUIBtnBlock>
                     ) : (
                       <S.ArticleBtn onClick={handleShowPhoneClick}>
-                        Показать&nbsp;телефон
-                        <br />
-                        <S.ArticleBtnSpan>
-                          {!showPhone
-                            ? `${adv?.user.phone.substring(
-                                0,
-                                1
-                              )}${adv?.user.phone.substring(1, 4)} XXX XX XX`
-                            : data?.user.phone}
-                        </S.ArticleBtnSpan>
+                        {adv.user.phone === null ? (
+                          <S.ArticleBtnSpan>
+                            Телефон продавца <br /> не указан
+                          </S.ArticleBtnSpan>
+                        ) : (
+                          <S.ArticleBtnSpan>
+                            Показать&nbsp;телефон
+                            <br />
+                            {!showPhone
+                              ? `${adv?.user.phone.substring(
+                                  0,
+                                  1
+                                )}${adv?.user.phone.substring(1, 4)} XXX XX XX`
+                              : data?.user.phone}
+                          </S.ArticleBtnSpan>
+                        )}
                       </S.ArticleBtn>
                     )}
 

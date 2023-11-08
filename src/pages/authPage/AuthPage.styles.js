@@ -194,5 +194,5 @@ font-size: 15px;
 line-height: 24px;
 margin-top: 10px;
 margin-right: 48px;
-text-align: center;
+text-align: left;
 `

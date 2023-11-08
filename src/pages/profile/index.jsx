@@ -29,7 +29,6 @@ import { NewAdvModal } from "../../components/modal/new-adv";
 import ChangePasswordModal from "../../components/modal/change-password/changePassword";
 
 const Profile = () => {
-
   const { logoutUserFn } = useAuthContext();
   // Pop-up "post new adv"
   const [modalActive, setModalActive] = useState(false);
@@ -39,6 +38,7 @@ const Profile = () => {
   const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
   const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
+
 
   const dispatch = useDispatch();
 
@@ -198,9 +198,10 @@ const Profile = () => {
                             <S.ProfileImg
                               src={
                                 currentUser === undefined
-                                  ? ""
+                                  ? "Загрузите картинку"
                                   : `http://localhost:8090/${currentUser?.avatar}`
                               }
+                              alt="avatar"
                             />
                           </S.SettingsImg>
                           <S.SettingChangePhoto
@@ -285,6 +286,9 @@ const Profile = () => {
                   <S.MainContentTitle>Мои товары</S.MainContentTitle>
                   <S.MainContent>
                     <S.ContentCards>
+                    {data?.length === 0
+                    ? "Вы пока не разместили объявления"
+                    : ""}
                       {data?.map((item, index) => (
                         <CardsItem
                           key={index}
@@ -298,9 +302,9 @@ const Profile = () => {
                         />
                       ))}
                     </S.ContentCards>
-                    {data?.length === 0 &&
-                      "Вы пока не разместили ни одного объявления"}
+                  
                   </S.MainContent>
+                
                 </S.MainCenterBox>
               </S.MainContainer>
             </S.Main>

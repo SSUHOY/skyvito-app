@@ -264,11 +264,15 @@ export const SettingsImg = styled.div`
 `;
 
 export const ProfileImg = styled.img`
-  width: 100%;
-  height: auto;
+  width: 170px;
+  height: 170px;
   display: block;
   object-fit: cover;
   border-radius: 50%;
+  @media screen and (max-width: 620px) {
+    width: 132px;
+    height: 132px;
+  }
 `;
 
 export const SettingChangePhoto = styled.label`

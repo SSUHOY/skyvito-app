@@ -39,10 +39,11 @@ export const AuthPage = () => {
       return;
     }
     try {
-      setIsAuthLoading(true);
+      setIsAuthLoading(true);     
+       setRepeatLogin(false)
       await loginUserFn({ email, password });
       setIsAuthLoading(false);
-      setRepeatLogin(false)
+
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);

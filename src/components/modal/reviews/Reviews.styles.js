@@ -41,7 +41,7 @@ export const ModalBlock = styled.div`
     position: absolute;
     z-index: 5;
     left: 0px;
-    top: 55px;
+    top: 4px;
     opacity: 1;
   }
 `;
@@ -63,6 +63,22 @@ export const ModalContent = styled.div`
   background-color: #ffffff;
   border-radius: 12px;
   position: relative;
+  @media screen and (max-width: 600px) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 320px;
+    height: auto;
+    padding: 30px 20px 30px;
+  }
 `;
 
 export const ModalMainTitle = styled.h3`

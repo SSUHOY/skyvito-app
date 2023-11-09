@@ -197,11 +197,11 @@ export const adsApi = createApi({
       invalidatesTags: ["Ads"],
     }),
     deleteAdvImages: builder.mutation({
-      query: ({ data, id }) => {
-        console.log(data);
-
+      query: (data) => {
+        const url = data.imgURL
+        const new_url = url.replace("http://localhost:8090/", "")
         return {
-          url: `ads/${id}/image?file_url=${new_url}`,
+          url: `ads/${data.id}/image?file_url=${new_url}`,
           method: "DELETE",
         };
       },

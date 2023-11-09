@@ -265,6 +265,7 @@ export const FormNewArtParagraph = styled.p`
   font-size: 16px;
   line-height: 24px;
   color: #000000;
+  z-index: 1;
   margin-bottom: 10px;
   @media screen and (max-width: 600px) {
     font-size: 14px;
@@ -360,9 +361,7 @@ export const FormNewArtImage = styled.label`
   position: relative;
   z-index: 0;
   background-color: #f0f0f0;
-  &.displayNone {
-    display: none;
-  }
+  
   @media screen and (max-width: 600px) {
     display: block;
     width: 90px;
@@ -394,13 +393,13 @@ export const FormNewArtCover = styled.input`
   }
   content: "Файл";
   position: absolute;
-
+opacity: 0;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   background-color: #f0f0f0;
-  z-index: -1;
+  z-index: -2;
   cursor: pointer;
 
   &:before {
@@ -426,44 +425,18 @@ export const FormNewArtCover = styled.input`
   }
 `;
 
-export const DeletePicFromListDiv = styled.div`
+export const DeleteImageBtnDiv = styled.div`
   width: 18px;
   height: 18px;
-  position: absolute;
-  top: 5px;
-  right: 7px;
-  z-index: 3;
+  position: sticky;
   cursor: pointer;
 `;
 
-export const DeletePicFromListBtn = styled.div`
-  border-radius: 50%;
-  position: relative;
-  width: 5pcx;
-  background-color: white;
-  height: 100%;
-  &:before {
-    content: "";
-    position: absolute;
-    width: 15px;
-    height: 2px;
-    border-radius: 1px;
-    background-color: black;
-    top: 45%;
-    right: 1px;
-    transform: rotate(45deg);
-  }
-  &:after {
-    transform: rotate(-45deg);
-    content: "";
-    position: absolute;
-    width: 15px;
-    height: 2px;
-    border-radius: 1px;
-    background-color: black;
-    top: 45%;
-    right: 1px;
-  }
+export const DeleteImageBtn = styled.img`
+  width: 18px;
+  height: 18px;
+  z-index: 2;
+  position: sticky;
 `;
 
 export const FormPrice = styled.label`

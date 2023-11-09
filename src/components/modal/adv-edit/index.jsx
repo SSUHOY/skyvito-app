@@ -10,6 +10,7 @@ import {
   useUploadUserImageMutation,
 } from "../../services/adsApi.jsx";
 import Skeleton from "react-loading-skeleton";
+import deleteImg from "../../../assets/images/delete_btn.png";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export const EditAdvModal = ({ active, setActive }) => {
@@ -32,8 +33,6 @@ export const EditAdvModal = ({ active, setActive }) => {
       setImages(data.images);
     }
   }, [data]);
-
-
 
   const adv = useMemo(() => data || [], [data]);
 
@@ -69,21 +68,18 @@ export const EditAdvModal = ({ active, setActive }) => {
   };
 
   const handleDeleteAdvImage = async () => {
-    await refreshToken();
-    deleteAdvImages({ id: id, data: images });
-    
+    console.log('Удаление')
+    // deleteAdvImages({ id: id, data: images });
   };
 
   const handleAdTitleChange = (event) => {
     setTitle(event.target.value);
     setSaveButtonActive(true);
-
   };
 
   const handleAdDescriptionChange = (event) => {
     setDescription(event.target.value);
     setSaveButtonActive(true);
-
   };
 
   const handleAdPriceChange = (event) => {
@@ -138,20 +134,26 @@ export const EditAdvModal = ({ active, setActive }) => {
                 <S.FormNewArtBarImages>
                   {" "}
                   {data?.images?.map((image, index) => (
-                    <S.FormNewArtImage htmlFor="upload-photo" key={index}>
+                    <S.FormNewArtImage key={index}>
+                       <S.DeleteImageBtnDiv onClick={(e) => e.stopPropagation()}>
+                        <S.DeleteImageBtn src={deleteImg} onClick={handleDeleteAdvImage} />
+                      </S.DeleteImageBtnDiv>
                       <S.FormNewArtImg
                         src={
                           !image.url ? "" : `http://localhost:8090/${image.url}`
                         }
                       />
                       <S.FormNewArtCover type="file" id="upload-photo" />
+                  
                     </S.FormNewArtImage>
+                    
                   ))}
                   {images.length >= 5 ? (
                     ""
                   ) : (
-                    <S.FormNewArtImage htmlFor="upload-photo">
+                    <S.FormNewArtImage >
                       <S.FormNewArtImg />
+
                       <S.FormNewArtCover
                         type="file"
                         id="upload-photo"
@@ -162,7 +164,7 @@ export const EditAdvModal = ({ active, setActive }) => {
                   {images.length >= 4 ? (
                     ""
                   ) : (
-                    <S.FormNewArtImage htmlFor="upload-photo">
+                    <S.FormNewArtImage >
                       <S.FormNewArtImg />
                       <S.FormNewArtCover
                         type="file"
@@ -174,7 +176,7 @@ export const EditAdvModal = ({ active, setActive }) => {
                   {images.length >= 3 ? (
                     ""
                   ) : (
-                    <S.FormNewArtImage htmlFor="upload-photo">
+                    <S.FormNewArtImage>
                       <S.FormNewArtImg />
                       <S.FormNewArtCover
                         type="file"
@@ -186,7 +188,7 @@ export const EditAdvModal = ({ active, setActive }) => {
                   {images.length >= 2 ? (
                     ""
                   ) : (
-                    <S.FormNewArtImage htmlFor="upload-photo">
+                    <S.FormNewArtImage >
                       <S.FormNewArtImg />
                       <S.FormNewArtCover
                         type="file"
@@ -198,7 +200,7 @@ export const EditAdvModal = ({ active, setActive }) => {
                   {images.length >= 1 ? (
                     ""
                   ) : (
-                    <S.FormNewArtImage htmlFor="upload-photo">
+                    <S.FormNewArtImage>
                       <S.FormNewArtImg />
                       <S.FormNewArtCover
                         type="file"

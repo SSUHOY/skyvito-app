@@ -82,8 +82,7 @@ export const Button = styled.button`
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background-color: ${(props) => props.activeHover};
   }
   @media screen and (max-width: 620px) {
     display: none;
@@ -94,7 +93,7 @@ export const SellerButton = styled.button`
   height: 40px;
   border: 1px solid #ffffff;
   border-radius: 6px;
-  background-color: transparent;
+  background-color: #009EE4;
   color: #ffffff;
   font-size: 16px;
   line-height: 1;
@@ -104,8 +103,8 @@ export const SellerButton = styled.button`
     border: 1px solid #d9d9d9;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background-color: ${(props) => props.activeHover};
+  }
   }
   @media screen and (max-width: 620px) {
     display: none;

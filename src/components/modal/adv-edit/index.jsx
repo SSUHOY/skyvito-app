@@ -19,7 +19,6 @@ export const EditAdvModal = ({ active, setActive }) => {
   const [deleteAdvImages] = useDeleteAdvImagesMutation(id);
   const [refreshToken] = useRefreshTokenMutation();
   const [uploadAdvImage] = useUploadAdvImageMutation(id);
-
   const [isLoading, setIsLoading] = useState(true);
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
@@ -27,13 +26,14 @@ export const EditAdvModal = ({ active, setActive }) => {
   const [price, setPrice] = useState("");
   const [saveButtonActive, setSaveButtonActive] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
-
   useEffect(() => {
     if (data) {
       setIsLoading(false);
       setImages(data.images);
     }
   }, [data]);
+
+
 
   const adv = useMemo(() => data || [], [data]);
 
@@ -64,26 +64,32 @@ export const EditAdvModal = ({ active, setActive }) => {
     } else {
       const formData = new FormData();
       formData.append("file", selectedImg);
-      uploadAdvImage({ data: formData, id: id });
+      uploadAdvImage({ formData, id });
     }
   };
 
   const handleDeleteAdvImage = async () => {
     await refreshToken();
     deleteAdvImages({ id: id, data: images });
+    
   };
 
   const handleAdTitleChange = (event) => {
     setTitle(event.target.value);
+    setSaveButtonActive(true);
+
   };
 
   const handleAdDescriptionChange = (event) => {
     setDescription(event.target.value);
+    setSaveButtonActive(true);
+
   };
 
   const handleAdPriceChange = (event) => {
     console.log(event.target.value);
     setPrice(event.target.value);
+    setSaveButtonActive(true);
   };
 
   return (
@@ -141,14 +147,66 @@ export const EditAdvModal = ({ active, setActive }) => {
                       <S.FormNewArtCover type="file" id="upload-photo" />
                     </S.FormNewArtImage>
                   ))}
-                  <S.FormNewArtImage htmlFor="upload-photo">
-                    <S.FormNewArtImg />
-                    <S.FormNewArtCover
-                      type="file"
-                      id="upload-photo"
-                      onChange={handleImgUpload}
-                    />
-                  </S.FormNewArtImage>
+                  {images.length >= 5 ? (
+                    ""
+                  ) : (
+                    <S.FormNewArtImage htmlFor="upload-photo">
+                      <S.FormNewArtImg />
+                      <S.FormNewArtCover
+                        type="file"
+                        id="upload-photo"
+                        onChange={handleImgUpload}
+                      />
+                    </S.FormNewArtImage>
+                  )}
+                  {images.length >= 4 ? (
+                    ""
+                  ) : (
+                    <S.FormNewArtImage htmlFor="upload-photo">
+                      <S.FormNewArtImg />
+                      <S.FormNewArtCover
+                        type="file"
+                        id="upload-photo"
+                        onChange={handleImgUpload}
+                      />
+                    </S.FormNewArtImage>
+                  )}
+                  {images.length >= 3 ? (
+                    ""
+                  ) : (
+                    <S.FormNewArtImage htmlFor="upload-photo">
+                      <S.FormNewArtImg />
+                      <S.FormNewArtCover
+                        type="file"
+                        id="upload-photo"
+                        onChange={handleImgUpload}
+                      />
+                    </S.FormNewArtImage>
+                  )}
+                  {images.length >= 2 ? (
+                    ""
+                  ) : (
+                    <S.FormNewArtImage htmlFor="upload-photo">
+                      <S.FormNewArtImg />
+                      <S.FormNewArtCover
+                        type="file"
+                        id="upload-photo"
+                        onChange={handleImgUpload}
+                      />
+                    </S.FormNewArtImage>
+                  )}
+                  {images.length >= 1 ? (
+                    ""
+                  ) : (
+                    <S.FormNewArtImage htmlFor="upload-photo">
+                      <S.FormNewArtImg />
+                      <S.FormNewArtCover
+                        type="file"
+                        id="upload-photo"
+                        onChange={handleImgUpload}
+                      />
+                    </S.FormNewArtImage>
+                  )}
                 </S.FormNewArtBarImages>
               )}
             </S.FormNewArtBlock>
@@ -168,7 +226,7 @@ export const EditAdvModal = ({ active, setActive }) => {
               active={!saveButtonActive ? "#D9D9D9" : "#009EE4"}
               activehover={!saveButtonActive ? "#D9D9D9" : "#0080C1"}>
               {" "}
-              Опубликовать
+              Сохранить
             </S.FormSendBtn>
           </S.ModalFormNewArt>
         </S.ModalContent>

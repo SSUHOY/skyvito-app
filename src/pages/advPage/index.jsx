@@ -100,6 +100,8 @@ export const AdvPage = () => {
     return () => clearTimeout(timer);
   }, [selectedImg]);
 
+  console.log(adv)
+
   return (
     <S.Wrapper>
       <S.Container>

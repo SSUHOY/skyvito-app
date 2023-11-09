@@ -1,4 +1,4 @@
-import { useDispatch,  } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as S from "./SellerProfile.styles";
 import { Link, NavLink, useParams } from "react-router-dom";
 import { FooterAll } from "../../components/footer/footer";
@@ -24,17 +24,16 @@ import {
 
 const SellerProfile = () => {
   const dispatch = useDispatch();
-  const user = useAuthContext();
+  const {user} = useAuthContext();
   const { id } = useParams();
-  const { data} = useGetCurrentAdvQuery(id);
-  const { data: allAds}= useGetAllAdsQuery([])
+  const { data } = useGetCurrentAdvQuery(id);
+  const { data: allAds } = useGetAllAdsQuery([]);
   const [showPhone, setShowPhone] = useState(false);
   const [sellerAds, setSellerAds] = useState([]);
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
   };
-
 
   useEffect(() => {
     let i = 0;
@@ -55,8 +54,7 @@ const SellerProfile = () => {
       let sellerAds = allAdv.filter((item) => item.user_id === userId);
       setSellerAds(sellerAds);
     }
-  }, [allAds, data]);
-
+  }, [allAds, user]);
   // Помещаем в общий стор данные всех публикаций
   useEffect(() => {
     if (data) {

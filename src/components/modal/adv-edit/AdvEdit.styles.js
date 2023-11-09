@@ -360,6 +360,9 @@ export const FormNewArtImage = styled.label`
   position: relative;
   z-index: 0;
   background-color: #f0f0f0;
+  &.displayNone {
+    display: none;
+  }
   @media screen and (max-width: 600px) {
     display: block;
     width: 90px;
@@ -494,7 +497,7 @@ export const FormPriceInput = styled.input`
 
 export const FormNewArtPriceCover = styled.div`
   position: relative;
-  left: 255px;
+  left: 180px;
   bottom: 34px;
   @media screen and (max-width: 600px) {
     position: relative;

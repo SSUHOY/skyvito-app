@@ -29,14 +29,13 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
 
   const refresh_token = localStorage.getItem("refresh_token");
 
-
   if (result?.error?.status === 401) {
-    console.log('logOut')
+    console.log("logOut");
     forceLogout();
   }
   if (result?.error?.status !== 401) {
     return result;
-  }  
+  }
 };
 
 export const adsApi = createApi({
@@ -147,7 +146,7 @@ export const adsApi = createApi({
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: [{ type: "Ads", id: "LIST" }],
+      invalidatesTags: ["Ads"],
     }),
     addNewAdvText: builder.mutation({
       query: (newAdvData) => ({
@@ -212,9 +211,9 @@ export const adsApi = createApi({
       query: ({ id, formData }) => ({
         url: `ads/${id}/image`,
         method: "POST",
-        body: { formData },
+        body: formData,
       }),
-      invalidatesTags: [{ type: "Ads", id: "LIST" }],
+      invalidatesTags: ["Ads"],
     }),
   }),
 });

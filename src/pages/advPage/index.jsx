@@ -195,12 +195,12 @@ export const AdvPage = () => {
                       <S.ArticleCity>
                         {adv ? adv.user.city : "Загрузка"}
                       </S.ArticleCity>
-                      <NavLink
-                        style={{ color: "blue" }}
-                        onClick={() => setModalActiveRevs(true)}>
+                      <S.OpenReviews onClick={() => setModalActiveRevs(true)}>
                         {" "}
-                        Отзывы: {adComments ? adComments.length : "..."}
-                      </NavLink>
+                        <S.ReviewsParagraph>
+                          Отзывы: {adComments ? adComments.length : "..."}
+                        </S.ReviewsParagraph>
+                      </S.OpenReviews>
                     </S.ArticleInfo>
                     <S.ArticlePrice>
                       {adv ? adv.price : "Загрузка.."} {data ? "₽" : ""}
@@ -220,15 +220,14 @@ export const AdvPage = () => {
                       </S.UsersUIBtnBlock>
                     ) : (
                       <S.ArticleBtn onClick={handleShowPhoneClick}>
-                       
                         {adv.user.phone === null ? (
-                       <S.ArticleBtnSpan>
-                        Телефон продавца не указан
-                         </S.ArticleBtnSpan>
+                          <S.ArticleBtnSpan>
+                            Телефон продавца не указан
+                          </S.ArticleBtnSpan>
                         ) : (
                           <S.ArticleBtnSpan>
-                             Показать&nbsp;телефон
-                        <br />
+                            Показать&nbsp;телефон
+                            <br />
                             {!showPhone
                               ? `${adv?.user.phone.substring(
                                   0,
@@ -289,7 +288,7 @@ export const AdvPage = () => {
           setActive={setModalActiveEdit}
           advData={data}
         />
-        <FooterAll active={modalActive} setActive={setModalActive}/>
+        <FooterAll active={modalActive} setActive={setModalActive} />
       </S.Container>
     </S.Wrapper>
   );

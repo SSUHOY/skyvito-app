@@ -28,12 +28,9 @@ import {
   fetchSetAdsRequest,
   setSearchParameters,
 } from "../../store/actions/creators/ads";
-import { selectAllAdsList, selectIsLogin } from "../../store/selectors/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
 import { MainContainer } from "../../components/styles/reusable/Usable.styles";
 import { NewAdvModal } from "../../components/modal/new-adv";
-import SkeletonLoaderAds from "../../components/skeleton";
-import { SkeletonTheme } from "react-loading-skeleton";
 
 const Main = () => {
   const { data } = useGetAllAdsQuery({});

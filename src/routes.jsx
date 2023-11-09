@@ -12,6 +12,7 @@ import { useAuthContext } from "./components/context/AuthContext";
 const AppRoutes = () => {
 
   const {user} = useAuthContext()
+  
   return (
     <Routes>
       <Route path="/" element={<Main />} />

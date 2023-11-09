@@ -33,8 +33,11 @@ export const CardsItem = ({
         <CardsContentBox>
           <CardsCard>
             <CardImgBox>
-              <CardImage src={picture} />
+              <Link to={`/adv-page/${advId}`}>
+                <CardImage src={picture} />
+              </Link>
             </CardImgBox>
+
             <CardContentBox>
               <Link to={`/adv-page/${advId}`}>
                 <CardTitle>{title}</CardTitle>

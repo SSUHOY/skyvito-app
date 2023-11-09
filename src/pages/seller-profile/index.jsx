@@ -6,9 +6,11 @@ import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { BackToBtn, Logo, SearchLogoMob } from "../../assets/icons/icons";
 import { useAuthContext } from "../../components/context/AuthContext";
 import {
+  useGetAllAdsQuery,
+  useGetCurrentAdvQuery,
   useGetCurrentUserAdvtQuery,
 } from "../../components/services/adsApi";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchSetCurrentUserAdsRequest } from "../../store/actions/creators/ads";
 import {
   MainMenu,
@@ -24,16 +26,14 @@ const SellerProfile = () => {
   const dispatch = useDispatch();
   const user = useAuthContext();
   const { id } = useParams();
-  const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
-  console.log(data)
-  const [adv, setAdv] = useState();
+  const { data} = useGetCurrentAdvQuery(id);
+  const { data: allAds}= useGetAllAdsQuery([])
   const [showPhone, setShowPhone] = useState(false);
   const [sellerAds, setSellerAds] = useState([]);
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
   };
-
 
 
   useEffect(() => {
@@ -46,14 +46,16 @@ const SellerProfile = () => {
       }
     }
   }, [data, id]);
+  const allAdv = useMemo(() => allAds || [], [data]);
 
   useEffect(() => {
-    if (adv?.user) {
-      let userId = adv.user_id;
-      let sellerAds = data.filter((item) => item.user_id === userId);
+    if (data?.user) {
+      let userId = data.user_id;
+
+      let sellerAds = allAdv.filter((item) => item.user_id === userId);
       setSellerAds(sellerAds);
     }
-  }, [adv, data]);
+  }, [allAds, data]);
 
   // Помещаем в общий стор данные всех публикаций
   useEffect(() => {
@@ -113,39 +115,39 @@ const SellerProfile = () => {
                         <S.UserContentLeftBox>
                           <S.SellerImg>
                             <S.ProfileImg
-                              src={`http://localhost:8090/${adv?.user.avatar}`}
+                              src={`http://localhost:8090/${data?.user.avatar}`}
                             />
                           </S.SellerImg>
                         </S.UserContentLeftBox>
                         <S.UserContentRightBox>
                           <S.SellerName>
-                            {adv?.user.name} {adv?.user.surname}
+                            {data?.user.name} {data?.user.surname}
                           </S.SellerName>
-                          <S.SellerCity>{adv?.user.city}</S.SellerCity>
+                          <S.SellerCity>{data?.user.city}</S.SellerCity>
                           <S.SellerRegistrationDate>
-                            Продает товары с {adv?.user.sells_from}
+                            Продает товары с {data?.user.sells_from}
                           </S.SellerRegistrationDate>
                           <S.ButtonBox>
                             <S.SellerimgBox>
                               <S.SellerImgMob>
                                 <S.ProfileImgMob
-                                  src={`http://localhost:8090/${adv?.user.avatar}`}
+                                  src={`http://localhost:8090/${data?.user.avatar}`}
                                 />
                               </S.SellerImgMob>
                             </S.SellerimgBox>
                             <S.PhoneShownBtn onClick={handleShowPhoneClick}>
                               Показать телефон <br />
                               <S.PhoneNumber>
-                                {!adv && "Загрузка"}
+                                {!data && "Загрузка"}
                                 {!showPhone
-                                  ? `${adv?.user.phone.substring(
+                                  ? `${data?.user.phone.substring(
                                       0,
                                       1
-                                    )}${adv?.user.phone.substring(
+                                    )}${data?.user.phone.substring(
                                       1,
                                       4
                                     )} XXX XX XX`
-                                  : adv?.user.phone}
+                                  : data?.user.phone}
                               </S.PhoneNumber>
                             </S.PhoneShownBtn>
                           </S.ButtonBox>
@@ -156,7 +158,7 @@ const SellerProfile = () => {
                   <S.MainContentTitle>Товары продавца</S.MainContentTitle>
                   <S.MainContent>
                     <S.ContentCards>
-                      {data?.map((adv) => (
+                      {sellerAds?.map((adv) => (
                         <CardsItem
                           key={adv?.id}
                           advId={id}

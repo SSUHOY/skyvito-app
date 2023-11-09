@@ -323,6 +323,14 @@ export const ArticleCity = styled.p`
     margin-bottom: 4px;
   }
 `;
+export const ReviewsParagraph = styled.p`
+
+  color: #009ee4;
+`
+export const OpenReviews = styled.div`
+font-size: 16px;
+  line-height: 21px;
+`
 
 export const ArticlePrice = styled.p`
   font-size: 28px;

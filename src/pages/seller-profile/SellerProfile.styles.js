@@ -374,16 +374,23 @@ export const ContentCards = styled.div`
   grid-gap: 40px 26px;
   justify-content: center;
   height: 922px;
-  @media screen and (max-width: 590px) {
-    display: -ms-grid;
+  @media screen and (max-width: 1158px) {
     display: grid;
-    -ms-grid-columns: (137px) [2];
+    grid-template-columns: repeat(3, 270px);
+  }
+
+  @media screen and (max-width: 890px) {
+    display: grid;
+    grid-template-columns: repeat(2, 270px);
+  }
+
+  @media screen and (max-width: 590px) {
+    display: grid;
     grid-template-columns: repeat(2, 137px);
     grid-auto-rows: 293px;
     grid-gap: 10px 10px;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
+    height: 100%;
   }
 `;
 

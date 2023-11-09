@@ -28,10 +28,10 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
   };
 
   const refresh_token = localStorage.getItem("refresh_token");
-  console.log(refresh_token)
+
 
   if (result?.error?.status === 401) {
-    console.log('лог аут')
+    console.log('logOut')
     forceLogout();
   }
   if (result?.error?.status !== 401) {

@@ -23,7 +23,7 @@ export const AuthPage = () => {
   const [error, setError] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [showPassword, setShowPassWord] = useState("password");
-  const [repeatLogin, setRepeatLogin] = useState(false);
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,7 +40,6 @@ export const AuthPage = () => {
     }
     try {
       setIsAuthLoading(true);     
-       setRepeatLogin(false)
       await loginUserFn({ email, password });
       setIsAuthLoading(false);
 
@@ -82,8 +81,8 @@ export const AuthPage = () => {
       registerUser(userData);
       setUser(userData);
       setIsAuthLoading(false);
-      setRepeatLogin(true);
-      navigate("/login", { replace: true });
+      await loginUserFn({ email, password });
+      navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);
       setError(error.message || "Неизвестная ошибка регистрации");
@@ -134,11 +133,7 @@ export const AuthPage = () => {
               />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
-            {repeatLogin && (
-              <S.ReloginMessage>
-                Войдите под новыми данными для завершения регистрации
-              </S.ReloginMessage>
-            )}
+
             <S.Buttons>
               <S.PrimaryButton
                 onClick={() => handleLogin({ email, password })}

@@ -222,7 +222,7 @@ export const NewAdvModal = ({ active, setActive }) => {
                 className="form-newArt__input-price"
                 type="number"
                 name="price"
-                id="formName"
+                id="formPrice"
                 onChange={handleAdPriceChange}></S.FormPriceInput>
               <S.FormNewArtPriceCover> &#8381;</S.FormNewArtPriceCover>
             </S.FormNewArtBlockPrice>

@@ -12,7 +12,6 @@ import {
 } from "../styles/main/Footer.styles";
 
 export const FooterAll = ({ active, setActive }) => {
-  console.log(setActive);
   return (
     <>
       <Footer>

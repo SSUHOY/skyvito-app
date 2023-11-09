@@ -22,6 +22,7 @@ export async function fetchLogin({ email, password }) {
 
 export async function fetchUser({ tokenData }) {
   const token = tokenData.access_token;
+  console.log(token)
   const response = await axios.get("http://localhost:8090/user", {
     headers: {
       authorization: `Bearer ${token}`,

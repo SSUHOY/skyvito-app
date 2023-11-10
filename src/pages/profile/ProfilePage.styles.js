@@ -93,7 +93,7 @@ export const SellerButton = styled.button`
   height: 40px;
   border: 1px solid #ffffff;
   border-radius: 6px;
-  background-color: #009EE4;
+  background-color: #009ee4;
   color: #ffffff;
   font-size: 16px;
   line-height: 1;
@@ -105,7 +105,12 @@ export const SellerButton = styled.button`
   &:hover {
     background-color: ${(props) => props.activeHover};
   }
+  @media screen and (max-width: 620px) {
+    display: none;
   }
+`;
+
+export const LinkAndBtnHideDiv = styled.div`
   @media screen and (max-width: 620px) {
     display: none;
   }

@@ -128,7 +128,6 @@ export const MainSearch = styled.main`
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 3;
   }
 `;
 
@@ -247,7 +246,7 @@ export const SearchLogoMobLink = styled.div`
 
 export const SearchLogoMob = styled.img`
   display: none;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 620px) {
     width: 32px;
     height: auto;
     display: block;

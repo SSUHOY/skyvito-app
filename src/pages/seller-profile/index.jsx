@@ -27,7 +27,7 @@ const SellerProfile = () => {
   const {user} = useAuthContext();
   const { id } = useParams();
   const { data } = useGetCurrentAdvQuery(id);
-  const { data: allAds } = useGetAllAdsQuery([]);
+  const { data: allAds } = useGetAllAdsQuery({});
   const [showPhone, setShowPhone] = useState(false);
   const [sellerAds, setSellerAds] = useState([]);
 
@@ -45,10 +45,10 @@ const SellerProfile = () => {
       }
     }
   }, [data, id]);
-  const allAdv = useMemo(() => allAds || [], [data]);
+  const allAdv = useMemo(() => allAds || null, [allAds]);
 
   useEffect(() => {
-    if (data?.user) {
+    if (allAdv != null) {
       let userId = data.user_id;
 
       let sellerAds = allAdv.filter((item) => item.user_id === userId);

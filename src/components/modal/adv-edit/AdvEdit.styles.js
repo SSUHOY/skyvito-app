@@ -393,7 +393,6 @@ export const FormNewArtCover = styled.input`
   }
   content: "Файл";
   position: absolute;
-opacity: 0;
   width: 100%;
   height: 100%;
   top: 0;

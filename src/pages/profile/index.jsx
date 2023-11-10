@@ -39,7 +39,6 @@ const Profile = () => {
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
   const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
 
-
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -163,11 +162,13 @@ const Profile = () => {
                   onClick={() => setModalChangePassActive(true)}>
                   Сменить пароль
                 </S.ChangePasswordButton>
-                <Link to="/">
-                  <S.SellerButton onClick={() => logoutUserFn()}>
-                    Выйти
-                  </S.SellerButton>
-                </Link>
+                <S.LinkAndBtnHideDiv>
+                  <Link to="/">
+                    <S.SellerButton onClick={() => logoutUserFn()}>
+                      Выйти
+                    </S.SellerButton>
+                  </Link>
+                </S.LinkAndBtnHideDiv>
               </Nav>
             </Header>
             <S.Main>
@@ -286,9 +287,9 @@ const Profile = () => {
                   <S.MainContentTitle>Мои товары</S.MainContentTitle>
                   <S.MainContent>
                     <S.ContentCards>
-                    {data?.length === 0
-                    ? "Вы пока не разместили объявления"
-                    : ""}
+                      {data?.length === 0
+                        ? "Вы пока не разместили объявления"
+                        : ""}
                       {data?.map((item, index) => (
                         <CardsItem
                           key={index}
@@ -302,9 +303,7 @@ const Profile = () => {
                         />
                       ))}
                     </S.ContentCards>
-                  
                   </S.MainContent>
-                
                 </S.MainCenterBox>
               </S.MainContainer>
             </S.Main>

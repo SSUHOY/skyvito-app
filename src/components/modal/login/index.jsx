@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./AuthPage.styles";
+import * as S from "./LoginModal.styles";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import LogoSkyUrl from "../../assets/images/logo-skypro.png";
-import ShowPassWordLogo from "../../assets/images/view_show_icon_124811.png";
-import HidePassWordLogo from "../../assets/images/view_hide_icon_124813.png";
-import { loginUser } from "../../store/actions/creators/ads";
-import { useAuthContext } from "../../components/context/AuthContext";
-import { useRegisterUserMutation } from "../../components/services/adsApi";
+import LogoSkyUrl from "../../../assets/images/logo-skypro.png";
+import ShowPassWordLogo from "../../../assets/images/view_show_icon_124811.png";
+import HidePassWordLogo from "../../../assets/images/view_hide_icon_124813.png";
+import { useRegisterUserMutation } from "../../services/adsApi";
+import { useAuthContext } from "../../context/AuthContext";
+import { loginUser } from "../../../store/actions/creators/ads";
+
 
 export const AuthPage = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export const AuthPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsLoginMode(location.pathname === "/login");
+    setIsLoginMode(location.pathname === "/reLogin");
   }, [location.pathname, isLoginMode]);
 
   const handleLogin = async () => {
@@ -43,7 +44,6 @@ export const AuthPage = () => {
       await loginUserFn({ email, password });
       setIsAuthLoading(false);
 
-      navigate("/", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);
       setError(error.message || "Неизвестная ошибка при входе");

@@ -11,7 +11,6 @@ import { useAuthContext } from "./components/context/AuthContext";
 
 const AppRoutes = () => {
 
-  const {user} = useAuthContext()
   
   return (
     <Routes>
@@ -20,7 +19,7 @@ const AppRoutes = () => {
       <Route path="/register" element={<AuthPage />} />
       <Route path="/adv-page/:id" element={<AdvPage />} />
       <Route path="/seller-account/:id" element={<SellerProfile />} />
-      <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
+      <Route element={<ProtectedRoute/>}>
         <Route path="/account" element={<Profile />} />
       </Route>
 

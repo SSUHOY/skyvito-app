@@ -37,7 +37,7 @@ const Profile = () => {
 
   const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
-  const { data, isLoading } = useGetCurrentUserAdvtQuery([]);
+  const { data, isLoading } = useGetCurrentUserAdvtQuery({});
 
   const dispatch = useDispatch();
 
@@ -74,6 +74,7 @@ const Profile = () => {
 
   const handleAvatarUpload = async (event) => {
     event.preventDefault();
+    await refreshToken();
     const selectedImg = event.target.files[0];
     setSelectedFile(event.target.files[0]);
     if (!selectedImg) {
@@ -196,14 +197,18 @@ const Profile = () => {
                       <S.ProfileSettingsContainer>
                         <S.SettingsLeftBox>
                           <S.SettingsImg>
-                            <S.ProfileImg
-                              src={
-                                currentUser === undefined
-                                  ? "Загрузите картинку"
-                                  : `http://localhost:8090/${currentUser?.avatar}`
-                              }
-                              alt="avatar"
-                            />
+                            {selectedFile === 'null'  ? (
+                              <S.AvatarAltText>Загрузите аватар</S.AvatarAltText>
+                            ) : (
+                              <S.ProfileImg
+                                src={
+                                  currentUser === undefined
+                                    ? ""
+                                    : `http://localhost:8090/${currentUser?.avatar}`
+                                }
+                              
+                              />
+                            )}
                           </S.SettingsImg>
                           <S.SettingChangePhoto
                             id="upload-photo"

@@ -50,8 +50,7 @@ export const Button = styled.button`
   line-height: 1;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background-color: #0080c1;
   }
   @media screen and (max-width: 768px) {
     display: none;

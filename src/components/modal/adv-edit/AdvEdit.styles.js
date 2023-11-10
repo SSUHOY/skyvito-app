@@ -361,7 +361,7 @@ export const FormNewArtImage = styled.label`
   position: relative;
   z-index: 0;
   background-color: #f0f0f0;
-  
+
   @media screen and (max-width: 600px) {
     display: block;
     width: 90px;
@@ -384,6 +384,40 @@ export const FormNewArtImg = styled.img`
     height: auto;
     -o-object-fit: cover;
     object-fit: cover;
+  }
+`;
+
+export const FormNewArtCoverDiv = styled.div`
+  content: "Файл";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #f0f0f0;
+  z-index: -2;
+  cursor: pointer;
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    top: 50%;
+    right: calc(50% - (30px / 2));
+    transform: rotate(90deg);
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    top: 50%;
+    right: calc(50% - (30px / 2));
   }
 `;
 

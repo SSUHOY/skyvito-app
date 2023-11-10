@@ -43,7 +43,7 @@ export const HeaderNav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: end;
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 768px) {
     height: 55px;
     -webkit-box-pack: start;
     -ms-flex-pack: start;
@@ -64,10 +64,8 @@ export const HeaderBtnLk = styled.button`
   line-height: 1;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background-color: #0080c1;
   }
-
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -88,7 +86,7 @@ export const HeaderBtnMainEnter = styled.button`
     border: 1px solid #ffffff;
   }
   @media screen and (max-width: 768px) {
-    display: none
+    display: none;
   }
 `;
 
@@ -346,4 +344,3 @@ export const Cards = styled.div`
     }
 }
 `;
-

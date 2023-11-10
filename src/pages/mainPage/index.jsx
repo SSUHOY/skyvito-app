@@ -85,20 +85,22 @@ const Main = () => {
               <>
                 <S.Button
                   disabled={isLoading}
-                  activehover={!isLoading ? "#D9D9D9" : "rgba(255, 255, 255, 0.15)"}
+                  className={isLoading ? "disabled" : ""}
                   onClick={() => setModalActive(true)}>
                   Разместить объявление
                 </S.Button>
                 <NavLink to="/account">
-                  <S.SellerButton disabled={isLoading} 
-                  activehover={!isLoading ? "#D9D9D9" : "rgba(255, 255, 255, 0.15)"}>
+                  <S.SellerButton
+                    disabled={isLoading}
+                    className={isLoading ? "disabled" : ""}>
                     Личный кабинет
                   </S.SellerButton>
                 </NavLink>
               </>
             ) : (
               <NavLink to="/login">
-                <HeaderBtnMainEnter>Вход в личный кабинет</HeaderBtnMainEnter>
+                <HeaderBtnMainEnter>
+                  Вход в личный кабинет</HeaderBtnMainEnter>
               </NavLink>
             )}
           </HeaderNav>

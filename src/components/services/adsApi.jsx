@@ -27,10 +27,7 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
     window.location.href = "/login";
   };
 
-  const refresh_token = localStorage.getItem("refresh_token");
-
   if (result?.error?.status === 401) {
-    console.log("logOut");
     forceLogout();
   }
   if (result?.error?.status !== 401) {
@@ -198,10 +195,9 @@ export const adsApi = createApi({
     }),
     deleteAdvImages: builder.mutation({
       query: (data) => {
-        const url = data.imgURL
-        const new_url = url.replace("http://localhost:8090/", "")
+        const url = data.image.url; 
         return {
-          url: `ads/${data.id}/image?file_url=${new_url}`,
+          url: `ads/${data.id}/image?file_url=${url}`,
           method: "DELETE",
         };
       },

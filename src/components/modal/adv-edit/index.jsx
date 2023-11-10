@@ -67,9 +67,10 @@ export const EditAdvModal = ({ active, setActive }) => {
     }
   };
 
-  const handleDeleteAdvImage = async () => {
-    console.log('Удаление')
-    // deleteAdvImages({ id: id, data: images });
+  const handleDeleteAdvImage = async (image) => {
+    await refreshToken();
+    const data = { image, id };
+    deleteAdvImages(data);
   };
 
   const handleAdTitleChange = (event) => {
@@ -83,7 +84,6 @@ export const EditAdvModal = ({ active, setActive }) => {
   };
 
   const handleAdPriceChange = (event) => {
-    console.log(event.target.value);
     setPrice(event.target.value);
     setSaveButtonActive(true);
   };
@@ -135,23 +135,24 @@ export const EditAdvModal = ({ active, setActive }) => {
                   {" "}
                   {data?.images?.map((image, index) => (
                     <S.FormNewArtImage key={index}>
-                       <S.DeleteImageBtnDiv onClick={(e) => e.stopPropagation()}>
-                        <S.DeleteImageBtn src={deleteImg} onClick={handleDeleteAdvImage} />
+                      <S.DeleteImageBtnDiv onClick={(e) => e.stopPropagation()}>
+                        <S.DeleteImageBtn
+                          src={deleteImg}
+                          onClick={() => handleDeleteAdvImage(image)}
+                        />
                       </S.DeleteImageBtnDiv>
                       <S.FormNewArtImg
                         src={
                           !image.url ? "" : `http://localhost:8090/${image.url}`
                         }
                       />
-                      <S.FormNewArtCover type="file" id="upload-photo" />
-                  
+                      <S.FormNewArtCoverDiv />
                     </S.FormNewArtImage>
-                    
                   ))}
                   {images.length >= 5 ? (
                     ""
                   ) : (
-                    <S.FormNewArtImage >
+                    <S.FormNewArtImage>
                       <S.FormNewArtImg />
 
                       <S.FormNewArtCover
@@ -164,7 +165,7 @@ export const EditAdvModal = ({ active, setActive }) => {
                   {images.length >= 4 ? (
                     ""
                   ) : (
-                    <S.FormNewArtImage >
+                    <S.FormNewArtImage>
                       <S.FormNewArtImg />
                       <S.FormNewArtCover
                         type="file"
@@ -188,7 +189,7 @@ export const EditAdvModal = ({ active, setActive }) => {
                   {images.length >= 2 ? (
                     ""
                   ) : (
-                    <S.FormNewArtImage >
+                    <S.FormNewArtImage>
                       <S.FormNewArtImg />
                       <S.FormNewArtCover
                         type="file"

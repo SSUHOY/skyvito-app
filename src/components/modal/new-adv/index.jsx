@@ -3,6 +3,7 @@ import * as S from "./NewAdv.styles";
 import {
   useAddNewAdvPicMutation,
   useAddNewAdvTextMutation,
+  useRefreshTokenMutation,
 } from "../../services/adsApi";
 
 export const NewAdvModal = ({ active, setActive }) => {
@@ -21,6 +22,8 @@ export const NewAdvModal = ({ active, setActive }) => {
   const [addNewAdvWithPic] = useAddNewAdvPicMutation({});
   // Post Ad without photo
   const [addNewAdvText] = useAddNewAdvTextMutation({});
+
+  const [refreshToken] = useRefreshTokenMutation();
 
   const handleAdTitleChange = (event) => {
     setTitle(event.target.value);
@@ -99,6 +102,7 @@ export const NewAdvModal = ({ active, setActive }) => {
 
   const handleSendChanges = async (event) => {
     event.preventDefault();
+    await refreshToken();
     if (!advTitle || !advDescription || !advPrice) {
       setError("Пожалуйста, добавьте информацию о товаре");
       return;

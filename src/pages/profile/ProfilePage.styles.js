@@ -80,9 +80,13 @@ export const Button = styled.button`
     background-color: #d9d9d9;
     border: 1px solid #d9d9d9;
   }
-
+  &.disabled {
+    &:hover {
+      background-color: #d9d9d9;
+    }
+  }
   &:hover {
-    background-color: ${(props) => props.activeHover};
+    background-color: #0080c1;
   }
   @media screen and (max-width: 620px) {
     display: none;
@@ -102,8 +106,13 @@ export const SellerButton = styled.button`
     background-color: #d9d9d9;
     border: 1px solid #d9d9d9;
   }
+  &.disabled {
+    &:hover {
+      background-color: #d9d9d9;
+    }
+  }
   &:hover {
-    background-color: ${(props) => props.activeHover};
+    background-color: #0080c1;
   }
   @media screen and (max-width: 620px) {
     display: none;
@@ -131,8 +140,7 @@ export const ChangePasswordButton = styled.button`
     border: 1px solid #d9d9d9;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background-color: #0080c1;
   }
   @media screen and (max-width: 620px) {
     width: 173px;
@@ -261,6 +269,22 @@ export const SettingsImg = styled.div`
   height: 170px;
   border-radius: 50%;
   background-color: #f0f0f0;
+  @media screen and (max-width: 620px) {
+    width: 132px;
+    height: 132px;
+  }
+`;
+
+export const AvatarAltText = styled.div`
+  width: 170px;
+  height: 170px;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
   @media screen and (max-width: 620px) {
     width: 132px;
     height: 132px;

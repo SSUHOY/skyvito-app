@@ -140,7 +140,7 @@ const Main = () => {
                         title={ad.title}
                         picture={`http://localhost:8090/${ad.images[0]?.url}`}
                         price={ad.price}
-                        date={ad.created_on.split("T")[0]}
+                        date={ad.created_on}
                         place={ad.user.city}
                         isLoading={isLoading}
                       />
@@ -152,7 +152,7 @@ const Main = () => {
                         title={ad.title}
                         picture={`http://localhost:8090/${ad.images[0]?.url}`}
                         price={ad.price}
-                        date={ad.created_on.split("T")[0]}
+                        date={ad.created_on}
                         place={ad.user.city}
                         isLoading={isLoading}
                       />

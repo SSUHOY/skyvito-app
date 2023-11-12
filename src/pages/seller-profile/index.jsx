@@ -8,7 +8,6 @@ import { useAuthContext } from "../../components/context/AuthContext";
 import {
   useGetAllAdsQuery,
   useGetCurrentAdvQuery,
-  useGetCurrentUserAdvtQuery,
 } from "../../components/services/adsApi";
 import { useEffect, useMemo, useState } from "react";
 import { fetchSetCurrentUserAdsRequest } from "../../store/actions/creators/ads";
@@ -21,15 +20,25 @@ import {
   HeaderBtnLk,
   HeaderBtnMainEnter,
 } from "../../components/styles/main/MainPage.styles";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
+import { ArticleBtnSpan } from "../advPage/AdvPage.styles";
 
 const SellerProfile = () => {
   const dispatch = useDispatch();
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   const { id } = useParams();
-  const { data } = useGetCurrentAdvQuery(id);
+  const { data, isLoading } = useGetCurrentAdvQuery(id);
   const { data: allAds } = useGetAllAdsQuery({});
+
   const [showPhone, setShowPhone] = useState(false);
   const [sellerAds, setSellerAds] = useState([]);
+  const [formatDate, setFormatDate] = useState("");
+
+  // Pop-up "post new adv"
+  const [modalActive, setModalActive] = useState(false);
+  // Pop-up "change password"
+  const [modalActiveChangePass, setModalChangePassActive] = useState(false);
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
@@ -61,6 +70,18 @@ const SellerProfile = () => {
       dispatch(fetchSetCurrentUserAdsRequest(data));
     }
   }, [data, dispatch]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      // format user sells from Date
+      const date_sells_from = new Date(data.user.sells_from);
+      const calendarDateFormat = "PPP";
+      const SellsFromDate = format(date_sells_from, calendarDateFormat, {
+        locale: ru,
+      });
+      setFormatDate(SellsFromDate);
+    }
+  }, [data]);
 
   return (
     <>
@@ -102,11 +123,10 @@ const SellerProfile = () => {
                     </MenuForm>
                   </MainMenu>
                   <Link to={`/adv-page/${id}`}>
-                    <div>
-                      <BackToBtn />
-                    </div>
+                    <BackToBtn />
+                    <S.Title>Профиль продавца</S.Title>
                   </Link>
-                  <S.Title>Профиль продавца</S.Title>
+
                   <S.MainProfile>
                     <S.ProfileContent>
                       <S.ProfileSellerContainer>
@@ -123,7 +143,7 @@ const SellerProfile = () => {
                           </S.SellerName>
                           <S.SellerCity>{data?.user.city}</S.SellerCity>
                           <S.SellerRegistrationDate>
-                            Продает товары с {data?.user.sells_from}
+                            Продает товары с {formatDate}
                           </S.SellerRegistrationDate>
                           <S.ButtonBox>
                             <S.SellerimgBox>
@@ -134,19 +154,25 @@ const SellerProfile = () => {
                               </S.SellerImgMob>
                             </S.SellerimgBox>
                             <S.PhoneShownBtn onClick={handleShowPhoneClick}>
-                              Показать телефон <br />
-                              <S.PhoneNumber>
-                                {!data && "Загрузка"}
-                                {!showPhone
-                                  ? `${data?.user.phone.substring(
-                                      0,
-                                      1
-                                    )}${data?.user.phone.substring(
-                                      1,
-                                      4
-                                    )} XXX XX XX`
-                                  : data?.user.phone}
-                              </S.PhoneNumber>
+                              {data.user.phone === null ? (
+                                <ArticleBtnSpan>
+                                  Телефон продавца не указан
+                                </ArticleBtnSpan>
+                              ) : (
+                                <ArticleBtnSpan>
+                                  Показать&nbsp;телефон
+                                  <br />
+                                  {!showPhone
+                                    ? `${data?.user.phone.substring(
+                                        0,
+                                        1
+                                      )}${data?.user.phone.substring(
+                                        1,
+                                        4
+                                      )} XXX XX XX`
+                                    : data?.user.phone}
+                                </ArticleBtnSpan>
+                              )}
                             </S.PhoneShownBtn>
                           </S.ButtonBox>
                         </S.UserContentRightBox>
@@ -156,6 +182,7 @@ const SellerProfile = () => {
                   <S.MainContentTitle>Товары продавца</S.MainContentTitle>
                   <S.MainContent>
                     <S.ContentCards>
+                      {sellerAds.length === 0 && "Объявлений нет"}
                       {sellerAds?.map((adv) => (
                         <CardsItem
                           key={adv?.id}
@@ -174,7 +201,7 @@ const SellerProfile = () => {
             </S.Main>
           </S.Container>
         </S.PageContainer>
-        <FooterAll />
+        <FooterAll active={modalActive} setActive={setModalActive} />
       </S.Wrapper>
     </>
   );

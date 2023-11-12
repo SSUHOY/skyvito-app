@@ -25,11 +25,14 @@ import { ReviewsModal } from "../../components/modal/reviews";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { EditAdvModal } from "../../components/modal/adv-edit";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
 
 export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data, isLoading } = useGetCurrentAdvQuery(id);
+  console.log(data);
   const [refreshToken] = useRefreshTokenMutation();
 
   const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
@@ -38,11 +41,10 @@ export const AdvPage = () => {
   const [adComments, setAdvComments] = useState([]);
   const [nextImg, setNextImg] = useState(0);
   const [showPhone, setShowPhone] = useState(false);
-  const [errorWithImg, setImgError] = useState("");
   const [deleted, setDeleted] = useState(false);
+  const [formatDate, setFormatDate] = useState("");
+  const [formatDateWithTime, setFormatDateWithTime] = useState("");
   const [uploadedImages, setUploadedImages] = useState([]);
-  const [selectedPhotoIndexOnMob, setSelectedPhotoIndexOnMob] = useState(null);
-
   // Pop-up "Post new Adv"
   const [modalActive, setModalActive] = useState(false);
   // Pop-up "Reviews"
@@ -55,10 +57,6 @@ export const AdvPage = () => {
   };
   const handleSelectImg = (event) => {
     setSelectedImg(event.target.src);
-  };
-
-  const handleSelectImgByClickCircles = () => {
-    setSelectedPhotoIndexOnMob(selectedImg.id);
   };
 
   const handleNextPhotoClick = () => {
@@ -91,16 +89,23 @@ export const AdvPage = () => {
   const user_data = useMemo(() => user || [], [user]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      console.log("Проверка");
-      if (selectedImg === undefined) {
-        return setImgError("Фото отсутсвует");
-      }
-    }, 1300);
-    return () => clearTimeout(timer);
-  }, [selectedImg]);
-
-  console.log(adv)
+    if (!isLoading) {
+      // format user sells from Date
+      const date_sells_from = new Date(adv.user.sells_from);
+      const calendarDateFormat = "PPP";
+      const SellsFromDate = format(date_sells_from, calendarDateFormat, {
+        locale: ru,
+      });
+      setFormatDate(SellsFromDate);
+      // format adv date post from
+      const date_post_adv = new Date(adv.created_on);
+      const calendarDateFormatWithTime = "PPpp";
+      const AdvPostDate = format(date_post_adv, calendarDateFormatWithTime, {
+        locale: ru,
+      });
+      setFormatDateWithTime(AdvPostDate);
+    }
+  }, [data]);
 
   return (
     <S.Wrapper>
@@ -142,12 +147,14 @@ export const AdvPage = () => {
           <S.MainArticle>
             <S.ArticleContent>
               <S.ArticleLeft>
-                {errorWithImg != "" ? <S.Error>{errorWithImg}</S.Error> : ""}
+                {selectedImg === undefined && !isLoading ? (
+                  <S.Error>Фото отсутсвует</S.Error>
+                ) : (
+                  ""
+                )}
                 <S.ArticleFillImg>
                   {data?.images.slice(0, 1).map((image, index) => (
-                    <S.ArticleImgBox
-                      key={index}
-                      onClick={() => handleSelectImgByClickCircles(image.id)}>
+                    <S.ArticleImgBox key={index}>
                       <S.ArticleImg
                         onClick={handleNextPhotoClick}
                         src={
@@ -170,15 +177,16 @@ export const AdvPage = () => {
                       </S.ArticleImgBarBox>
                     ))}
                   </S.ArticleImgBar>
-
-                  <S.ArticleImgBarMob>
-                    {data?.images?.slice(0, 5).map((image, index) => (
-                      <S.ArticleImgBarCircle
-                        key={index}
-                        src={`http://localhost:8090/${image.url}`}
-                      />
-                    ))}
-                  </S.ArticleImgBarMob>
+             
+                    <S.ArticleImgBarMob>
+                      {data?.images?.slice(0, 5).map((image, index) => (
+                        <S.ArticleImgBarCircle
+                          key={index}
+                          className={nextImg === index ? "selected" : ""}
+                        />
+                      ))}
+                    </S.ArticleImgBarMob>
+         
                 </S.ArticleFillImg>
               </S.ArticleLeft>
               {isLoading ? (
@@ -192,7 +200,7 @@ export const AdvPage = () => {
                     <S.ArticleInfo>
                       <S.ArticleDate>
                         {" "}
-                        {adv ? adv.created_on.split("T")[0] : "Загрузка"}
+                        {adv ? formatDateWithTime : "Загрузка"}
                       </S.ArticleDate>
                       <S.ArticleCity>
                         {adv ? adv.user.city : "Загрузка"}
@@ -259,7 +267,7 @@ export const AdvPage = () => {
                         </Link>
                         <S.AuthorAbout>
                           {adv ? "Продает товары с " : ""}{" "}
-                          {adv ? adv.user.sells_from : "Загрузка..."}
+                          {adv ? formatDate : "Загрузка..."}
                         </S.AuthorAbout>
                       </S.AuthorContent>
                     </S.ArticleAuthor>

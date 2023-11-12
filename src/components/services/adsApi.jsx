@@ -61,7 +61,7 @@ export const adsApi = createApi({
     }),
     getCurrentUserAdvt: builder.query({
       query: () => "ads/me",
-      providesTags: ["Ads"],
+      providesTags: [{ type: "Ads", id: "LIST" }],
     }),
     getAllComments: builder.query({
       query: () => "comments",
@@ -195,7 +195,7 @@ export const adsApi = createApi({
     }),
     deleteAdvImages: builder.mutation({
       query: (data) => {
-        const url = data.image.url; 
+        const url = data.image.url;
         return {
           url: `ads/${data.id}/image?file_url=${url}`,
           method: "DELETE",

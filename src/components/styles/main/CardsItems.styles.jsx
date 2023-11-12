@@ -105,8 +105,7 @@ export const CardImage = styled.img`
 export const CardContentBox = styled.div`
   font-family: "Roboto", sans-serif;
   padding: 0px 10px 12px;
-  @media screen and (max-width: 590px) {
-    height: 51px;
+  @media screen and (max-width: 590px) { 
     width: 137px;
     font-size: 14px;
     line-height: 17px;
@@ -125,11 +124,10 @@ export const CardTitle = styled.h3`
   text-overflow: ellipsis;
 
   @media screen and (max-width: 590px) {
-    height: 51px;
     font-size: 14px;
     line-height: 17px;
     color: #009ee4;
-    margin-bottom: 10px;
+    margin-bottom: -3px;
     margin-top: 10px;
   }
 `;
@@ -150,7 +148,7 @@ export const CardPlace = styled.p`
   font-size: 16px;
   line-height: 21px;
   color: #5f5f5f;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 
   @media screen and (max-width: 590px) {
     font-size: 12px;

@@ -243,9 +243,9 @@ export const FormLabelTextDescription = styled.textarea`
   line-height: 24px;
   color: #000000;
   padding-left: 19px;
+  padding-right: 5px;
   padding-top: 19px;
   resize: none;
-  font-size: 16px;
   line-height: 1;
   box-sizing: border-box;
   vertical-align: top;

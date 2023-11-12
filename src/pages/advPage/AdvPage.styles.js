@@ -259,7 +259,8 @@ export const ArticleImgBarMob = styled.div`
     display: flex;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    gap: 7px;
+    justify-content: center;
   }
 `;
 
@@ -270,7 +271,7 @@ export const ArticleImgBarCircle = styled.img`
     border-radius: 50%;
     border: 1px solid #ffffff;
   }
-  &:active {
+  &.selected {
     background-color: #ffffff;
   }
   // Написать значение для active
@@ -330,13 +331,13 @@ export const ArticleCity = styled.p`
   }
 `;
 export const ReviewsParagraph = styled.p`
-
+  cursor: pointer;
   color: #009ee4;
-`
+`;
 export const OpenReviews = styled.div`
-font-size: 16px;
+  font-size: 16px;
   line-height: 21px;
-`
+`;
 
 export const ArticlePrice = styled.p`
   font-size: 28px;

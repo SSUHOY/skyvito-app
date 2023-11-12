@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   CardsContentBox,
@@ -15,6 +15,8 @@ import {
 import "react-loading-skeleton/dist/skeleton.css";
 import SkeletonLoaderAds from "../skeleton";
 import Skeleton from "react-loading-skeleton";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
 
 export const CardsItem = ({
   title,
@@ -25,6 +27,23 @@ export const CardsItem = ({
   advId,
   isLoading,
 }) => {
+  const [formatAdvDate, setFormatDateWithTime] = useState("");
+  console.log(formatAdvDate);
+
+  useEffect(() => {
+    if (!isLoading) {
+      // format adv date post from
+      console.log("форматирование");
+      const date_post_adv = new Date(date);
+      console.log(date_post_adv);
+      const calendarDateFormatWithTime = "PPpp";
+      const AdvPostDate = format(date_post_adv, calendarDateFormatWithTime, {
+        locale: ru,
+      });
+      setFormatDateWithTime(AdvPostDate);
+    }
+  }, [isLoading]);
+
   return (
     <>
       {isLoading ? (
@@ -44,7 +63,7 @@ export const CardsItem = ({
               </Link>
               <CardPrice>{price} ₽</CardPrice>
               <CardPlace>{place}</CardPlace>
-              <CardDate>{date}</CardDate>
+              <CardDate>{formatAdvDate}</CardDate>
             </CardContentBox>
           </CardsCard>
         </CardsContentBox>

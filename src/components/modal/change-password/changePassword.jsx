@@ -11,9 +11,8 @@ const ChangePasswordModal = ({ active, setActive }) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [sendButtonActive, setSendButtonActive] = useState(false);
-  const [changePassword] = useChangePasswordMutation({});
+  const [changePassword, { error }] = useChangePasswordMutation();
   const [showPassword, setShowPassWord] = useState("password");
-  const [changed, setChanged] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,28 +30,25 @@ const ChangePasswordModal = ({ active, setActive }) => {
       setErrorMessage("Обязательные поля не заполнены");
       return;
     }
-    try {
-      const newPassData = {
-        password_1: currentPassword,
-        password_2: newPassword,
-      };
-      setSendButtonActive(false);
-      changePassword(newPassData);
-      setSendButtonActive(true);
-      setChanged(true);
-      setErrorMessage("");
-      navigate("/account", { replace: true });
+    if (error != undefined) {
+      console.log("ошибка");
+      setErrorMessage(JSON.stringify(error.data));
       return;
-    } catch (error) {
-      console.error(error);
-      setErrorMessage("Ошибка при смене пароля");
-      setChanged(false);
     }
+
+    const newPassData = {
+      password_1: currentPassword,
+      password_2: newPassword,
+    };
+    setSendButtonActive(false);
+    changePassword(newPassData);
+    setSendButtonActive(true);
+
+    navigate("/account", { replace: true });
   };
 
   return (
-    <S.PageContainer
-      className={active ? "active" : ""}>
+    <S.PageContainer className={active ? "active" : ""}>
       <S.ModalForm
         className={active ? "active" : ""}
         onClick={(e) => e.stopPropagation()}>
@@ -95,13 +91,14 @@ const ChangePasswordModal = ({ active, setActive }) => {
             }
           />
         </S.Inputs>
-        {<S.Error>{errorMessage}</S.Error>}
+
+        {error ? <S.Error>Ошибка : {JSON.stringify(error.data.detail)}</S.Error> : ""}
 
         <S.Buttons>
           <S.PrimaryButton
             disabled={sendButtonActive}
             onClick={handleChangePassword}>
-            {changed ? "Новый пароль установлен" : "Сменить пароль"}
+            Сменить пароль
           </S.PrimaryButton>
         </S.Buttons>
       </S.ModalForm>

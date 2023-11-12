@@ -193,7 +193,7 @@ export const ShowPasswordLogo = styled.img`
 export const ShowPasswordLogoSec = styled.img`
   position: absolute;
   left: 287px;
-  bottom: 155px;
+  bottom: 150px;
   width: 22px;
   height: 21px;
 `;

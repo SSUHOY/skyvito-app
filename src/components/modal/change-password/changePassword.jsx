@@ -52,14 +52,16 @@ const ChangePasswordModal = ({ active, setActive }) => {
 
   return (
     <S.PageContainer
-      className={active ? "active" : ""}
-      onClick={() => setActive(false)}>
+      className={active ? "active" : ""}>
       <S.ModalForm
         className={active ? "active" : ""}
         onClick={(e) => e.stopPropagation()}>
         <S.ModalLogo>
           <S.ModalLogoImage src={LogoSkyUrl} alt="logo" />
         </S.ModalLogo>
+        <S.ModalBtnCloseBox>
+          <S.ModalBtnCloseLine onClick={() => setActive(false)} />
+        </S.ModalBtnCloseBox>
         <S.Inputs>
           <S.Description>Введите текущий пароль:</S.Description>
           <S.ModalInput

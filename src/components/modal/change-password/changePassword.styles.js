@@ -31,6 +31,47 @@ export const PageContainer = styled.div`
   }
 `;
 
+export const ModalBtnCloseBox = styled.div`
+  width: 23px;
+  height: 23px;
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  z-index: 3;
+  cursor: pointer;
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+`;
+
+export const ModalBtnCloseLine = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  &:before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    top: 47%;
+    right: -4px;
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    top: 47%;
+    right: -4px;
+  }
+`;
+
 export const ModalForm = styled.div`
   width: 366px;
   height: 439px;
@@ -110,7 +151,7 @@ export const Inputs = styled.div`
 `;
 
 export const Error = styled.div`
-position: absolute;
+  position: absolute;
   color: coral;
   font-weight: 400;
   font-size: 14px;
@@ -132,7 +173,7 @@ export const PrimaryButton = styled.button`
   border-radius: 6px;
   border: 1px solid;
   &:disabled {
-    background-color: #D9D9D9;
+    background-color: #d9d9d9;
   }
   @media screen and (max-width: 600px) {
     margin-top: 10px;
@@ -142,17 +183,17 @@ export const PrimaryButton = styled.button`
 `;
 
 export const ShowPasswordLogo = styled.img`
-position: absolute;
-    left: 287px;
-    bottom: 265px;
-    width: 22px;
-    height: 21px;
+  position: absolute;
+  left: 287px;
+  bottom: 265px;
+  width: 22px;
+  height: 21px;
 `;
 
 export const ShowPasswordLogoSec = styled.img`
-position: absolute;
-    left: 287px;
-    bottom: 155px;
-    width: 22px;
-    height: 21px;
+  position: absolute;
+  left: 287px;
+  bottom: 155px;
+  width: 22px;
+  height: 21px;
 `;

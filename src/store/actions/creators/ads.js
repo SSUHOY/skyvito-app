@@ -25,7 +25,7 @@ export const fetchSetCurrentUserAdsRequest = (setUserAds) => ({
   payload: setUserAds,
 });
 
-export const loginUser = () => ({
+export const loginUserAction = () => ({
   type: LOG_IN_USER,
 });
 

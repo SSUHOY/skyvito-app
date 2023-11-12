@@ -7,13 +7,12 @@ import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
 import {
   useEditUserDataMutation,
-  useGetAllAdsQuery,
-  useGetCurrentAdvQuery,
+
   useGetCurrentUserAdvtQuery,
   useGetCurrentUserMutation,
-  useGetCurrentUserQuery,
+
   useRefreshTokenMutation,
-  useRegisterUserMutation,
+
   useUploadUserImageMutation,
 } from "../../components/services/adsApi";
 import { useAuthContext } from "../../components/context/AuthContext";

@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   const loginUserFn = async ({ email, password }) => {
+    
     try {
       const tokenData = await fetchLogin({ email, password });
       localStorage.setItem("access_token", tokenData.access_token);

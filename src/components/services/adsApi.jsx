@@ -59,6 +59,14 @@ export const adsApi = createApi({
       query: () => "user",
       providesTags: ["Ads"],
     }),
+    transformResponse: (response) => {
+      localStorage.setItem("user_register_id", response.id);
+      localStorage.setItem("user_register_email", response.email);
+      localStorage.setItem("user_register_city", response.city);
+      localStorage.setItem("user_register_name", response.name);
+      localStorage.setItem("user_register_surname", response.surname);
+      localStorage.setItem("user_register_phone", response.phone);
+    },
     getCurrentUserAdvt: builder.query({
       query: () => "ads/me",
       providesTags: [{ type: "Ads", id: "LIST" }],
@@ -98,6 +106,19 @@ export const adsApi = createApi({
         localStorage.setItem("user_register_name", response.name);
         localStorage.setItem("user_register_surname", response.surname);
         localStorage.setItem("user_register_phone", response.phone);
+      },
+    }),
+    loginUser: builder.mutation({
+      query: (user_data) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: user_data,
+      }),
+
+      transformResponse: (response) => {
+        localStorage.setItem("access_token", response.access_token);
+        localStorage.setItem("refresh_token", response.refresh_token);
+        return response;
       },
     }),
     changePassword: builder.mutation({
@@ -226,6 +247,7 @@ export const {
   useAddNewAdvPicMutation,
   useGetAllCurrentUserCommentsQuery,
   useRegisterUserMutation,
+  useLoginUserMutation,
   useRefreshTokenMutation,
   useEditUserDataMutation,
   useEditAdvMutation,

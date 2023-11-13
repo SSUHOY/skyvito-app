@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
-import * as S from "./AuthPage.styles";
+import * as S from "./LoginModal.styles";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import LogoSkyUrl from "../../assets/images/logo-skypro.png";
-import ShowPassWordLogo from "../../assets/images/view_show_icon_124811.png";
-import HidePassWordLogo from "../../assets/images/view_hide_icon_124813.png";
-import { loginUserAction } from "../../store/actions/creators/ads";
-import { useAuthContext } from "../../components/context/AuthContext";
-import {
+import LogoSkyUrl from "../../../assets/images/logo-skypro.png";
+import ShowPassWordLogo from "../../../assets/images/view_show_icon_124811.png";
+import HidePassWordLogo from "../../../assets/images/view_hide_icon_124813.png";
+import { useRegisterUserMutation } from "../../services/adsApi";
+import { useAuthContext } from "../../context/AuthContext";
+import { loginUser } from "../../../store/actions/creators/ads";
 
-  useLoginUserMutation,
-  useRegisterUserMutation,
-} from "../../components/services/adsApi";
 
 export const AuthPage = () => {
+  const dispatch = useDispatch();
   const { setUser, loginUserFn } = useAuthContext();
-  const [registerUser] = useRegisterUserMutation();
- 
+  const [registerUser, { data }] = useRegisterUserMutation();
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
@@ -28,31 +25,25 @@ export const AuthPage = () => {
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [showPassword, setShowPassWord] = useState("password");
 
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    setIsLoginMode(location.pathname === "/login");
+    setIsLoginMode(location.pathname === "/reLogin");
   }, [location.pathname, isLoginMode]);
 
   const handleLogin = async () => {
+    dispatch(loginUser());
     if (!email || !password) {
       setError("Пожалуйста, введите пароль и/или логин");
       return;
     }
     try {
-      dispatch(loginUserAction);
-      setIsAuthLoading(true);
-      const user_data = {
-        email,
-        password,
-      };
-      await loginUserFn(user_data);
-      // await loginUserFn({ email, password });
-      setIsAuthLoading(false)
-      navigate("/account", { replace: true });
+      setIsAuthLoading(true);     
+      await loginUserFn({ email, password });
+      setIsAuthLoading(false);
+
     } catch (error) {
       console.error("Ошибка регистрации:", error);
       setError(error.message || "Неизвестная ошибка при входе");
@@ -90,11 +81,7 @@ export const AuthPage = () => {
       registerUser(userData);
       setUser(userData);
       setIsAuthLoading(false);
-      const user_data = {
-        email,
-        password,
-      };
-      await loginUserFn(user_data);
+      await loginUserFn({ email, password });
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);

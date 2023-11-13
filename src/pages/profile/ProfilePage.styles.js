@@ -13,7 +13,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-
 export const PageContainer = styled.div`
   max-width: 1440px;
   width: 100%;
@@ -59,7 +58,7 @@ export const Nav = styled.nav`
     height: 55px;
     -webkit-box-pack: start;
     -ms-flex-pack: start;
-    justify-content: start;
+    justify-content: space-between;
     padding: 0 20px;
   }
 `;
@@ -77,10 +76,17 @@ export const Button = styled.button`
   color: #ffffff;
   font-size: 16px;
   line-height: 1;
-
+  &:disabled {
+    background-color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+  }
+  &.disabled {
+    &:hover {
+      background-color: #d9d9d9;
+    }
+  }
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background-color: #0080c1;
   }
   @media screen and (max-width: 620px) {
     display: none;
@@ -91,34 +97,55 @@ export const SellerButton = styled.button`
   height: 40px;
   border: 1px solid #ffffff;
   border-radius: 6px;
-  background-color: transparent;
+  background-color: #009ee4;
   color: #ffffff;
   font-size: 16px;
   line-height: 1;
   margin-left: 10px;
+  &:disabled {
+    background-color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+  }
+  &.disabled {
+    &:hover {
+      background-color: #d9d9d9;
+    }
+  }
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background-color: #0080c1;
   }
   @media screen and (max-width: 620px) {
     display: none;
   }
 `;
 
-export const ToMainButton = styled.button`
-  width: 241px;
-  height: 50px;
-  background-color: #009ee4;
-  border: 1px solid #009ee4;
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  &:hover {
-    background: #0080c1;
-  }
+export const LinkAndBtnHideDiv = styled.div`
   @media screen and (max-width: 620px) {
     display: none;
+  }
+`;
+
+export const ChangePasswordButton = styled.button`
+  width: 173px;
+  height: 40px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1;
+  margin-left: 10px;
+  &:disabled {
+    background-color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+  }
+  &:hover {
+    background-color: #0080c1;
+  }
+  @media screen and (max-width: 620px) {
+    width: 173px;
+    height: 40px;
+    margin-left: 185px;
   }
 `;
 
@@ -149,29 +176,6 @@ export const MainCenterBox = styled.div`
     margin: 0 auto;
     padding: 0 20px;
   }
-`;
-
-export const MainMenu = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: start;
-  width: 100%;
-  padding: 31px 10px 64px;
-  @media screen and (max-width: 620px) {
-    display: none;
-  }
-`;
-
-export const MenuForm = styled.form`
-  margin-left: 60px;
-  max-width: 1044px;
-  width: 100%;
 `;
 
 export const TitleGreetings = styled.h2`
@@ -271,14 +275,35 @@ export const SettingsImg = styled.div`
   }
 `;
 
-export const ProfileImg = styled.img`
-  width: 100%;
-  height: auto;
+export const AvatarAltText = styled.div`
+  width: 170px;
+  height: 170px;
   display: block;
   object-fit: cover;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  @media screen and (max-width: 620px) {
+    width: 132px;
+    height: 132px;
+  }
 `;
 
-export const SettingChangePhoto = styled.p`
+export const ProfileImg = styled.img`
+  width: 170px;
+  height: 170px;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  @media screen and (max-width: 620px) {
+    width: 132px;
+    height: 132px;
+  }
+`;
+
+export const SettingChangePhoto = styled.label`
   cursor: pointer;
   text-decoration: none;
   font-size: 16px;
@@ -286,7 +311,18 @@ export const SettingChangePhoto = styled.p`
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
+  padding-top: 10px;
   color: #009ee4;
+  position: relative;
+  display: inline-block;
+`;
+
+export const SettingChangeAvaInput = styled.input`
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  height: 20px;
+  width: 20px;
 `;
 
 export const SettingsRight = styled.div`
@@ -469,15 +505,46 @@ export const MainContent = styled.div`
 `;
 
 export const ContentCards = styled.div`
-  @media screen and (max-width: 590px) {
-    display: -ms-grid;
+  max-width: 1158px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  grid-auto-rows: 441px;
+  grid-gap: 40px 26px;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: #ffffff #2e2e2e;
+  scrollbar-width: thin;
+  scrollbar-width: 0px;
+  height: 922px;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+    background-color: #009ee4;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #0080c1;
+    border-radius: 3px;
+  }
+
+  @media screen and (max-width: 1158px) {
     display: grid;
-    -ms-grid-columns: (137px) [2];
+    grid-template-columns: repeat(3, 270px);
+  }
+
+  @media screen and (max-width: 890px) {
+    display: grid;
+    grid-template-columns: repeat(2, 270px);
+  }
+
+  @media screen and (max-width: 590px) {
+    display: grid;
     grid-template-columns: repeat(2, 137px);
     grid-auto-rows: 293px;
     grid-gap: 10px 10px;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
+    height: 100%;
   }
 `;

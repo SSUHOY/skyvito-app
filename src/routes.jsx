@@ -6,17 +6,23 @@ import Profile from "./pages/profile";
 import { ProtectedRoute } from "./components/protected-route";
 import { NotFound } from "./pages/notFound/404";
 import SellerProfile from "./pages/seller-profile";
+import { AdvPage } from "./pages/advPage";
+import { useAuthContext } from "./components/context/AuthContext";
 
-const AppRoutes = ({ user }) => {
+const AppRoutes = () => {
+
+  
   return (
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="/register" element={<AuthPage />} />
-      <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
+      <Route path="/adv-page/:id" element={<AdvPage />} />
+      <Route path="/seller-account/:id" element={<SellerProfile />} />
+      <Route element={<ProtectedRoute/>}>
         <Route path="/account" element={<Profile />} />
-        <Route path="/seller-account" element={<SellerProfile />} />
       </Route>
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

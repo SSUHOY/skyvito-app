@@ -1,18 +1,20 @@
 import { createContext, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logoutUser, uploadTokens } from "../../store/actions/creators/ads";
-import { fetchLogin, fetchUser } from "../../api";
+import {
+  useGetCurrentUserMutation,
+  useLoginUserMutation,
+} from "../services/adsApi";
 
 export const AuthContext = createContext({});
-
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const storedUserData = localStorage.getItem("userData");
+    const storedUserData = localStorage.getItem("user_data");
   });
   const [error, setError] = useState(() => {
-    const storedUserData = localStorage.getItem("userData");
+    const storedUserData = localStorage.getItem("user_data");
     if (storedUserData) {
       setUser(JSON.parse(storedUserData));
     } else {
@@ -21,19 +23,23 @@ export const AuthProvider = ({ children }) => {
   });
 
   const dispatch = useDispatch();
+  const [loginUser] = useLoginUserMutation();
+  const [getCurrentUser] = useGetCurrentUserMutation();
 
   const loginUserFn = async ({ email, password }) => {
     try {
-      const tokenData = await fetchLogin({ email, password }); 
-      // const {access: access_token, refresh: refresh_token} = tokenData
-      console.log(tokenData)
-      // dispatch(uploadTokens(access_token, refresh_token))
-      localStorage.setItem("tokenData", JSON.stringify(tokenData));
-      localStorage.setItem("accessToken", JSON.stringify(tokenData.access_token));
-      const userData = await fetchUser({tokenData})
-      console.log(userData)
-      localStorage.setItem("userData", JSON.stringify(userData));
-      setUser(userData);
+      const user_data = {
+        email,
+        password,
+      };
+      await loginUser(user_data);
+      await getCurrentUser();
+      const currentUserData = localStorage.getItem("user_data");
+      const access_token = localStorage.getItem("access_token");
+      const refresh_token = localStorage.getItem("refresh_token");
+
+      dispatch(uploadTokens(access_token, refresh_token));
+      setUser(JSON.parse(currentUserData));
       setError(null);
     } catch (error) {
       setError(error.message);
@@ -42,8 +48,7 @@ export const AuthProvider = ({ children }) => {
   };
   const logoutUserFn = () => {
     setUser(null);
-    localStorage.removeItem("userData");
-    localStorage.removeItem("tokenData");
+    localStorage.clear();
     logoutUser();
   };
 

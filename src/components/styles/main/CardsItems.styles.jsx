@@ -11,6 +11,7 @@ export const ContentCards = styled.div`
   grid-gap: 40px 26px;
   justify-content: center;
   overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-color: #ffffff #2e2e2e;
   scrollbar-width: thin;
   scrollbar-width: 0px;
@@ -36,7 +37,7 @@ export const ContentCards = styled.div`
     grid-template-columns: repeat(2, 270px);
   }
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 590px) {
     display: grid;
     grid-template-columns: repeat(2, 137px);
     grid-auto-rows: 293px;
@@ -48,7 +49,7 @@ export const ContentCards = styled.div`
 
 export const CardsContentBox = styled.div`
   margin: 0;
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 580px) {
     margin: 0;
   }
 `;
@@ -59,7 +60,7 @@ export const CardsCard = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media screen and (max-width: 620px) {
+  @media screen and (max-width: 590px) {
     width: 137px;
     height: 293px;
     display: flex;
@@ -85,7 +86,7 @@ export const CardImgBox = styled.div`
 
 export const CardImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 270px;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
@@ -104,8 +105,7 @@ export const CardImage = styled.img`
 export const CardContentBox = styled.div`
   font-family: "Roboto", sans-serif;
   padding: 0px 10px 12px;
-  @media screen and (max-width: 590px) {
-    height: 51px;
+  @media screen and (max-width: 590px) { 
     width: 137px;
     font-size: 14px;
     line-height: 17px;
@@ -124,11 +124,10 @@ export const CardTitle = styled.h3`
   text-overflow: ellipsis;
 
   @media screen and (max-width: 590px) {
-    height: 51px;
     font-size: 14px;
     line-height: 17px;
     color: #009ee4;
-    margin-bottom: 10px;
+    margin-bottom: -3px;
     margin-top: 10px;
   }
 `;
@@ -149,7 +148,7 @@ export const CardPlace = styled.p`
   font-size: 16px;
   line-height: 21px;
   color: #5f5f5f;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 
   @media screen and (max-width: 590px) {
     font-size: 12px;

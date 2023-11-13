@@ -1,4 +1,14 @@
-import { LOG_IN_USER, LOG_OUT_USER, SET_ADS, SET_ADS_FAILURE, UPLOAD_TOKENS } from "../types/ads";
+import {
+  CHANGE_PASSWORD,
+  LOG_IN_USER,
+  LOG_OUT_USER,
+  SEARCH_TEXT,
+  SEARCH_VALUE,
+  SET_ADS,
+  SET_ADS_FAILURE,
+  SET_USERS_ADS,
+  UPLOAD_TOKENS,
+} from "../types/ads";
 
 export const fetchSetAdsRequest = (adsList) => ({
   type: SET_ADS,
@@ -6,24 +16,34 @@ export const fetchSetAdsRequest = (adsList) => ({
 });
 
 export const fetchSetAdsFailure = (error) => ({
-    type: SET_ADS_FAILURE,
-    payload: error,
-  });
-  
-  export const fetchSetCurrentUserAdsRequest = (adsUserList) => ({
-    type: SET_ADS,
-    payload: adsUserList,
-  });
+  type: SET_ADS_FAILURE,
+  payload: error,
+});
 
-export const loginUser = () => ({
+export const fetchSetCurrentUserAdsRequest = (setUserAds) => ({
+  type: SET_USERS_ADS,
+  payload: setUserAds,
+});
+
+export const loginUserAction = () => ({
   type: LOG_IN_USER,
-})
+});
 
 export const logoutUser = () => ({
   type: LOG_OUT_USER,
-})
+});
 
 export const uploadTokens = (accessToken, refreshToken) => ({
   type: UPLOAD_TOKENS,
-  payload: {accessToken, refreshToken}
+  payload: { accessToken, refreshToken },
+});
+
+export const setSearchParameters = (searchedAds) => ({
+type: SEARCH_VALUE,
+payload: searchedAds,
+})
+
+export const changePassword = (newPassword) => ({
+  type: CHANGE_PASSWORD,
+  payload: newPassword
 })

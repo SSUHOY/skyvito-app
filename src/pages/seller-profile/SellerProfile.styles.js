@@ -27,12 +27,6 @@ export const PageContainer = styled.div`
   }
 `;
 
-export const MenuForm = styled.form`
-  margin-left: 60px;
-  max-width: 1044px;
-  width: 100%;
-`;
-
 export const Container = styled.div`
   width: 100%;
   min-height: 100%;
@@ -44,6 +38,24 @@ export const Container = styled.div`
 
 export const Header = styled.header`
   background-color: #009ee4;
+`;
+
+export const Button = styled.button`
+  width: 232px;
+  height: 40px;
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1;
+
+  &:hover {
+    background-color: #0080c1;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const Nav = styled.nav`
@@ -74,27 +86,28 @@ export const HeaderLogo = styled.div`
 `;
 
 export const PhoneShownBtn = styled.button`
-  width: 214px;
-  height: 62px;
-  margin-top: 30px;
+background-color: #009ee4;
   border-radius: 6px;
   border: 1px solid #009ee4;
-  background-color: #009ee4;
-  color: #ffffff;
+  width: 214px;
+  height: 62px;
   font-size: 16px;
-  line-height: 1;
+  font-weight: 500;
+  line-height: 22px;
+  color: #ffffff;
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid #ffffff;
+    background: #0080c1;
   }
-  @media screen and (max-width: 620px) {
+  font-family: "Roboto", sans-serif;
+  @media screen and (max-width: 768px) {
     width: 100%;
     height: 57px;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 14px;
     line-height: 20px;
+    color: #ffffff;
   }
 `;
+
 
 export const PhoneNumber = styled.span`
   display: block;
@@ -142,23 +155,6 @@ export const SellerPostButton = styled.button`
   }
 `;
 
-export const ToMainButton = styled.button`
-  width: 241px;
-  height: 50px;
-  background-color: #009ee4;
-  border: 1px solid #009ee4;
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  &:hover {
-    background: #0080c1;
-  }
-  @media screen and (max-width: 620px) {
-    display: none;
-  }
-`;
-
 export const Main = styled.main`
   box-sizing: border-box;
   background-color: white;
@@ -188,23 +184,6 @@ export const MainCenterBox = styled.div`
   }
 `;
 
-export const MainMenu = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: start;
-  width: 100%;
-  padding: 31px 10px 64px;
-  @media screen and (max-width: 620px) {
-    display: none;
-  }
-`;
-
 export const UserInfForm = styled.form`
   margin-left: 60px;
   max-width: 1044px;
@@ -218,13 +197,13 @@ export const Title = styled.h2`
   line-height: 42px;
   color: #000000;
   margin-bottom: 30px;
-  padding-left: 25px;
   @media screen and (max-width: 620px) {
     font-size: 24px;
     line-height: 29px;
     color: #000000;
     margin-bottom: 20px;
     position: relative;
+    padding-left: 25px;
   }
 `;
 
@@ -314,20 +293,12 @@ export const SellerImg = styled.div`
   }
 `;
 export const SellerImgMob = styled.div`
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
-  display: none;
-  background-color: #f0f0f0;
-  @media screen and (max-width: 620px) {
-    width: 170px;
-    height: 170px;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    padding: 20px 0;
+  @media screen and (max-width: 580px) {
     display: block;
+    width: 132px;
+    height: 132px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
   }
 `;
 
@@ -344,6 +315,17 @@ export const ProfileImg = styled.img`
   height: auto;
   display: block;
   object-fit: cover;
+`;
+export const ProfileImgMob = styled.img`
+  display: none;
+  @media screen and (max-width: 620px) {
+    display: block;
+    width: 132px;
+    height: 144px;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
 `;
 
 export const SettingsRight = styled.div`
@@ -385,16 +367,31 @@ export const MainContent = styled.div`
 `;
 
 export const ContentCards = styled.div`
-  @media screen and (max-width: 590px) {
-    display: -ms-grid;
+  max-width: 1158px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  grid-auto-rows: 441px;
+  grid-gap: 40px 26px;
+  justify-content: center;
+  height: 922px;
+  @media screen and (max-width: 1158px) {
     display: grid;
-    -ms-grid-columns: (137px) [2];
+    grid-template-columns: repeat(3, 270px);
+  }
+
+  @media screen and (max-width: 890px) {
+    display: grid;
+    grid-template-columns: repeat(2, 270px);
+  }
+
+  @media screen and (max-width: 590px) {
+    display: grid;
     grid-template-columns: repeat(2, 137px);
     grid-auto-rows: 293px;
     grid-gap: 10px 10px;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
+    height: 100%;
   }
 `;
 
@@ -438,9 +435,8 @@ export const SellerRegistrationDate = styled.p`
 `;
 
 export const ButtonBox = styled.div`
-@media screen and (max-width: 620px) {
-  display: flex;
-  flex-direction: column;
-}
-
+  @media screen and (max-width: 620px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;

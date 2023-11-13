@@ -243,6 +243,9 @@ export const ArticleImgBarImg = styled.img`
   -o-object-fit: cover;
   object-fit: cover;
   cursor: pointer;
+  &.selected {
+    border: 2px solid #009ee4;
+  }
 `;
 
 export const ArticleImgBarMob = styled.div`

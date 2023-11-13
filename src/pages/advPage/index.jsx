@@ -32,7 +32,6 @@ export const AdvPage = () => {
   const { user } = useAuthContext();
   const { id } = useParams();
   const { data, isLoading } = useGetCurrentAdvQuery(id);
-  console.log(data);
   const [refreshToken] = useRefreshTokenMutation();
 
   const { data: advComments } = useGetAllCurrentUserCommentsQuery(id);
@@ -173,20 +172,20 @@ export const AdvPage = () => {
                         <S.ArticleImgBarImg
                           onClick={handleSelectImg}
                           src={`http://localhost:8090/${image.url}`}
+                          className={nextImg === index ? "selected" : ""}
                         />
                       </S.ArticleImgBarBox>
                     ))}
                   </S.ArticleImgBar>
-             
-                    <S.ArticleImgBarMob>
-                      {data?.images?.slice(0, 5).map((image, index) => (
-                        <S.ArticleImgBarCircle
-                          key={index}
-                          className={nextImg === index ? "selected" : ""}
-                        />
-                      ))}
-                    </S.ArticleImgBarMob>
-         
+
+                  <S.ArticleImgBarMob>
+                    {data?.images?.slice(0, 5).map((image, index) => (
+                      <S.ArticleImgBarCircle
+                        key={index}
+                        className={nextImg === index ? "selected" : ""}
+                      />
+                    ))}
+                  </S.ArticleImgBarMob>
                 </S.ArticleFillImg>
               </S.ArticleLeft>
               {isLoading ? (

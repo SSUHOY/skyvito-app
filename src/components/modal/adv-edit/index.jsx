@@ -52,6 +52,7 @@ export const EditAdvModal = ({ active, setActive }) => {
       id: id,
     });
     setSaveButtonActive(false);
+    setActive(false)
   };
 
   const handleImgUpload = async (event) => {
@@ -64,6 +65,7 @@ export const EditAdvModal = ({ active, setActive }) => {
       const formData = new FormData();
       formData.append("file", selectedImg);
       uploadAdvImage({ formData, id });
+      setSaveButtonActive(true)
     }
   };
 
@@ -90,8 +92,7 @@ export const EditAdvModal = ({ active, setActive }) => {
 
   return (
     <S.ContainerModal
-      className={active ? "active" : ""}
-      onClick={() => setActive(false)}>
+      className={active ? "active" : ""}>
       <S.ModalBlock
         className={active ? "active" : ""}
         onClick={(e) => e.stopPropagation()}>

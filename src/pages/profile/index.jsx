@@ -34,7 +34,7 @@ const Profile = () => {
 
   const { data, isLoading } = useGetCurrentUserAdvtQuery();
   const [uploadImg] = useUploadUserImageMutation({});
-  const [getCurrentUser, { data: currentUser}] = useGetCurrentUserMutation();
+  const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
 
   const dispatch = useDispatch();
 
@@ -289,14 +289,12 @@ const Profile = () => {
                     </S.ProfileContent>
                   </S.MainProfile>
                   <S.MainContentTitle>Мои товары</S.MainContentTitle>
+                  {data.length === 0 ? "Объявлений нет" : ""}
                   <S.MainContent>
                     {!data ? (
                       "Загрузка..."
                     ) : (
                       <S.ContentCards>
-                        {data.length === 0
-                          ? "Вы пока не разместили объявления"
-                          : ""}
                         {data?.map((item, index) => (
                           <CardsItem
                             key={index}

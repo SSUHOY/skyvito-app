@@ -86,26 +86,28 @@ export const HeaderLogo = styled.div`
 `;
 
 export const PhoneShownBtn = styled.button`
-  width: 214px;
-  height: 62px;
-  margin-top: 30px;
+background-color: #009ee4;
   border-radius: 6px;
   border: 1px solid #009ee4;
-  background-color: #009ee4;
-  color: #ffffff;
+  width: 214px;
+  height: 62px;
   font-size: 16px;
-  line-height: 1;
+  font-weight: 500;
+  line-height: 22px;
+  color: #ffffff;
   &:hover {
     background: #0080c1;
   }
-  @media screen and (max-width: 620px) {
+  font-family: "Roboto", sans-serif;
+  @media screen and (max-width: 768px) {
     width: 100%;
     height: 57px;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 14px;
     line-height: 20px;
+    color: #ffffff;
   }
 `;
+
 
 export const PhoneNumber = styled.span`
   display: block;

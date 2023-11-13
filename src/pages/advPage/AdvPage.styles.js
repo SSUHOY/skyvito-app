@@ -149,7 +149,9 @@ export const EmptyImgMessage = styled.div`
 `;
 
 export const ArticleFillImg = styled.div`
-  width: 100%;
+  width: 480px;
+  height: 480px;
+
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
@@ -439,7 +441,9 @@ export const ArticleBtnDel = styled.button`
   }
 `;
 
-export const ArticleBtnSpan = styled.span``;
+export const ArticleBtnSpan = styled.span`
+  padding-top: 5px;
+`;
 
 export const ArticleAuthor = styled.div`
   margin-top: 34px;
@@ -505,7 +509,6 @@ export const AuthorAbout = styled.p`
 export const MainContentDescription = styled.div`
   max-width: 792px;
   width: 100%;
-  padding: 0 5px 117px;
   padding-top: 15px;
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -518,7 +521,7 @@ export const MainContentDescription = styled.div`
 export const MainContentText = styled.p`
   max-width: 792px;
   width: 100%;
-  padding: 0 5px 117px;
+  padding: 0 0px 117px;
   @media screen and (max-width: 768px) {
     width: 100%;
     margin: 0 auto;

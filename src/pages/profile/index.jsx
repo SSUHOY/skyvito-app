@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import * as S from "./ProfilePage.styles";
 import { Logo, SearchLogoMob } from "../../assets/icons/icons";
@@ -33,6 +33,7 @@ const Profile = () => {
   const [modalActiveChangePass, setModalChangePassActive] = useState(false);
 
   const { data, isLoading } = useGetCurrentUserAdvtQuery();
+  console.log("🚀 ~ file: index.jsx:36 ~ Profile ~ data:", data)
   const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
 
@@ -143,6 +144,9 @@ const Profile = () => {
   useEffect(() => {
     setSellerAdv(data);
   }, [data, currentUser]);
+
+  
+  const ads = useMemo(() => data || [], [data]);
 
   return (
     <>
@@ -289,7 +293,7 @@ const Profile = () => {
                     </S.ProfileContent>
                   </S.MainProfile>
                   <S.MainContentTitle>Мои товары</S.MainContentTitle>
-                  {data.length === 0 ? "Объявлений нет" : ""}
+                  {ads.length === 0 ? "Объявлений нет" : ""}
                   <S.MainContent>
                     {!data ? (
                       "Загрузка..."

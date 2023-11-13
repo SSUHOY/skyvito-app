@@ -311,6 +311,7 @@ export const SettingChangePhoto = styled.label`
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
+  padding-top: 10px;
   color: #009ee4;
   position: relative;
   display: inline-block;

@@ -109,14 +109,14 @@ export const NewAdvModal = ({ active, setActive }) => {
     }
     try {
       if (!photoIsChosen) {
-        console.log("пост без фото");
         const newAdvData = {
           title: advTitle,
           description: advDescription,
           price: advPrice,
         };
-        setSendButtonActive(false);
+
         addNewAdvText(newAdvData);
+        setSendButtonActive(false);
         return;
       }
       const formData = new FormData();
@@ -145,10 +145,14 @@ export const NewAdvModal = ({ active, setActive }) => {
         className={active ? "active" : ""}
         onClick={(e) => e.stopPropagation()}>
         <S.ModalContent>
-          <S.ModalTitle>Новое объявление</S.ModalTitle>
-          <S.ModalBtnCloseBox>
-            <S.ModalBtnCloseLine onClick={() => setActive(false)} />
-          </S.ModalBtnCloseBox>
+          <S.ModalTitleBlock>
+            <S.ModalTitle onClick={() => setActive(false)}>
+              Новое объявление
+            </S.ModalTitle>
+            <S.ModalBtnCloseBox>
+              <S.ModalBtnCloseLine onClick={() => setActive(false)} />
+            </S.ModalBtnCloseBox>
+          </S.ModalTitleBlock>
           <S.ModalFormNewArt id="formNewArt">
             <S.FormNewArtBlock>
               <S.FormLabelName>Название</S.FormLabelName>

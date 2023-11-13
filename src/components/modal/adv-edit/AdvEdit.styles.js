@@ -35,7 +35,7 @@ export const ModalBlock = styled.div`
   position: absolute;
   z-index: 5;
   left: calc(50% - (600px / 2));
-  top: 60px;
+  top: 22px;
   opacity: 0;
   transition: 0.5s;
   pointer-events: none;
@@ -47,7 +47,7 @@ export const ModalBlock = styled.div`
     position: absolute;
     z-index: 5;
     left: calc(50% - (400px / 2));
-    top: 4px;
+    top: 0px;
     opacity: 0;
     &.active {
       opacity: 1;
@@ -89,6 +89,32 @@ export const ModalContent = styled.div`
     height: auto;
     padding: 30px 20px 30px;
   }
+  @media screen and (max-width: 400px) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-radius: 0px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 320px;
+    height: 100vh;
+    padding: 30px 20px 30px;
+  }
+`;
+export const ModalTitleBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  @media screen and (max-width: 400px) {
+    width: 361px;
+  }
 `;
 
 export const ModalTitle = styled.h3`
@@ -113,7 +139,7 @@ export const ModalTitle = styled.h3`
       transform: rotate(-45deg);
       position: absolute;
       top: 9px;
-      left: 0;
+      left: -76px;
       cursor: pointer;
     }
   }
@@ -335,7 +361,7 @@ export const FormNewArtBarImages = styled.div`
   margin-bottom: 10px;
   overflow: hidden;
   @media screen and (max-width: 600px) {
-    width: 278px;
+    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;

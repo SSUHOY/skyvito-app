@@ -35,7 +35,7 @@ export const ModalBlock = styled.div`
   position: absolute;
   z-index: 5;
   left: calc(50% - (600px / 2));
-  top: 60px;
+  top: 20px;
   opacity: 0;
   transition: 0.5s;
   pointer-events: none;
@@ -46,8 +46,19 @@ export const ModalBlock = styled.div`
   @media screen and (max-width: 600px) {
     position: absolute;
     z-index: 5;
-    left: calc(50% - (320px / 2));
-    top: 4px;
+    left: calc(50% - (530px / 2));
+    top: 0px;
+    opacity: 0;
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    position: absolute;
+    z-index: 5;
+    left: calc(50% - (383px / 2));
+    top: 0px;
     opacity: 0;
     &.active {
       opacity: 1;
@@ -89,6 +100,33 @@ export const ModalContent = styled.div`
     height: auto;
     padding: 30px 20px 30px;
   }
+  @media screen and (max-width: 500px) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-radius: 0px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    width: 100vw;
+    min-width: 320px;
+    height: 100vh;
+    padding: 30px 20px 30px;
+  }
+`;
+
+export const ModalTitleBlock = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  @media screen and (max-width: 400px) {
+    width: 361px;
+  }
 `;
 
 export const ModalTitle = styled.h3`
@@ -113,7 +151,7 @@ export const ModalTitle = styled.h3`
       transform: rotate(-45deg);
       position: absolute;
       top: 9px;
-      left: 0;
+      left: -50px;
       cursor: pointer;
     }
   }
@@ -334,7 +372,7 @@ export const FormNewArtBarImages = styled.div`
   margin-bottom: 10px;
   overflow: hidden;
   @media screen and (max-width: 600px) {
-    width: 278px;
+    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -424,7 +462,6 @@ export const FormNewArtCover = styled.input`
 `;
 
 export const DeletePicFromListDiv = styled.div`
-
   width: 23px;
   height: 23px;
   position: absolute;
@@ -435,10 +472,10 @@ export const DeletePicFromListDiv = styled.div`
 `;
 
 export const DeletePicFromListBtn = styled.div`
-border-radius: 50%;
+  border-radius: 50%;
   position: relative;
-  width: 5pcx;
-  background-color: #009EE4;
+  width: 5px;
+  background-color: #009ee4;
   height: 100%;
   &:before {
     content: "";
@@ -499,7 +536,11 @@ export const FormNewArtPriceCover = styled.div`
   bottom: 34px;
   @media screen and (max-width: 600px) {
     position: relative;
-    left: 251px;
+    left: 458px;
+  }
+  @media screen and (max-width: 400px) {
+    position: relative;
+    left: 318px;
   }
 `;
 

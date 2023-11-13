@@ -470,6 +470,7 @@ export const AuthorImg = styled.img`
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
+  border-radius: 50%;
 `;
 
 export const AuthorContent = styled.div`

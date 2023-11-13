@@ -28,14 +28,11 @@ export const CardsItem = ({
   isLoading,
 }) => {
   const [formatAdvDate, setFormatDateWithTime] = useState("");
-  console.log(formatAdvDate);
 
   useEffect(() => {
     if (!isLoading) {
       // format adv date post from
-      console.log("форматирование");
       const date_post_adv = new Date(date);
-      console.log(date_post_adv);
       const calendarDateFormatWithTime = "PPpp";
       const AdvPostDate = format(date_post_adv, calendarDateFormatWithTime, {
         locale: ru,

@@ -56,20 +56,21 @@ export const adsApi = createApi({
       providesTags: ["Ads"],
     }),
     getCurrentUser: builder.mutation({
-      query: () => "user",
+      query: () => ({
+        url: "user",
+      }),
+      transformResponse: (response) => {
+        localStorage.setItem("user_register_id", response.id);
+        localStorage.setItem("user_register_email", response.email);
+        localStorage.setItem("user_register_city", response.city);
+        localStorage.setItem("user_register_name", response.name);
+        localStorage.setItem("user_register_surname", response.surname);
+        localStorage.setItem("user_register_phone", response.phone);
+        localStorage.setItem("user_register_avatar", response.avatar);
+        localStorage.setItem("user_data", JSON.stringify(response));
+        return response;
+      },
       providesTags: ["Ads"],
-    }),
-    transformResponse: (response) => {
-      localStorage.setItem("user_register_id", response.id);
-      localStorage.setItem("user_register_email", response.email);
-      localStorage.setItem("user_register_city", response.city);
-      localStorage.setItem("user_register_name", response.name);
-      localStorage.setItem("user_register_surname", response.surname);
-      localStorage.setItem("user_register_phone", response.phone);
-    },
-    getCurrentUserAdvt: builder.query({
-      query: () => "ads/me",
-      providesTags: [{ type: "Ads", id: "LIST" }],
     }),
     getAllComments: builder.query({
       query: () => "comments",
@@ -114,12 +115,12 @@ export const adsApi = createApi({
         method: "POST",
         body: user_data,
       }),
-
       transformResponse: (response) => {
         localStorage.setItem("access_token", response.access_token);
         localStorage.setItem("refresh_token", response.refresh_token);
         return response;
       },
+      invalidatesTags: ["Ads"],
     }),
     changePassword: builder.mutation({
       query: (newPassData) => ({
@@ -141,6 +142,10 @@ export const adsApi = createApi({
         localStorage.setItem("access_token", response.access_token);
         localStorage.setItem("refresh_token", response.refresh_token);
       },
+    }),
+    getCurrentUserAdvt: builder.query({
+      query: () => "ads/me",
+      providesTags: ["Ads"],
     }),
     editUserData: builder.mutation({
       query: (userData) => ({
@@ -172,7 +177,7 @@ export const adsApi = createApi({
         method: "POST",
         body: newAdvData,
       }),
-      invalidatesTags: [{ type: "Ads", id: "LIST" }],
+      invalidatesTags: ["Ads"],
     }),
     addNewAdvPic: builder.mutation({
       query: (data) => {
@@ -204,7 +209,7 @@ export const adsApi = createApi({
           method: "DELETE",
         };
       },
-      invalidatesTags: [{ type: "Ads", id: "LIST" }],
+      invalidatesTags: ["Ads"],
     }),
     editAdv: builder.mutation({
       query: ({ id, title, description, price }) => ({

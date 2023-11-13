@@ -8,7 +8,7 @@ import HidePassWordLogo from "../../assets/images/view_hide_icon_124813.png";
 import { loginUserAction } from "../../store/actions/creators/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
 import {
-  useGetCurrentUserMutation,
+
   useLoginUserMutation,
   useRegisterUserMutation,
 } from "../../components/services/adsApi";
@@ -16,7 +16,7 @@ import {
 export const AuthPage = () => {
   const { setUser, loginUserFn } = useAuthContext();
   const [registerUser] = useRegisterUserMutation();
-  const [loginUser] = useLoginUserMutation();
+ 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
@@ -31,7 +31,7 @@ export const AuthPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoginMode(location.pathname === "/login");
@@ -43,11 +43,15 @@ export const AuthPage = () => {
       return;
     }
     try {
-      dispatch(loginUserAction)
+      dispatch(loginUserAction);
       setIsAuthLoading(true);
-      await loginUserFn({ email, password });
-      setIsAuthLoading(false);
-
+      const user_data = {
+        email,
+        password,
+      };
+      await loginUserFn(user_data);
+      // await loginUserFn({ email, password });
+      setIsAuthLoading(false)
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);
@@ -90,7 +94,7 @@ export const AuthPage = () => {
         email,
         password,
       };
-      await loginUser(user_data);
+      await loginUserFn(user_data);
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);

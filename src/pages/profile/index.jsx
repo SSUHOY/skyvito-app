@@ -7,12 +7,9 @@ import { CardsItem } from "../../components/cardsItem/cardsItem";
 import { FooterAll } from "../../components/footer/footer";
 import {
   useEditUserDataMutation,
-
   useGetCurrentUserAdvtQuery,
   useGetCurrentUserMutation,
-
   useRefreshTokenMutation,
-
   useUploadUserImageMutation,
 } from "../../components/services/adsApi";
 import { useAuthContext } from "../../components/context/AuthContext";
@@ -28,15 +25,16 @@ import { NewAdvModal } from "../../components/modal/new-adv";
 import ChangePasswordModal from "../../components/modal/change-password/changePassword";
 
 const Profile = () => {
-  const { logoutUserFn } = useAuthContext();
+  const { logoutUserFn, user } = useAuthContext();
+
   // Pop-up "post new adv"
   const [modalActive, setModalActive] = useState(false);
   // Pop-up "change password"
   const [modalActiveChangePass, setModalChangePassActive] = useState(false);
 
+  const { data, isLoading } = useGetCurrentUserAdvtQuery();
   const [uploadImg] = useUploadUserImageMutation({});
-  const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
-  const { data, isLoading } = useGetCurrentUserAdvtQuery({});
+  const [getCurrentUser, { data: currentUser}] = useGetCurrentUserMutation();
 
   const dispatch = useDispatch();
 
@@ -83,7 +81,7 @@ const Profile = () => {
       formData.append("file", selectedImg);
       setInputsAreFilled(true);
       uploadImg(formData);
-      alert('Нажмите "Сохранить", чтобы изменения вступили в силу')
+      alert('Нажмите "Сохранить", чтобы изменения вступили в силу');
     }
   };
 
@@ -92,7 +90,6 @@ const Profile = () => {
     await refreshToken();
     const userData = { phone, name, surname, city };
     editUserData(userData);
-    console.log(selectedFile);
     setSaveButtonActive(false);
     getCurrentUser();
   };
@@ -131,6 +128,7 @@ const Profile = () => {
     const fetchUserData = async () => {
       await getCurrentUser();
       await refreshToken();
+      setSellerAdv(data);
     };
     fetchUserData();
   }, []);
@@ -144,7 +142,7 @@ const Profile = () => {
 
   useEffect(() => {
     setSellerAdv(data);
-  }, [data]);
+  }, [data, currentUser]);
 
   return (
     <>
@@ -197,8 +195,10 @@ const Profile = () => {
                       <S.ProfileSettingsContainer>
                         <S.SettingsLeftBox>
                           <S.SettingsImg>
-                            {selectedFile === 'null'  ? (
-                              <S.AvatarAltText>Загрузите аватар</S.AvatarAltText>
+                            {selectedFile === "null" ? (
+                              <S.AvatarAltText>
+                                Загрузите аватар
+                              </S.AvatarAltText>
                             ) : (
                               <S.ProfileImg
                                 src={
@@ -206,7 +206,6 @@ const Profile = () => {
                                     ? ""
                                     : `http://localhost:8090/${currentUser?.avatar}`
                                 }
-                              
                               />
                             )}
                           </S.SettingsImg>
@@ -291,23 +290,27 @@ const Profile = () => {
                   </S.MainProfile>
                   <S.MainContentTitle>Мои товары</S.MainContentTitle>
                   <S.MainContent>
-                    <S.ContentCards>
-                      {data?.length === 0
-                        ? "Вы пока не разместили объявления"
-                        : ""}
-                      {data?.map((item, index) => (
-                        <CardsItem
-                          key={index}
-                          advId={item.id}
-                          title={item.title}
-                          picture={`http://localhost:8090/${item.images[0]?.url}`}
-                          price={item.price}
-                          date={item.created_on.split("T")[0]}
-                          place={item.user.city}
-                          isLoading={isLoading}
-                        />
-                      ))}
-                    </S.ContentCards>
+                    {!data ? (
+                      "Загрузка..."
+                    ) : (
+                      <S.ContentCards>
+                        {data.length === 0
+                          ? "Вы пока не разместили объявления"
+                          : ""}
+                        {data?.map((item, index) => (
+                          <CardsItem
+                            key={index}
+                            advId={item.id}
+                            title={item.title}
+                            picture={`http://localhost:8090/${item.images[0]?.url}`}
+                            price={item.price}
+                            date={item.created_on.split("T")[0]}
+                            place={item.user.city}
+                            isLoading={isLoading}
+                          />
+                        ))}
+                      </S.ContentCards>
+                    )}
                   </S.MainContent>
                 </S.MainCenterBox>
               </S.MainContainer>

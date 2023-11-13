@@ -1,18 +1,20 @@
 import { createContext, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logoutUser, uploadTokens } from "../../store/actions/creators/ads";
-import { fetchLogin, fetchUser } from "../../api";
+import {
+  useGetCurrentUserMutation,
+  useLoginUserMutation,
+} from "../services/adsApi";
 
 export const AuthContext = createContext({});
-
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const storedUserData = localStorage.getItem("userData");
+    const storedUserData = localStorage.getItem("user_data");
   });
   const [error, setError] = useState(() => {
-    const storedUserData = localStorage.getItem("userData");
+    const storedUserData = localStorage.getItem("user_data");
     if (storedUserData) {
       setUser(JSON.parse(storedUserData));
     } else {
@@ -21,25 +23,23 @@ export const AuthProvider = ({ children }) => {
   });
 
   const dispatch = useDispatch();
+  const [loginUser] = useLoginUserMutation();
+  const [getCurrentUser] = useGetCurrentUserMutation();
 
   const loginUserFn = async ({ email, password }) => {
-    
     try {
-      const tokenData = await fetchLogin({ email, password });
-      localStorage.setItem("access_token", tokenData.access_token);
-      localStorage.setItem("refresh_token", tokenData.refresh_token);
-      dispatch(uploadTokens(tokenData.access_token, tokenData.refresh_token));
-      const userData = await fetchUser({ tokenData });
-      localStorage.setItem("userData", JSON.stringify(userData));
-      localStorage.setItem("user_register_id", userData.id);
-      localStorage.setItem("user_register_email", userData.email);
-      localStorage.setItem("user_register_city", userData.city);
-      localStorage.setItem("user_register_name", userData.name);
-      localStorage.setItem("user_register_avatar", userData.avatar);
-      localStorage.setItem("user_register_surname", userData.surname);
-      localStorage.setItem("user_register_phone", userData.phone);
+      const user_data = {
+        email,
+        password,
+      };
+      await loginUser(user_data);
+      await getCurrentUser();
+      const currentUserData = localStorage.getItem("user_data");
+      const access_token = localStorage.getItem("access_token");
+      const refresh_token = localStorage.getItem("refresh_token");
 
-      setUser(userData);
+      dispatch(uploadTokens(access_token, refresh_token));
+      setUser(JSON.parse(currentUserData));
       setError(null);
     } catch (error) {
       setError(error.message);

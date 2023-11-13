@@ -96,10 +96,14 @@ export const EditAdvModal = ({ active, setActive }) => {
         className={active ? "active" : ""}
         onClick={(e) => e.stopPropagation()}>
         <S.ModalContent>
-          <S.ModalTitle>Редактировать объявление</S.ModalTitle>
-          <S.ModalBtnCloseBox>
-            <S.ModalBtnCloseLine onClick={() => setActive(false)} />
-          </S.ModalBtnCloseBox>
+          <S.ModalTitleBlock>
+            <S.ModalTitle onClick={() => setActive(false)}>
+              Редактировать
+            </S.ModalTitle>
+            <S.ModalBtnCloseBox>
+              <S.ModalBtnCloseLine onClick={() => setActive(false)} />
+            </S.ModalBtnCloseBox>
+          </S.ModalTitleBlock>
           <S.ModalFormNewArt id="formNewArt">
             <S.FormNewArtBlock>
               <S.FormLabelName>Название</S.FormLabelName>

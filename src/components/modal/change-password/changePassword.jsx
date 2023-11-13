@@ -7,10 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { useChangePasswordMutation } from "../../services/adsApi";
 
 const ChangePasswordModal = ({ active, setActive }) => {
-  const [errorMessage, setErrorMessage] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [sendButtonActive, setSendButtonActive] = useState(false);
+  const [sendButtonDisabled, setSendButtonDisabled] = useState(true);
   const [changePassword, { error }] = useChangePasswordMutation();
   const [showPassword, setShowPassWord] = useState("password");
 
@@ -25,14 +24,19 @@ const ChangePasswordModal = ({ active, setActive }) => {
     return false;
   };
 
+  const handleSetCurrentPassword = (event) => {
+    setCurrentPassword(event.target.value);
+    setSendButtonDisabled(false);
+  };
+
+  const handleSetNewPassword = (event) => {
+    setNewPassword(event.target.value);
+    setSendButtonDisabled(false);
+  };
+
   const handleChangePassword = async () => {
     if (!currentPassword || !newPassword) {
       setErrorMessage("Обязательные поля не заполнены");
-      return;
-    }
-    if (error != undefined) {
-      console.log("ошибка");
-      setErrorMessage(JSON.stringify(error.data));
       return;
     }
 
@@ -40,9 +44,9 @@ const ChangePasswordModal = ({ active, setActive }) => {
       password_1: currentPassword,
       password_2: newPassword,
     };
-    setSendButtonActive(false);
+
     changePassword(newPassData);
-    setSendButtonActive(true);
+    setSendButtonDisabled(true);
 
     navigate("/account", { replace: true });
   };
@@ -64,9 +68,7 @@ const ChangePasswordModal = ({ active, setActive }) => {
             type={showPassword}
             name="password"
             placeholder="Текущий пароль"
-            onChange={(event) => {
-              setCurrentPassword(event.target.value);
-            }}
+            onChange={handleSetCurrentPassword}
           />
           <S.ShowPasswordLogo
             onClick={handleShowPassword}
@@ -79,9 +81,7 @@ const ChangePasswordModal = ({ active, setActive }) => {
             type={showPassword}
             name="password"
             placeholder="Новый пароль"
-            onChange={(event) => {
-              setNewPassword(event.target.value);
-            }}
+            onChange={handleSetNewPassword}
           />
 
           <S.ShowPasswordLogoSec
@@ -92,11 +92,15 @@ const ChangePasswordModal = ({ active, setActive }) => {
           />
         </S.Inputs>
 
-        {error ? <S.Error>Ошибка : {JSON.stringify(error.data.detail)}</S.Error> : ""}
+        {error ? (
+          <S.Error>Ошибка : {JSON.stringify(error.data.detail)}</S.Error>
+        ) : (
+          ""
+        )}
 
         <S.Buttons>
           <S.PrimaryButton
-            disabled={sendButtonActive}
+            disabled={sendButtonDisabled}
             onClick={handleChangePassword}>
             Сменить пароль
           </S.PrimaryButton>

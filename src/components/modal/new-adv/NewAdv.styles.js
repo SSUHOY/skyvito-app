@@ -17,8 +17,9 @@ export const ContainerModal = styled.div`
   &.active {
     opacity: 1;
     pointer-events: all;
+    z-index: 2;
   }
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 600px) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,6 +28,7 @@ export const ContainerModal = styled.div`
     &.active {
       opacity: 1;
       pointer-events: all;
+      z-index: 2;
     }
   }
 `;
@@ -35,34 +37,23 @@ export const ModalBlock = styled.div`
   position: absolute;
   z-index: 5;
   left: calc(50% - (600px / 2));
-  top: 20px;
   opacity: 0;
   transition: 0.5s;
   pointer-events: none;
   &.active {
     opacity: 1;
     pointer-events: all;
+    z-index: 2;
   }
   @media screen and (max-width: 600px) {
     position: absolute;
     z-index: 5;
-    left: calc(50% - (530px / 2));
-    top: 0px;
-    opacity: 0;
+    left: 0px;
+    opacity: 1;
     &.active {
       opacity: 1;
       pointer-events: all;
-    }
-  }
-  @media screen and (max-width: 400px) {
-    position: absolute;
-    z-index: 5;
-    left: calc(50% - (383px / 2));
-    top: 0px;
-    opacity: 0;
-    &.active {
-      opacity: 1;
-      pointer-events: all;
+      z-index 2;
     }
   }
 `;
@@ -137,7 +128,6 @@ export const ModalTitle = styled.h3`
   @media screen and (max-width: 600px) {
     font-size: 24px;
     line-height: 29px;
-    padding: 0 0 0 26px;
     position: relative;
     &:before {
       content: "";
@@ -165,7 +155,7 @@ export const ModalBtnCloseBox = styled.div`
   right: 50px;
   z-index: 3;
   cursor: pointer;
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 400px) {
     display: none;
   }
 `;
@@ -541,6 +531,10 @@ export const FormNewArtPriceCover = styled.div`
   @media screen and (max-width: 400px) {
     position: relative;
     left: 318px;
+  }
+  @media screen and (max-width: 380px) {
+    position: relative;
+    left: 280px;
   }
 `;
 

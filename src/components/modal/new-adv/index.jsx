@@ -138,9 +138,7 @@ export const NewAdvModal = ({ active, setActive }) => {
   };
 
   return (
-    <S.ContainerModal
-      className={active ? "active" : ""}
-      onClick={() => setActive(false)}>
+    <S.ContainerModal className={active ? "active" : ""}>
       <S.ModalBlock
         className={active ? "active" : ""}
         onClick={(e) => e.stopPropagation()}>

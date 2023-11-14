@@ -153,27 +153,31 @@ const SellerProfile = () => {
                                 />
                               </S.SellerImgMob>
                             </S.SellerimgBox>
-                            <S.PhoneShownBtn onClick={handleShowPhoneClick}>
-                              {data.user.phone === null ? (
-                                <ArticleBtnSpan>
-                                  Телефон продавца не указан
-                                </ArticleBtnSpan>
-                              ) : (
-                                <ArticleBtnSpan>
-                                  Показать&nbsp;телефон
-                                  <br />
-                                  {!showPhone
-                                    ? `${data?.user.phone.substring(
-                                        0,
-                                        1
-                                      )}${data?.user.phone.substring(
-                                        1,
-                                        4
-                                      )} XXX XX XX`
-                                    : data?.user.phone}
-                                </ArticleBtnSpan>
-                              )}
-                            </S.PhoneShownBtn>
+                            {!data ? (
+                              "Загрузка"
+                            ) : (
+                              <S.PhoneShownBtn onClick={handleShowPhoneClick}>
+                                {data.user.phone === null ? (
+                                  <ArticleBtnSpan>
+                                    Телефон продавца не указан
+                                  </ArticleBtnSpan>
+                                ) : (
+                                  <ArticleBtnSpan>
+                                    Показать&nbsp;телефон
+                                    <br />
+                                    {!showPhone
+                                      ? `${data?.user.phone.substring(
+                                          0,
+                                          1
+                                        )}${data?.user.phone.substring(
+                                          1,
+                                          4
+                                        )} XXX XX XX`
+                                      : data?.user.phone}
+                                  </ArticleBtnSpan>
+                                )}
+                              </S.PhoneShownBtn>
+                            )}
                           </S.ButtonBox>
                         </S.UserContentRightBox>
                       </S.ProfileSellerContainer>

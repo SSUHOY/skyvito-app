@@ -148,11 +148,29 @@ export const EmptyImgMessage = styled.div`
   justify-content: center;
 `;
 
-export const ArticleFillImg = styled.div`
-  width: 480px;
-  height: 480px;
+export const ArticleFillImgContent = styled.div`
+  &:before {
+    content: "";
+    display: block;
+    width: 23px;
+    height: 23px;
+    background-color: transparent;
+    border-top: 2px solid #000000;
+    border-left: 2px solid #000000;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 78px;
+    left: 32px;
+    cursor: pointer;
+    z-index: 1;
+  }
+`;
 
+export const ArticleFillImg = styled.div`
+  width: 100%;
   display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -161,27 +179,36 @@ export const ArticleFillImg = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-
   @media screen and (max-width: 768px) {
     max-width: 100%;
     width: 100%;
     overflow: hidden;
     display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
     -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
     position: relative;
+    z-index: 0;
   }
 `;
 
 export const ArticleImgBox = styled.div`
+  width: 100%;
+  height: 480px;
   background-color: #f0f0f0;
   margin: 0 5px;
+  align-items: center;
+  display: flex;
+
   @media screen and (max-width: 768px) {
     width: 100%;
     min-width: 320px;
@@ -193,10 +220,11 @@ export const ArticleImgBox = styled.div`
 
 export const ArticleImg = styled.img`
   width: 100%;
-  height: 270px;
+  height: auto;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
+
   @media screen and (max-width: 768px) {
     width: 100%;
     min-width: 320px;

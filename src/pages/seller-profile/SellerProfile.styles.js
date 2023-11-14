@@ -86,7 +86,7 @@ export const HeaderLogo = styled.div`
 `;
 
 export const PhoneShownBtn = styled.button`
-background-color: #009ee4;
+  background-color: #009ee4;
   border-radius: 6px;
   border: 1px solid #009ee4;
   width: 214px;
@@ -105,9 +105,9 @@ background-color: #009ee4;
     font-size: 14px;
     line-height: 20px;
     color: #ffffff;
+    margin-top: 30px;
   }
 `;
-
 
 export const PhoneNumber = styled.span`
   display: block;
@@ -315,6 +315,7 @@ export const ProfileImg = styled.img`
   height: auto;
   display: block;
   object-fit: cover;
+  border-radius: 50%;
 `;
 export const ProfileImgMob = styled.img`
   display: none;
@@ -325,6 +326,7 @@ export const ProfileImgMob = styled.img`
     display: block;
     -o-object-fit: cover;
     object-fit: cover;
+    border-radius: 50%;
   }
 `;
 
@@ -363,6 +365,7 @@ export const MainContent = styled.div`
   @media screen and (max-width: 620px) {
     width: 100%;
     margin: 0 auto;
+    margin-bottom: 20px;
   }
 `;
 
@@ -435,6 +438,8 @@ export const SellerRegistrationDate = styled.p`
 `;
 
 export const ButtonBox = styled.div`
+  padding-top: 30px;
+
   @media screen and (max-width: 620px) {
     display: flex;
     flex-direction: column;

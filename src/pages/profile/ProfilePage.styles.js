@@ -501,6 +501,7 @@ export const MainContent = styled.div`
   @media screen and (max-width: 620px) {
     width: 100%;
     margin: 0 auto;
+    margin-bottom: 40px;
   }
 `;
 

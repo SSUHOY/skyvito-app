@@ -56,6 +56,8 @@ export const AdvPage = () => {
   };
   const handleSelectImg = (event) => {
     setSelectedImg(event.target.src);
+    const nextIndex = (nextImg + 1) % data?.images.length;
+    setNextImg(nextIndex);
   };
 
   const handleNextPhotoClick = () => {
@@ -146,11 +148,15 @@ export const AdvPage = () => {
           <S.MainArticle>
             <S.ArticleContent>
               <S.ArticleLeft>
+                <Link to="/">
+                  <S.ArticleFillImgContent />
+                </Link>
                 {selectedImg === undefined && !isLoading ? (
                   <S.Error>Фото отсутсвует</S.Error>
                 ) : (
                   ""
                 )}
+
                 <S.ArticleFillImg>
                   {data?.images.slice(0, 1).map((image, index) => (
                     <S.ArticleImgBox key={index}>

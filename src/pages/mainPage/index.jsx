@@ -54,7 +54,7 @@ const Main = () => {
     dispatch(setSearchParameters(results));
   };
 
-  const HandleSearchClick = async (event) => {
+  const HandleSearchClick =  (event) => {
     event.preventDefault();
     SearchProducts(data, searchText);
   };
@@ -125,7 +125,7 @@ const Main = () => {
                 placeholder="Поиск"
                 name="search-mob"
               />
-              <SearchBtn onClick={HandleSearchClick}>Найти</SearchBtn>
+              <SearchBtn onClick={HandleSearchClick} onKeyDown={HandleSearchClick}>Найти</SearchBtn>
             </SearchForm>
           </MainSearch>
           <MainContainer>

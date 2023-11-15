@@ -6,6 +6,7 @@ export const MainContainer = styled.div`
   padding: 52px 10px 37px;
   @media screen and (max-width: 590px) {
     padding: 85px 10px 84px;
+    min-height: 100vh;
   }
 `;
 

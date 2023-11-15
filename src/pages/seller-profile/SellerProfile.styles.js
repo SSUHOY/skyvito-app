@@ -22,7 +22,6 @@ export const PageContainer = styled.div`
   @media screen and (max-width: 590px) {
     width: 100%;
     min-width: 320px;
-    min-height: 100vh;
     background-color: #ffffff;
   }
 `;
@@ -311,8 +310,8 @@ export const SellerimgBox = styled.div`
 `;
 
 export const ProfileImg = styled.img`
-  width: 100%;
-  height: auto;
+  width: 170px;
+  height: 170px;
   display: block;
   object-fit: cover;
   border-radius: 50%;
@@ -322,7 +321,7 @@ export const ProfileImgMob = styled.img`
   @media screen and (max-width: 620px) {
     display: block;
     width: 132px;
-    height: 144px;
+    height: 132px;
     display: block;
     -o-object-fit: cover;
     object-fit: cover;

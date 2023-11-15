@@ -1,4 +1,12 @@
-import { CHANGE_PASSWORD, LOG_IN_USER, LOG_OUT_USER, SET_ADS, SET_ADS_FAILURE, SET_USERS_ADS } from "../actions/types/ads";
+import {
+  CHANGE_PASSWORD,
+  LOG_IN_USER,
+  LOG_OUT_USER,
+  SET_ADS,
+  SET_ADS_FAILURE,
+  SET_USERS_ADS,
+  SET_USER_DATA,
+} from "../actions/types/ads";
 
 const initialState = {
   searchedAds: [],
@@ -6,7 +14,8 @@ const initialState = {
   setAds: [],
   error: null,
   isLogin: false,
-  newPassword: ''
+  newPassword: "",
+  setUserData: [],
 };
 
 export default function adsReducer(state = initialState, action) {
@@ -15,6 +24,12 @@ export default function adsReducer(state = initialState, action) {
       return {
         ...state,
         setAds: action.payload,
+      };
+    }
+    case SET_USER_DATA: {
+      return {
+        ...state,
+        setUserData: action.payload,
       };
     }
     case SET_USERS_ADS: {
@@ -44,8 +59,8 @@ export default function adsReducer(state = initialState, action) {
     case CHANGE_PASSWORD: {
       return {
         ...state,
-        newPassword: action.payload
-      }
+        newPassword: action.payload,
+      };
     }
     default:
       return state;

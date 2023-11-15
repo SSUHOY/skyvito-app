@@ -5,7 +5,7 @@ import { useAuthContext } from "../context/AuthContext";
 const baseQueryWithReauth = async (argc, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
     baseUrl: "http://localhost:8090/",
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers) => {
       const token = localStorage.getItem("access_token");
 
       console.debug("Токен из стора", { token });
@@ -22,8 +22,7 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
   const forceLogout = () => {
     console.debug("Принудительная авторизация");
     api.dispatch(uploadTokens(null, null));
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    localStorage.clear();
     window.location.href = "/login";
   };
 

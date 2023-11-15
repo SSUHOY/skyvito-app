@@ -84,6 +84,33 @@ export const CardImgBox = styled.div`
   }
 `;
 
+export const Error = styled.div`
+  width: 100%;
+  height: 270px;
+  display: block;
+  -o-object-fit: cover;
+  object-fit: cover;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: black;
+  @media screen and (max-width: 590px) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    -o-object-fit: cover;
+    object-fit: cover;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: black;
+  }
+`;
+
 export const CardImage = styled.img`
   width: 100%;
   height: 270px;
@@ -105,7 +132,7 @@ export const CardImage = styled.img`
 export const CardContentBox = styled.div`
   font-family: "Roboto", sans-serif;
   padding: 0px 10px 12px;
-  @media screen and (max-width: 590px) { 
+  @media screen and (max-width: 590px) {
     width: 137px;
     font-size: 14px;
     line-height: 17px;
@@ -148,7 +175,7 @@ export const CardPlace = styled.p`
   font-size: 16px;
   line-height: 21px;
   color: #5f5f5f;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 
   @media screen and (max-width: 590px) {
     font-size: 12px;

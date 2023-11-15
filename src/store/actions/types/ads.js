@@ -6,3 +6,4 @@ export const LOG_OUT_USER = 'LOG_OUT_USER'
 export const UPLOAD_TOKENS = 'UPLOAD_TOKENS'
 export const SEARCH_VALUE = "SEARCH_VALUE"
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD"
+export const SET_USER_DATA = "SET_USER_DATA"

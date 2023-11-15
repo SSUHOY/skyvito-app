@@ -22,8 +22,8 @@ export const Container = styled.div`
   @media screen and (max-width: 590px) {
     width: 100%;
     min-width: 320px;
-    min-height: 100vh;
     background-color: #ffffff;
+    min-height: 100vh;
   }
 `;
 
@@ -149,21 +149,24 @@ export const EmptyImgMessage = styled.div`
 `;
 
 export const ArticleFillImgContent = styled.div`
-  &:before {
-    content: "";
-    display: block;
-    width: 23px;
-    height: 23px;
-    background-color: transparent;
-    border-top: 2px solid #000000;
-    border-left: 2px solid #000000;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    position: absolute;
-    top: 78px;
-    left: 32px;
-    cursor: pointer;
-    z-index: 1;
+  @media screen and (max-width: 620px) {
+    &:before {
+      display: none;
+      content: "";
+      display: block;
+      width: 23px;
+      height: 23px;
+      background-color: transparent;
+      border-top: 2px solid #000000;
+      border-left: 2px solid #000000;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      position: absolute;
+      top: 78px;
+      left: 32px;
+      cursor: pointer;
+      z-index: 1;
+    }
   }
 `;
 
@@ -220,11 +223,11 @@ export const ArticleImgBox = styled.div`
 
 export const ArticleImg = styled.img`
   width: 100%;
-  height: auto;
+  height: 480px;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
-
+  cursor: pointer;
   @media screen and (max-width: 768px) {
     width: 100%;
     min-width: 320px;
@@ -500,8 +503,8 @@ export const AuthorImgDiv = styled.div`
 `;
 
 export const AuthorImg = styled.img`
-  width: 100%;
-  height: auto;
+  width: 40px;
+  height: 40px;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;

@@ -22,7 +22,6 @@ export const PageContainer = styled.div`
   @media screen and (max-width: 590px) {
     width: 100%;
     min-width: 320px;
-    min-height: 100vh;
     background-color: #ffffff;
   }
 `;

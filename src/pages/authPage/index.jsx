@@ -8,15 +8,14 @@ import HidePassWordLogo from "../../assets/images/view_hide_icon_124813.png";
 import { loginUserAction } from "../../store/actions/creators/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
 import {
-
-  useLoginUserMutation,
+  useRefreshTokenMutation,
   useRegisterUserMutation,
 } from "../../components/services/adsApi";
 
 export const AuthPage = () => {
   const { setUser, loginUserFn } = useAuthContext();
   const [registerUser] = useRegisterUserMutation();
- 
+
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
@@ -50,8 +49,7 @@ export const AuthPage = () => {
         password,
       };
       await loginUserFn(user_data);
-      // await loginUserFn({ email, password });
-      setIsAuthLoading(false)
+      setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);

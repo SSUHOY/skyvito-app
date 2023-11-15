@@ -87,7 +87,7 @@ export const Inputs = styled.div`
 `;
 
 export const Error = styled.div`
-position: absolute;
+  position: absolute;
   color: coral;
   font-weight: 400;
   font-size: 14px;
@@ -110,10 +110,6 @@ const Button = styled.button`
   font-weight: 400;
   font-size: 18px;
   line-height: 24px;
-
-  &:disabled {
-    background-color: #303030;
-  }
 `;
 
 export const PrimaryButton = styled(Button)`
@@ -122,7 +118,10 @@ export const PrimaryButton = styled(Button)`
   &:hover {
     background-color: #0080c1;
   }
-
+  &:disabled {
+    background-color: #d9d9d9;
+    color: #ffffff;
+  }
 `;
 export const SecondaryButton = styled(Button)`
   color: #000000;
@@ -184,12 +183,12 @@ export const ShowPasswordLogoSec = styled.img`
 `;
 
 export const ReloginMessage = styled.div`
-position: absolute;
-color: #009ee4;
-font-weight: 400;
-font-size: 15px;
-line-height: 24px;
-margin-top: 10px;
-margin-right: 48px;
-text-align: left;
-`
+  position: absolute;
+  color: #009ee4;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 24px;
+  margin-top: 10px;
+  margin-right: 48px;
+  text-align: left;
+`;

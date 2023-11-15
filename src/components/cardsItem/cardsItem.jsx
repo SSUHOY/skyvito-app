@@ -26,7 +26,6 @@ export const CardsItem = ({
   advId,
   isLoading,
 }) => {
-  console.log("🚀 ~ file: cardsItem.jsx:30 ~ picture:", picture)
   const [formatAdvDate, setFormatDateWithTime] = useState("");
   
 

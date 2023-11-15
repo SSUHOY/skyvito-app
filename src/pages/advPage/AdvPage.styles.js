@@ -83,7 +83,6 @@ export const MainArticle = styled.div`
   @media screen and (max-width: 768px) {
     max-width: 1178px;
     width: 100%;
-    height: 100vh;
     margin: 0 auto;
   }
 `;
@@ -228,7 +227,7 @@ export const ArticleImg = styled.img`
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
-cursor: pointer;
+  cursor: pointer;
   @media screen and (max-width: 768px) {
     width: 100%;
     min-width: 320px;
@@ -504,8 +503,8 @@ export const AuthorImgDiv = styled.div`
 `;
 
 export const AuthorImg = styled.img`
-  width: 100%;
-  height: auto;
+  width: 40px;
+  height: 40px;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;

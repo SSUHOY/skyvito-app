@@ -9,7 +9,6 @@ import { useRegisterUserMutation } from "../../services/adsApi";
 import { useAuthContext } from "../../context/AuthContext";
 import { loginUser } from "../../../store/actions/creators/ads";
 
-
 export const AuthPage = () => {
   const dispatch = useDispatch();
   const { setUser, loginUserFn } = useAuthContext();
@@ -23,8 +22,12 @@ export const AuthPage = () => {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [error, setError] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
-  const [showPassword, setShowPassWord] = useState("password");
+  console.log(
+    "🚀 ~ file: index.jsx:25 ~ AuthPage ~ isAuthLoading:",
+    isAuthLoading
+  );
 
+  const [showPassword, setShowPassWord] = useState("password");
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,10 +43,9 @@ export const AuthPage = () => {
       return;
     }
     try {
-      setIsAuthLoading(true);     
+      setIsAuthLoading(true);
       await loginUserFn({ email, password });
       setIsAuthLoading(false);
-
     } catch (error) {
       console.error("Ошибка регистрации:", error);
       setError(error.message || "Неизвестная ошибка при входе");
@@ -71,6 +73,8 @@ export const AuthPage = () => {
     }
     try {
       setIsAuthLoading(true);
+      localStorage.clear();
+
       const userData = {
         email,
         password,
@@ -79,9 +83,9 @@ export const AuthPage = () => {
         surname,
       };
       registerUser(userData);
-      setUser(userData);
-      setIsAuthLoading(false);
+      setUser(userData)
       await loginUserFn({ email, password });
+      setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);
@@ -223,14 +227,13 @@ export const AuthPage = () => {
                 }}
               />
             </S.Inputs>
-
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
               <S.PrimaryButton
                 onClick={() =>
                   handleRegister({ email, password, name, surname, city })
                 }
-                disabled={isAuthLoading}>
+                disabled={true}>
                 Зарегистрироваться
               </S.PrimaryButton>
             </S.Buttons>

@@ -15,7 +15,7 @@ import {
 export const AuthPage = () => {
   const { setUser, loginUserFn } = useAuthContext();
   const [registerUser] = useRegisterUserMutation();
- 
+
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
@@ -48,8 +48,8 @@ export const AuthPage = () => {
         email,
         password,
       };
-      await loginUserFn(user_data)
-      setIsAuthLoading(false)
+      await loginUserFn(user_data);
+      setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);

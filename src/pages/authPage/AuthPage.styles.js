@@ -123,9 +123,6 @@ export const PrimaryButton = styled(Button)`
     background-color: #0080c1;
   }
 
-  &:active {
-    background-color: #007ac0;
-  }
 `;
 export const SecondaryButton = styled(Button)`
   color: #000000;

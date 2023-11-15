@@ -10,12 +10,14 @@ import { useAuthContext } from "../../components/context/AuthContext";
 import {
 
   useLoginUserMutation,
+  useRefreshTokenMutation,
   useRegisterUserMutation,
 } from "../../components/services/adsApi";
 
 export const AuthPage = () => {
   const { setUser, loginUserFn } = useAuthContext();
   const [registerUser] = useRegisterUserMutation();
+  const [refreshToken] = useRefreshTokenMutation()
  
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");
@@ -49,8 +51,7 @@ export const AuthPage = () => {
         email,
         password,
       };
-      await loginUserFn(user_data);
-      // await loginUserFn({ email, password });
+      await loginUserFn(user_data)
       setIsAuthLoading(false)
       navigate("/account", { replace: true });
     } catch (error) {

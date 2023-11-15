@@ -37,8 +37,6 @@ const SellerProfile = () => {
 
   // Pop-up "post new adv"
   const [modalActive, setModalActive] = useState(false);
-  // Pop-up "change password"
-  const [modalActiveChangePass, setModalChangePassActive] = useState(false);
 
   const handleShowPhoneClick = () => {
     setShowPhone(true);
@@ -187,10 +185,10 @@ const SellerProfile = () => {
                   <S.MainContent>
                     <S.ContentCards>
                       {sellerAds.length === 0 && "Объявлений нет"}
-                      {sellerAds?.map((adv) => (
+                      {sellerAds?.map((adv, index) => (
                         <CardsItem
-                          key={adv?.id}
-                          advId={id}
+                          key={index}
+                          advId={adv?.id}
                           title={adv.title}
                           price={adv.price}
                           place={adv.user.city}

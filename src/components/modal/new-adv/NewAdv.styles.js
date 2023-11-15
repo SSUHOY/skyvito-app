@@ -115,7 +115,7 @@ export const ModalTitleBlock = styled.div`
   flex-direction: row;
   justify-content: center;
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 600px) {
     width: 361px;
   }
 `;
@@ -155,7 +155,7 @@ export const ModalBtnCloseBox = styled.div`
   right: 50px;
   z-index: 3;
   cursor: pointer;
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 600px) {
     display: none;
   }
 `;

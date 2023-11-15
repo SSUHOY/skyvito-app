@@ -7,6 +7,7 @@ import {
   SET_ADS,
   SET_ADS_FAILURE,
   SET_USERS_ADS,
+  SET_USER_DATA,
   UPLOAD_TOKENS,
 } from "../types/ads";
 
@@ -24,6 +25,11 @@ export const fetchSetCurrentUserAdsRequest = (setUserAds) => ({
   type: SET_USERS_ADS,
   payload: setUserAds,
 });
+
+export const getUserData = (setUserData) => ({
+  type: SET_USER_DATA,
+  payload: setUserData,
+})
 
 export const loginUserAction = () => ({
   type: LOG_IN_USER,

@@ -22,8 +22,8 @@ export const Container = styled.div`
   @media screen and (max-width: 590px) {
     width: 100%;
     min-width: 320px;
-    min-height: 100vh;
     background-color: #ffffff;
+    min-height: 100vh;
   }
 `;
 
@@ -83,6 +83,7 @@ export const MainArticle = styled.div`
   @media screen and (max-width: 768px) {
     max-width: 1178px;
     width: 100%;
+    height: 100vh;
     margin: 0 auto;
   }
 `;
@@ -149,21 +150,24 @@ export const EmptyImgMessage = styled.div`
 `;
 
 export const ArticleFillImgContent = styled.div`
-  &:before {
-    content: "";
-    display: block;
-    width: 23px;
-    height: 23px;
-    background-color: transparent;
-    border-top: 2px solid #000000;
-    border-left: 2px solid #000000;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    position: absolute;
-    top: 78px;
-    left: 32px;
-    cursor: pointer;
-    z-index: 1;
+  @media screen and (max-width: 620px) {
+    &:before {
+      display: none;
+      content: "";
+      display: block;
+      width: 23px;
+      height: 23px;
+      background-color: transparent;
+      border-top: 2px solid #000000;
+      border-left: 2px solid #000000;
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      position: absolute;
+      top: 78px;
+      left: 32px;
+      cursor: pointer;
+      z-index: 1;
+    }
   }
 `;
 
@@ -220,11 +224,11 @@ export const ArticleImgBox = styled.div`
 
 export const ArticleImg = styled.img`
   width: 100%;
-  height: auto;
+  height: 480px;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
-
+cursor: pointer;
   @media screen and (max-width: 768px) {
     width: 100%;
     min-width: 320px;

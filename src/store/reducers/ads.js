@@ -6,7 +6,8 @@ const initialState = {
   setAds: [],
   error: null,
   isLogin: false,
-  newPassword: ''
+  newPassword: '',
+  setUserData: [],
 };
 
 export default function adsReducer(state = initialState, action) {

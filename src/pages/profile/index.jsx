@@ -33,7 +33,6 @@ const Profile = () => {
   const [modalActiveChangePass, setModalChangePassActive] = useState(false);
 
   const { data, isLoading } = useGetCurrentUserAdvtQuery();
-  console.log("🚀 ~ file: index.jsx:36 ~ Profile ~ data:", data)
   const [uploadImg] = useUploadUserImageMutation({});
   const [getCurrentUser, { data: currentUser }] = useGetCurrentUserMutation();
 

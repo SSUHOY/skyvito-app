@@ -87,12 +87,13 @@ export const AuthPage = () => {
       };
       registerUser(userData);
       setUser(userData);
-      setIsAuthLoading(false);
+
       const user_data = {
         email,
         password,
       };
       await loginUserFn(user_data);
+      setIsAuthLoading(false);
       navigate("/account", { replace: true });
     } catch (error) {
       console.error("Ошибка регистрации:", error);

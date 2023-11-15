@@ -114,11 +114,11 @@ export const CardContentBox = styled.div`
 `;
 
 export const CardTitle = styled.h3`
-  height: 52px;
+height: 52px;
   font-size: 22px;
   line-height: 26px;
   color: #009ee4;
-  margin-bottom: 10px;
+
   margin-top: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -148,7 +148,7 @@ export const CardPlace = styled.p`
   font-size: 16px;
   line-height: 21px;
   color: #5f5f5f;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 
   @media screen and (max-width: 590px) {
     font-size: 12px;

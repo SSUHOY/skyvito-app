@@ -8,8 +8,6 @@ import HidePassWordLogo from "../../assets/images/view_hide_icon_124813.png";
 import { loginUserAction } from "../../store/actions/creators/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
 import {
-
-  useLoginUserMutation,
   useRefreshTokenMutation,
   useRegisterUserMutation,
 } from "../../components/services/adsApi";
@@ -17,7 +15,6 @@ import {
 export const AuthPage = () => {
   const { setUser, loginUserFn } = useAuthContext();
   const [registerUser] = useRegisterUserMutation();
-  const [refreshToken] = useRefreshTokenMutation()
  
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [email, setEmail] = useState("");

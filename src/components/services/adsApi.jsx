@@ -5,10 +5,7 @@ import { useAuthContext } from "../context/AuthContext";
 const baseQueryWithReauth = async (argc, api, extraOptions) => {
   const baseQuery = fetchBaseQuery({
     baseUrl: "http://localhost:8090/",
-    prepareHeaders: (headers, { getState }) => {
-      const {user} = getState()
-      console.log("🚀 ~ file: adsApi.jsx:10 ~ baseQueryWithReauth ~ inf:", inf)
-      
+    prepareHeaders: (headers) => {
       const token = localStorage.getItem("access_token");
 
       console.debug("Токен из стора", { token });

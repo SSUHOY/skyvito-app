@@ -442,6 +442,9 @@ export const ArticleBtnEdit = styled.button`
 export const UsersUIBtnBlock = styled.div`
   display: flex;
   gap: 10px;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const ArticleBtnDel = styled.button`

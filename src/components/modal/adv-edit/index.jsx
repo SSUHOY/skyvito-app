@@ -57,6 +57,7 @@ export const EditAdvModal = ({ active, setActive }) => {
 
   const handleImgUpload = async (event) => {
     event.preventDefault();
+    await refreshToken();
     const selectedImg = event.target.files[0];
     setSelectedFile(event.target.files[0]);
     if (!selectedImg) {
@@ -71,8 +72,15 @@ export const EditAdvModal = ({ active, setActive }) => {
 
   const handleDeleteAdvImage = async (image) => {
     await refreshToken();
-    const data = { image, id };
-    deleteAdvImages(data);
+    const userAnswer = confirm(
+      "Вы действительно хотите удалить фотографию товара?"
+    );
+    if (!userAnswer) {
+      return;
+    } else {
+      const data = { image, id };
+      deleteAdvImages(data);
+    }
   };
 
   const handleAdTitleChange = (event) => {

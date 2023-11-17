@@ -3,9 +3,11 @@ import * as S from "./Reviews.styles";
 import ReviewItem from "./reviewItem";
 import { useAddCommentMutation } from "../../services/adsApi";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext";
 
 export const ReviewsModal = ({ active, setActive, comments, advId }) => {
   let { id } = useParams();
+  const { user } = useAuthContext();
   const [addComment, { isLoading }] = useAddCommentMutation();
   const [newComment, setNewComment] = useState("");
   const [error, setError] = useState(null);
@@ -37,22 +39,29 @@ export const ReviewsModal = ({ active, setActive, comments, advId }) => {
           </S.ModalBtnClose>
 
           <S.ModalFormNewArt>
-            <S.ModalFormNewArtBlock>
-              <S.ModalFormNewArtLabel>Добавить отзыв</S.ModalFormNewArtLabel>
-              <S.ModalFormInput
-                type="text"
-                placeholder="Введите отзыв"
-                value={newComment}
-                onChange={(e) =>
-                  setNewComment(e.target.value)
-                }></S.ModalFormInput>
-            </S.ModalFormNewArtBlock>
-
-            <S.ModalBtnPublish
-              onClick={handleAddComment}
-              disabled={!newComment}>
-              {isLoading ? "Публикация..." : "Опубликовать"}
-            </S.ModalBtnPublish>
+            {!user ? (
+              ""
+            ) : (
+              <S.ModalFormNewArtBlock>
+                <S.ModalFormNewArtLabel>Добавить отзыв</S.ModalFormNewArtLabel>
+                <S.ModalFormInput
+                  type="text"
+                  placeholder="Введите отзыв"
+                  value={newComment}
+                  onChange={(e) =>
+                    setNewComment(e.target.value)
+                  }></S.ModalFormInput>
+              </S.ModalFormNewArtBlock>
+            )}
+            {!user ? (
+              ""
+            ) : (
+              <S.ModalBtnPublish
+                onClick={handleAddComment}
+                disabled={!newComment}>
+                {isLoading ? "Публикация..." : "Опубликовать"}
+              </S.ModalBtnPublish>
+            )}
           </S.ModalFormNewArt>
           <S.ModalScroll>
             <S.ModalReviewsBox>

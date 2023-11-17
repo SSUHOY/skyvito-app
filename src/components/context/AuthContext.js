@@ -27,9 +27,10 @@ export const AuthProvider = ({ children }) => {
   });
 
   const dispatch = useDispatch();
-  const [loginUser] = useLoginUserMutation();
-  const [getCurrentUser] = useGetCurrentUserMutation();
 
+  const [loginUser, { error: authError}] = useLoginUserMutation();
+
+  const [getCurrentUser] = useGetCurrentUserMutation();
   const loginUserFn = async ({ email, password }) => {
     try {
       localStorage.clear();
@@ -47,9 +48,8 @@ export const AuthProvider = ({ children }) => {
       dispatch(getUserData(JSON.parse(currentUserData)));
       setUser(JSON.parse(currentUserData));
       setError(null);
-    } catch (error) {
-      setError(error.message);
-      throw error;
+    } catch (authError) {
+      setError(authError);
     }
   };
   const logoutUserFn = () => {
@@ -60,7 +60,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, error, setError, loginUserFn, logoutUserFn }}>
+      value={{
+        user,
+        setUser,
+        error,
+        setError,
+        loginUserFn,
+        logoutUserFn,
+        authError,
+      }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as S from "./AuthPage.styles";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -7,16 +7,15 @@ import ShowPassWordLogo from "../../assets/images/view_show_icon_124811.png";
 import HidePassWordLogo from "../../assets/images/view_hide_icon_124813.png";
 import { loginUserAction } from "../../store/actions/creators/ads";
 import { useAuthContext } from "../../components/context/AuthContext";
-import {
-  useRefreshTokenMutation,
-  useRegisterUserMutation,
-} from "../../components/services/adsApi";
+import { useRegisterUserMutation } from "../../components/services/adsApi";
 
 export const AuthPage = () => {
-  const { setUser, loginUserFn } = useAuthContext();
-  const [registerUser] = useRegisterUserMutation();
+  const { setUser, loginUserFn, user, authError } = useAuthContext();
+  const [registerUser, { error: registerError, data: registerData }] =
+    useRegisterUserMutation();
 
   const [isLoginMode, setIsLoginMode] = useState(true);
+
   const [email, setEmail] = useState("");
   const [city, setCity] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +25,14 @@ export const AuthPage = () => {
   const [error, setError] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [showPassword, setShowPassWord] = useState("password");
+  const [emailError, setEmailError] = useState("Поле не может быть пустым");
+  const [passwordError, setPasswordError] = useState(
+    "Поле не может быть пустым"
+  );
+  const [information, setInf] = useState("");
+
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,26 +43,60 @@ export const AuthPage = () => {
     setIsLoginMode(location.pathname === "/login");
   }, [location.pathname, isLoginMode]);
 
+  const blurHandler = (e) => {
+    switch (e.target.name) {
+      case "email":
+        setEmailDirty(true);
+        break;
+      case "password":
+        setPasswordDirty(true);
+        break;
+    }
+  };
+
+  const emailHandler = (e) => {
+    setEmail(e.target.value);
+    setError(null);
+    let re = /^\S+@\S+\.\S+$/;
+
+    if (!re.test(String(e.target.value).toLowerCase())) {
+      setEmailError("Некорректный email");
+      setIsAuthLoading(true);
+      if (!e.target.value) {
+        setEmailError("Поле не может быть пустым");
+        setIsAuthLoading(true);
+      }
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const passwordHandler = (e) => {
+    setPassword(e.target.value);
+    setError(null);
+    if (!e.target.value) {
+      setPasswordError("Поле не может быть пустым");
+      setIsAuthLoading(true);
+    } else {
+      setPasswordError("");
+      setIsAuthLoading(false);
+    }
+  };
+
   const handleLogin = async () => {
     if (!email || !password) {
       setError("Пожалуйста, введите пароль и/или логин");
+      setIsAuthLoading(true);
       return;
     }
-    try {
-      dispatch(loginUserAction);
-      setIsAuthLoading(true);
-      const user_data = {
-        email,
-        password,
-      };
-      await loginUserFn(user_data);
-      setIsAuthLoading(false);
-      navigate("/account", { replace: true });
-    } catch (error) {
-      console.error("Ошибка регистрации:", error);
-      setError(error.message || "Неизвестная ошибка при входе");
-      setIsAuthLoading(false);
-    }
+    dispatch(loginUserAction);
+    setIsAuthLoading(true);
+    const user_data = {
+      email,
+      password,
+    };
+    await loginUserFn(user_data);
+    setIsAuthLoading(false);
   };
 
   const handleShowPassword = () => {
@@ -76,8 +117,20 @@ export const AuthPage = () => {
       setError("Пароли не совпадают");
       return;
     }
-    try {
-      setIsAuthLoading(true);
+    setIsAuthLoading(true);
+    const userData = {
+      email,
+      password,
+      name,
+      city,
+      surname,
+    };
+    await registerUser(userData);
+    setIsAuthLoading(false);
+  };
+
+  useEffect(() => {
+    if (user) {
       const userData = {
         email,
         password,
@@ -85,26 +138,34 @@ export const AuthPage = () => {
         city,
         surname,
       };
-      registerUser(userData);
-      setUser(userData);
-
-      const user_data = {
-        email,
-        password,
-      };
-      await loginUserFn(user_data);
-      setIsAuthLoading(false);
       navigate("/account", { replace: true });
-    } catch (error) {
-      console.error("Ошибка регистрации:", error);
-      setError(error.message || "Неизвестная ошибка регистрации");
-      setIsAuthLoading(false);
+      setUser(userData);
+    } else if (!user) {
+      console.log("Logout");
+    } else {
+      console.log("ошибки");
     }
-  };
+  }, [user, navigate]);
+
+  // Реавторазиация после регистрации
+  useEffect(() => {
+    if (registerData) {
+      navigate("/login", { replace: true });
+      setInf("Пользователь зарегистрирован! Авторизуйтесь!");
+    }
+  }, [registerData]);
+
   // Отлавливаем ошибку
   useEffect(() => {
-    setError(null);
-  }, [isLoginMode, email, password, repeatPassword]);
+    if (authError) {
+      setError(authError.data.detail);
+      console.log("ошибка авторизации");
+    }
+    if (registerError) {
+      setError(registerError.data.message);
+      console.log("ошибка регистрации");
+    }
+  }, [authError, registerError]);
 
   return (
     <S.PageContainer>
@@ -116,24 +177,30 @@ export const AuthPage = () => {
         </Link>
         {isLoginMode ? (
           <>
+            {emailError && emailDirty && (
+              <S.HandleInputErrorEmail>{emailError}</S.HandleInputErrorEmail>
+            )}
             <S.Inputs>
               <S.ModalInput
                 type="text"
-                name="login"
+                name="email"
                 placeholder="email"
                 value={email}
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
+                onBlur={(e) => blurHandler(e)}
+                onChange={(e) => emailHandler(e)}
               />
+              {passwordError && passwordDirty && (
+                <S.HandleInputErrorPassword>
+                  {passwordError}
+                </S.HandleInputErrorPassword>
+              )}
               <S.ModalInput
                 type={showPassword}
                 name="password"
                 placeholder="пароль"
                 value={password}
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
+                onBlur={(e) => blurHandler(e)}
+                onChange={(e) => passwordHandler(e)}
               />
               <S.ShowPasswordLogoLogin
                 onClick={handleShowPassword}
@@ -144,8 +211,8 @@ export const AuthPage = () => {
                 }
               />
             </S.Inputs>
-            {error && <S.Error>{error}</S.Error>}
-
+            {error && <S.Error>Ошибка: {error}</S.Error>}
+            {information && <S.Information>{information}</S.Information>}
             <S.Buttons>
               <S.PrimaryButton
                 onClick={() => handleLogin({ email, password })}
@@ -161,24 +228,30 @@ export const AuthPage = () => {
           </>
         ) : (
           <>
+            {emailError && emailDirty && (
+              <S.HandleInputErrorEmail>{emailError}</S.HandleInputErrorEmail>
+            )}
             <S.Inputs>
               <S.ModalInput
                 type="text"
-                name="login"
+                name="email"
                 placeholder="email"
                 value={email}
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
+                onBlur={(e) => blurHandler(e)}
+                onChange={(e) => emailHandler(e)}
               />
+              {passwordError && passwordDirty && (
+                <S.HandleInputErrorPassword>
+                  {passwordError}
+                </S.HandleInputErrorPassword>
+              )}
               <S.ModalInput
                 type={showPassword}
                 name="password"
                 placeholder="Пароль"
                 value={password}
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
+                onBlur={(e) => blurHandler(e)}
+                onChange={(e) => passwordHandler(e)}
               />
               <S.ShowPasswordLogoSec
                 onClick={handleShowPassword}
@@ -236,7 +309,8 @@ export const AuthPage = () => {
               />
             </S.Inputs>
 
-            {error && <S.Error>{error}</S.Error>}
+            {error && <S.Error>Ошибка: {error}</S.Error>}
+
             <S.Buttons>
               <S.PrimaryButton
                 onClick={() =>

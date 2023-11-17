@@ -26,10 +26,7 @@ const baseQueryWithReauth = async (argc, api, extraOptions) => {
     window.location.href = "/login";
   };
 
-  if (result?.error?.status === 401) {
-    forceLogout();
-  }
-  if (result?.error?.status !== 401) {
+  if (result?.status !== 401) {
     return result;
   }
 };
@@ -106,6 +103,7 @@ export const adsApi = createApi({
         localStorage.setItem("user_register_name", response.name);
         localStorage.setItem("user_register_surname", response.surname);
         localStorage.setItem("user_register_phone", response.phone);
+       return response;
       },
     }),
     loginUser: builder.mutation({

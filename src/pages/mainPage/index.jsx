@@ -54,7 +54,7 @@ const Main = () => {
     dispatch(setSearchParameters(results));
   };
 
-  const HandleSearchClick =  (event) => {
+  const HandleSearchClick = (event) => {
     event.preventDefault();
     SearchProducts(data, searchText);
   };
@@ -99,8 +99,7 @@ const Main = () => {
               </>
             ) : (
               <NavLink to="/login">
-                <HeaderBtnMainEnter>
-                  Вход в личный кабинет</HeaderBtnMainEnter>
+                <HeaderBtnMainEnter>Вход в личный кабинет</HeaderBtnMainEnter>
               </NavLink>
             )}
           </HeaderNav>
@@ -125,7 +124,11 @@ const Main = () => {
                 placeholder="Поиск"
                 name="search-mob"
               />
-              <SearchBtn onClick={HandleSearchClick} onKeyDown={HandleSearchClick}>Найти</SearchBtn>
+              <SearchBtn
+                onClick={HandleSearchClick}
+                onKeyDown={HandleSearchClick}>
+                Найти
+              </SearchBtn>
             </SearchForm>
           </MainSearch>
           <MainContainer>

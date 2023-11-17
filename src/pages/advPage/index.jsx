@@ -220,7 +220,7 @@ export const AdvPage = () => {
                     <S.ArticlePrice>
                       {adv ? adv.price : "Загрузка.."} {data ? "₽" : ""}
                     </S.ArticlePrice>
-                    {user_data.id === adv.user.id ? (
+                    {user && user_data.id === adv.user.id ? (
                       <S.UsersUIBtnBlock>
                         <S.ArticleBtnEdit
                           disabled={deleted}

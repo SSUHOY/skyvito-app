@@ -152,8 +152,6 @@ export const AuthPage = () => {
     if (registerData) {
       navigate("/login", { replace: true });
       setInf("Пользователь зарегистрирован! Авторизуйтесь!");
-    } else {
-      console.log("ошибки!!!");
     }
   }, [registerData]);
 

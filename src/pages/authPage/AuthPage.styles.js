@@ -19,7 +19,7 @@ export const ModalForm = styled.div`
   background-color: #ffffff;
   border-radius: 12px;
   padding: 43px 47px 47px 40px;
-  transition: all 0.5s;
+  transition: all 0.3s;
   @media screen and (max-width: 768px) {
     width: 320px;
     height: auto;
@@ -39,7 +39,7 @@ export const ModalForm = styled.div`
     position: absolute;
     left: calc(50% - (320px / 2));
     top: 55px;
-    transition: all 0.5s;
+    transition: all 0.3s;
   }
 `;
 
@@ -93,6 +93,39 @@ export const Error = styled.div`
   font-size: 14px;
   line-height: 24px;
   margin-top: 20px;
+  text-align: left;
+`;
+export const Information = styled.div`
+  position: absolute;
+  color: #009ee4;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  margin-top: 18px;
+  width: 300px;
+  text-align: center;
+  left: 25px;
+  bottom: 188px;
+  @media screen and (max-width: 768px){
+    left: 15px;
+  }
+`;
+
+export const HandleInputErrorEmail = styled.div`
+  position: absolute;
+  top: 80px;
+  color: coral;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: left;
+`;
+
+export const HandleInputErrorPassword = styled.div`
+  position: absolute;
+  top: 140px;
+  color: coral;
+  font-weight: 400;
+  font-size: 14px;
   text-align: left;
 `;
 

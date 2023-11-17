@@ -117,6 +117,7 @@ export const NewAdvModal = ({ active, setActive }) => {
 
         addNewAdvText(newAdvData);
         setSendButtonActive(false);
+        setActive(false);
         return;
       }
       const formData = new FormData();

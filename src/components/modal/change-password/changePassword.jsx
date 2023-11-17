@@ -39,15 +39,13 @@ const ChangePasswordModal = ({ active, setActive }) => {
       setErrorMessage("Обязательные поля не заполнены");
       return;
     }
-
     const newPassData = {
       password_1: currentPassword,
       password_2: newPassword,
     };
-
+    await refreshToken();
     changePassword(newPassData);
     setSendButtonDisabled(true);
-
     navigate("/account", { replace: true });
   };
 

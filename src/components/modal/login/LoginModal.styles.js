@@ -19,7 +19,7 @@ export const ModalForm = styled.div`
   background-color: #ffffff;
   border-radius: 12px;
   padding: 43px 47px 47px 40px;
-  transition: all 0.5s;
+  transition: all 0.3s;
   @media screen and (max-width: 768px) {
     width: 320px;
     height: auto;
@@ -39,7 +39,7 @@ export const ModalForm = styled.div`
     position: absolute;
     left: calc(50% - (320px / 2));
     top: 55px;
-    transition: all 0.5s;
+    transition: all 0.3s;
   }
 `;
 

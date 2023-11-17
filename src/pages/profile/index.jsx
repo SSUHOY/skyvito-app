@@ -81,7 +81,6 @@ const Profile = () => {
       formData.append("file", selectedImg);
       setInputsAreFilled(true);
       uploadImg(formData);
-      alert('Нажмите "Сохранить", чтобы изменения вступили в силу');
     }
   };
 

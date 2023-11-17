@@ -155,7 +155,7 @@ const SellerProfile = () => {
                               "Загрузка"
                             ) : (
                               <S.PhoneShownBtn onClick={handleShowPhoneClick}>
-                                {data.user.phone === null ? (
+                                {!user && data.user.phone === null ? (
                                   <ArticleBtnSpan>
                                     Телефон продавца не указан
                                   </ArticleBtnSpan>

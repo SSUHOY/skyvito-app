@@ -343,3 +343,10 @@ export const Cards = styled.div`
     }
 }
 `;
+
+export const SearchError = styled.div`
+  @media screen and (max-width: 590px) {
+    display: flex;
+    justify-content: center;
+  }
+`;

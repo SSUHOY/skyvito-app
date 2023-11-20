@@ -66,7 +66,6 @@ export const NotFound = () => {
             </S.ErrorBox>
           </S.ErrorNotFoundContainer>
         </main>
-        <FooterAll />
       </S.Container>
     </S.Wrapper>
   );
